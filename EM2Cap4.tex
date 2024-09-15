@@ -1,0 +1,1014 @@
+\chapter{INTERVALS DE CONFIANÇA}
+\section{Introducció: estimaci\'{o} puntual i per interval}
+
+Donada una mostra aleatòria simple, $\bX= \Sample$, d'una
+població, $\modest$, els m\`{e}todes d'estimaci\'{o} puntual ens
+permeten obtenir, una funci\'{o}, $T(\bX)$ construïda de forma
+que, previsiblement, avaluada sobre $\bX$ prendrà valors
+pr\`{o}xims a $\theta$ en algun sentit, ja sigui en valor mig (si
+no hi ha biaix), en mostres grans (consistència), etc.
+
+No hi ha, per\`{o}, cap garantia de que donada una mostra
+concreta $\bX^{0}$, l'estimaci\'{o} que ens proporciona $T$
+estigui m\'{e}s o menys pr\`{o}xima a $\theta$, és a dir, mai és
+possible afirmar, \emph{amb certesa absoluta} que
+$|T(\bX^0)-\theta|<\varepsilon$, per una quantitat $\varepsilon$
+qualsevol.
+
+Per compensar aquesta mancan\c{c}a es pot optar per fer una
+\emph{estimaci\'{o} per interval}, que, enlloc de donar-nos
+\emph{un únic valor} que s'aproxima a $\theta$ en una quantitat
+desconeguda, dóna una parella de valors $T_{\inf},T_{\sup }$
+construïts de tal forma que tenim una confian\c{c}a alta de que
+l'autèntic valor del par\`{a}metre queda entre $\left( T_{\inf
+}(\bX^0 ), T_{\sup }(\bX^0) \right) $
+
+\begin{example}
+Suposem que volem el percentatge de consumidors, $p$, que coneixen
+una determinada oferta comercial. A partir d'una mostra adient
+podem obtenir una estimaci\'{o} puntual $\hat p$ de $p$. Suposem
+que ha estat $\hat p=0.27$. Podem trobar-nos amb situacions
+diferents segons com sigui l'autèntic valor
+\begin{itemize}
+\item  Si $p=24\%$ l'estimaci\'{o}, $\hat p=27\%$ \'{e}s una bona aproximació al
+seu valor.
+\item  Si $p=14\%$ o  $p=45\%$ l'estimaci\'{o} \'{e}s dolenta
+\end{itemize}
+\end{example}
+
+El problema, com sempre que treballem amb paràmetres desconeguts,
+és que, excepte en comptades ocasions, no podem saber si ens
+trobem en el primer o en el segon cas, ja que no coneixem el
+valor de $p$, de manera que la informaci\'{o} que ens aporta
+$\hat p$ pot ser molt bona o molt dolenta.
+
+Una possibilitat alternativa seria buscar dos valors entre els
+quals sabéssim \emph{segur} que està el valor de $\theta$. En
+l'exemple anterior aquests dos valors haurien de ser $0$ i $1$, i
+per tant, la informació que això ens aportaria no serveix de res.
+
+La solució, òbviament, l'hem de buscar en un punt intermedi. És a
+dir, mirem d'obtenir un interval que \emph{tot i no estar segurs
+de si contindr\`{a} a $\theta$} ens doni una confian\c{c}a (alta)
+de que s\'{i} ho far\`{a}. Aix\`{o} permet construir intervals
+``raonables" i ``utils".
+
+\begin{example}
+En l'exemple anterior no serveix de res dir que el \% de persones
+que coneixen una oferta oscil.la entre el $0\%$ i el $100\%$,
+per\`{o} s\'{i} serà d'utilitat decidir si es confia en que
+aquest percentatge està entre $25\%$ i $30\%$, i per tant la
+diferència màxima entre $p$ i $\hat p$ és inferior al $5\%$, o
+entre $15\%$ i $45\%$, podent en aquest cas donar-se una
+diferència entre $p$ i $\hat p$ de fins al $30\%$.
+\end{example}
+
+El preu que haurem de pagar per aquesta major precisi\'{o}, serà,
+en general una menor certesa.
+
+Per concretar aquesta idea introduirem el concepte d'interval de
+confiança:
+\begin{definition}
+Donat un model estad\'{i}stic $\modest$ un interval de
+confian\c{c}a,  de nivell de confian\c{c}a $\left( 1-\alpha
+\right) $ \'{e}s una parella d'estad\'{i}stics $$T_{\inf }\left(
+\bX\right), T_{\sup}\left( \bX\right),$$ constru\"{i}ts de forma
+que
+\begin{equation*}
+P\left[ T_{\inf }\left( \bX\right) \leq \theta \leq T_{\sup }\left( \bX\right) %
+\right] \geq 1-\alpha.
+\end{equation*}
+\end{definition}
+
+\textbf{Cal anar amb compte amb com s'interpreta aquesta
+definició}. L'interval $\left[ T_{\inf }\left( \bX\right),
+T_{\sup }\left( \bX\right) \right] $ \'{e}s un interval aleatori
+(o si es vol està format una parella de variables aleat\`{o}ries)
+de forma que l'expressi\'{o} $$P\left[ T_{\inf }\left( \bX\right)
+\leq T\leq T_{\sup }\left( \bX\right) \right] \geq 1-\alpha $$ no
+s'ha d'interpretar com la probabilitat que el par\`{a}metre
+$\theta$ prengui algun valor entre $T_{\inf}\left( \bX \right),
+T_{\sup }\left(\bX\right)$ ja que $\theta$ és constant. Qui pren
+valors diferents s\'{o}n $T_{\inf }\left( \bX\right)$ i $T_{\sup
+}\left( \bX\right)$. Una forma d'entendre això és fent pales que
+l'expressió:
+$$
+P\left[ T_{\inf }\left( \bX\right) \leq \theta \leq T_{\sup
+}\left(\bX\right) \right] \geq 1-\alpha
+$$
+no s'ha d'entendre referida a la distribució d'una variable
+aleatòria $\theta$, és a dir equivalent a
+$$
+P\left\{\left[ \underbrace{\theta}_{\text{v.a.}} \geq T_{\inf
+}\left( \bX\right) \right] \cap \left[
+\underbrace{\theta}_{\text{v.a.}} \leq T_{\sup }\left( \bX\right)
+\right]\right\},
+$$
+sinó referida a la distribució de les dues variables $T_{inf}$ i
+$T_{sup}$ és a dir:
+$$
+P\left\{\left[ \underbrace{T_{\inf }}_{\text{v.a.}}\left(
+\bX\right) \leq \theta \right] \cap \left[\underbrace{T_{\sup
+}}_{\text{v.a.}}\left( \bX\right) \geq \theta \right]\right\}.
+$$
+Així doncs, l'afirmaci\'{o} $P\left[ T_{\inf }\left( \bX\right)
+\leq T\leq T_{\sup }\left( \bX\right) \right] \geq 1-\alpha$ s'ha
+d'entendre com que \emph{abans de pendre la mostra} la
+probabilitat que l'interval aleatori que s'obtindr\`{a}
+recobreixi el par\`{a}metre \'{e}s $\left( 1-\alpha \right)$. Un
+cop presa, l'interval recobreix al paràmetre o no ho fa, i per
+tant la probabilitat és $1$ o $0$ respectivament. Així doncs, no
+es parla de probabilitats sinó de confiança. Abans d'agafar la
+mostra tenim una determinada confiança, generalment alta,
+$1-\alpha$ de que recobreixi el paràmetre.
+\begin{example}
+Un opositor s'ha d'examinar de 100 temes. Nom\'{e}s n'ha pogut
+estudiar 90 i, a m\'{e}s, no recorda el nº de la lli\c{c}\'{o}
+que no s\'{e} s\`{a}p i ho haur\`{a} de mirar al programa.Per
+examinar-se treur\`{a} una bola i haur\`{a} d'exposar la
+lli\c{c}\'{o} que correspongui al nº de la bola.
+\newline
+Abans que tregui la bola t\'{e} una probabilitat de 0.90
+d'aprovar. Quan ja t\'{e} la bola, la probabilitat d'aprovar ja
+no \'{e}s de 0.90 sin\'{o} d'$1$ si ha sortit un tema que sap i
+$0$ si ha sortit un que no sap.
+\newline
+Com no es recorda de quins són els temes que no sap, mentre
+consulta el programa té una confiança del $0.90$ en que aprovarà,
+ja que abans de treure la bola tenia una probabilitat de 0.90 de
+treure un tema que sí sabia.
+\end{example}
+
+\section{M\`{e}todes de construcci\'{o} d'intervals de
+confian\c{c}a}
+
+\subsection{El m\`{e}tode del pivot}
+
+Suposem que certa població es pot descriure bé amb una distribució
+$X\sim N\left( \mu ,\sigma_{0}\right)$ on podem considerar amb $\sigma_{0}$%
+coneguda, per exemple per qüestions històriques, estabilitat del
+procés etc. At\'{e}s que $\bar{X}_{n}$ \'{e}s un bon estimador de
+$\mu $ sembla raonable definir un interval de confian\c{c}a
+posant:
+\begin{eqnarray*}
+I\left(X_1,\dots,X_{n}\right) &=&\left (I_{inf}(\bX),
+I_{sup}(\bX) \right)=\\
+&=&\left(\bar{X}_{n}-C_{1},\bar{X}_{n}+C_{2}\right).
+\end{eqnarray*}
+Per tal que $I_{inf}\left( \bX\right),I_{sup}\left( \bX\right)$
+sigui un interval de confian\c{c}a de nivell de confian\c{c}a
+$\left( 1-\alpha \right)$, s'ha de complir:
+\begin{equation*}
+P_{\mu }\left( \bar{X}_{n}-C_{1}\leq \mu \leq
+\bar{X}_{n}+C_{2}\right) \geq 1-\alpha.
+\end{equation*}
+Com $X$ \'{e}s absolutament contínua és possible trobar
+$C_{1},C_{2}$ per tal que es verifiqui la igualtat exactament, és
+a dir que:
+\begin{equation*}
+P_{\mu }\left( \bar{X}_{n}-C_{1}\leq\mu \leq
+\bar{X}_{n}+C_{2}\right) =1-\alpha.
+\end{equation*}
+Com
+\begin{equation*}
+X\sim N\left( \mu ,\sigma_{0}^{2}\right)\Rightarrow
+\bar{X}_{n}\sim N\left( \mu ,\frac{\sigma _{0}^{2}}{n}\right)
+\end{equation*}
+es t\'{e} que:
+\begin{equation*}
+\frac{\sqrt{n}\left( \bar{X}_{n}-\mu \right) }{\sigma _{0}}\sim
+N\left( 0,1\right).
+\end{equation*}
+Anomenem $z_{\frac{\alpha }{2}}$ al percentil $(1-\alpha/2)$ i
+$z_{1-\frac{\alpha }{2}}$ al percentil $(\alpha/2)$, que per la
+simetria de la distribució normal val $z_{1-\frac{\alpha
+}{2}}=-z_{\frac{\alpha }{2}}$. Fent la suposició raonable, de que
+$C_{1}=C_{2}$ tenim:
+\begin{equation*}
+P\left[ -z_{\frac{\alpha }{2}}\leq \frac{\sqrt{n}\left(
+\bar{X}_{n}-\mu \right) }{\sigma _{0}}\leq -z_{\frac{\alpha
+}{2}}\right] =1-\alpha,
+\end{equation*}
+d'on
+\begin{equation*}
+P\left[\bar{X}_{n}-\frac{Z_{\frac{\alpha }{2}}\sigma _{0}}{\sqrt{n}}\leq\mu \leq\bar{X}%
+_{n}+\frac{Z_{\frac{\alpha }{2}}\sigma _{0}}{\sqrt{n}}\right ]
+=1-\alpha.
+\end{equation*}
+
+Resumint: sota la suposició de que
+$C_{1}=C_{2}=\frac{z_{\frac{\alpha }{2}}\sigma _{0}}{\sqrt{n}}$
+l'interval de confiança de nivell $1-\alpha$  per a $\mu$ quan
+$X\sim N(\mu, \sigma^2)$ i $\sigma$ és coneguda és:
+$$
+\left(
+\bar{X}-z_{\frac{\alpha }{2}}\frac{\sigma_0}{\sqrt{n}}%
+,\bar{X}+z_{\frac{\alpha }{2}}\frac{\sigma_0}{\sqrt{n}}%
+\right).
+$$
+
+En la majoria de les situacions, $\sigma$ és desconeguda. El
+principi que hem aplicat en l'exemple anterior també serveix per
+obtenir un interval de confiança per a $\mu$ en aquest cas.
+
+\begin{example}
+\emph{Interval de confian\c{c}a per a $\mu $ quan $\sigma$ és
+desconeguda}.
+
+Si no es coneix $\sigma^{2}$sembla raonable substitu\"{i}r-lo per
+un estimador adient, $S^{2}$ o $\hat{S}^{2}=\frac{n}{n-1}S^{2}$.
+El raonament que hem fet en l'exemple anterior per trobar $C_{1},
+C_{2}$ es basava en el fet que:
+\begin{equation*}
+\frac{\bar{X}-\mu }{\sigma _{0}/\sqrt{n}}\sim N\left( 0,1\right).
+\end{equation*}
+Si no coneixem $\sigma$, i l'hem d'estimar podem basar-nos en el
+fet que, com a conseqüència del teorema de Fisher:
+\begin{equation*}
+\frac{\bar{X}-\mu }{\hat{S}\text{ }/\sqrt{n}}
+\end{equation*}
+segueix una distribuci\'{o} \emph{t-student }amb $\left(
+n-1\right) $ graus de llibertat de forma que, procedint de forma
+anàlega a l'anterior i anomenant $t_{n-1,\frac{\alpha }{2}}$
+$-t_{n-1,\frac{\alpha }{2}}$ als percentils $1-\alpha$ i $\alpha$
+de la distribució \emph{t-student }amb $\left( n-1\right)$
+g.d.ll., podem posar:
+\begin{equation*}
+P\left[ -t_{n-1,\frac{\alpha }{2}}\leq \frac{\left( \bar{X}-\mu
+\right) }{\hat{S}/\sqrt{n}}\leq -t_{n-1,\frac{\alpha }{2}}\right]
+=1-\alpha,
+\end{equation*}
+d'on:
+\begin{equation*}
+P\left[ \bar{X}-t_{n-1,\frac{\alpha }{2}}\frac{\hat{S}}{\sqrt{n}}%
+\leq\mu \leq\bar{X}+t_{n-1,\frac{\alpha }{2}}\frac{\hat{S}\text{ }}{\sqrt{n}}%
+\right] =1-\alpha.
+\end{equation*}
+Així doncs, sota la suposició que $C_1=C_2$ l'interval de
+confiança per a $\mu$ quan $X\sim N(\mu, \sigma^2)$ i $\sigma$ és
+desconeguda és:
+$$
+\left(
+\bar{X}-t_{n-1,\frac{\alpha }{2}}\frac{\hat{S}}{\sqrt{n}}%
+,\bar{X}+t_{n-1,\frac{\alpha }{2}}\frac{\hat{S}}{\sqrt{n}}%
+\right).
+$$
+\end{example}
+
+Els exemples anteriors suggereixen un procediment general
+d'obtenci\'{o} d'intervals de confian\c{c}a que es coneix com el
+\emph{Mètode del Pivot}. Un pivot serà qualsevol funció,
+$T(\bX;\theta)$ que conté al paràmetre i es pot invertir,
+$$
+t=T(\bX;\theta)\Longrightarrow \theta =S(t,\bX),
+$$
+i que al mateix temps té una distribució coneguda que no depèn
+del paràmetre
+$$
+T(\bX;\theta)\sim Y\Longrightarrow \ \exists
+y_{\alpha},y_{1-\alpha}:\ P\left[y_{\alpha}\leq T(\bX;\theta)\leq
+y_{1-\alpha}\right]=1-\alpha
+$$
+Això permet procedir, com hem fet en els exemples, posant
+l'expressió inicial referida a la probabilitat del pivot i
+aïllar-ne d'aquí els extrems de l'interval.
+
+Formalment, el mètode es pot establir en el següent teorema:
+\begin{theorem}
+Sigui $\Theta$ un interval de $\Real$ i sigui $T(\bX;\theta )$
+una funci\'{o} $T:R^{n}\ast \Theta \rightarrow R$ tal que:
+\begin{itemize}
+\item  per cada $\theta$ fix $T(\bX;\theta )$ sigui un
+estad\'{i}stic amb distribuci\'{o} independent de $\theta$,
+\item  per a cada vector mostral $\bx=\left(x_{1},\dots,x_{n}\right)$ es verifiqui que
+$T\left( \bx;\theta \right) $ sigui una funci\'{o} estrictament
+creixent o decreixent de $\theta $.
+\end{itemize}
+Si per a tot $t$ del recorregut de $T$ i tot
+$\left(x_{1}........x_{n}\right)$, l'equaci\'{o}
+$t=T\left(x_{1}........x_{n};\theta \right)$ té solució, llavors
+\'{e}s possible construir un interval de confiança per a $\theta$
+del nivell que es desitgi.
+\end{theorem}
+\begin{proof}
+El procés de demostració mostra quin serà el procés de
+construcció de l'interval.
+
+Suposem que estem en les condicions del teorema. Siguin $t_{1}$,\
+$ t_{2}$ del recorregut de $T$ tals que
+\begin{equation*}
+P\left[ t_{1}\leq T\left( \bX;\theta \right) \leq t_{2}\right]
+\geq 1-\alpha \forall \theta
+\end{equation*}
+Com se suposa que la distribuci\'{o} de $T\left(
+\bX;\theta\right)$ no dep\`{e}n de $\theta $ tampoc en depenen
+$t_{1}$ ni $t_{2}$. Les equacions:
+\begin{eqnarray*}
+t_{1} &=&T\left( \bX;\theta \right) \\
+t_{2} &=&T\left( \bX;\theta \right)
+\end{eqnarray*}
+es poden resoldre i tenen solució única at\`{e}s el car\`{a}cter
+mon\`{o}ton de $T$ de forma que resolent-les s'obté:
+\begin{eqnarray*}
+\hat{\theta}_{1} &=&S\left( \bX,t_{1}\right) =I_{1}\left(
+\bX\right)\\
+\hat{\theta}_{2} &=&S\left( \bX,t_{2}\right) =I_{2}\left(
+\bX\right) \\
+\theta &=&S\left(\bX,T(\bx;\theta) \right),
+\end{eqnarray*}
+i per tant:
+\begin{equation*}
+P\left[ t_{1}\leq T\left( \bX;\theta \right) \leq t_{2}\right]
+=P\left[ I_{1}\left( \bX\right) \leq\theta \leq I_{2}\left(
+\bX\right) \right] \geq 1-\alpha \ \forall \theta
+\end{equation*}
+\'{e}s un interval de confiança de nivell de confiança $\left(
+1-\alpha \right)$ per a $\theta $. Com $\alpha$ és arbitrari el
+teorema queda demostrat.
+\end{proof}
+
+\subsection{Intervals de confiança per problemes d'una mostra en poblacions normals}
+
+\subsubsection{Intervals de confiança per a $\mu$}
+Ja hem vist en la introducció de la secció anterior com construir
+intervals de confiança per a $\mu$ en poblacions normals. En
+aquest cas tenim:
+\begin{enumerate}
+\item  Si $\sigma$ és coneguda tenim que el pivot és:
+$$
+T(\bX;\mu)=\frac{\left( \bar{X}-\mu \right) /\frac{\sigma
+}{\sqrt{n}}}\sim N(0,1)
+$$
+Invertint-lo
+$$
+S(\bX;T(\bX;\mu))=\bar{X}+T(\bX;\mu)\cdot\frac{\sigma }{\sqrt{n}}
+$$
+i posant els extrems:
+\begin{eqnarray*}
+t_{1} &=&T\left( \bX;\theta \right)=-z_{\alpha/2} \\
+t_{2} &=&T\left( \bX;\theta \right)=z_{\alpha/2}
+\end{eqnarray*}
+obtenim l'interval de confiança per a $\mu$ al $1-\alpha\&$:
+$$
+\left(
+\bar{X}-z_{\frac{\alpha }{2}}\frac{\sigma}{\sqrt{n}}%
+,\bar{X}+t_{n-1,\frac{\alpha }{2}}\frac{\sigma}{\sqrt{n}}%
+\right).
+$$
+\item Si $\sigma$ és desconeguda ens trobem en la segona situació
+de l'exemple, és a dir el pivot serà:
+\begin{equation*}
+T(\bX;\mu)= \frac{\bar{X}-\mu }{\hat{S}\text{ }/\sqrt{n}},
+\end{equation*}
+que segueix una distribuci\'{o} \emph{t-student }amb $\left(
+n-1\right)$ graus de llibertat i que duu als intervals:
+$$
+\left(
+\bar{X}-t_{n-1,\frac{\alpha }{2}}\frac{\hat{S}}{\sqrt{n}}%
+,\bar{X}+t_{n-1,\frac{\alpha }{2}}\frac{\hat{S}}{\sqrt{n}}%
+\right).
+$$
+\end{enumerate}
+
+\subsubsection{Intervals de confiança per a la varian\c{c}a d'una
+poblaci\'{o} Normal}
+
+Per construir un intervals de confiança\ per $\sigma ^{2}$ només
+cal tenir en compte que, pel teorema de Fisher disposem del
+següent pivot per a $\sigma^2$:
+\begin{equation*}
+T(\bX;\sigma^2)=\frac{nS^{2}}{\sigma ^{2}}=\frac{\left( n-1\right) \hat{S}^{2}}{\sigma ^{2}}%
+\sim X_{\left( n-1\right) }^{2}.
+\end{equation*}
+L'aplicació del mètode consisteix, doncs en trobar dos valors:
+$\chi_{a}^{2}$,\ $\chi_{b}^{2}$ que deixin entre ells una massa
+de probabilitat d'$\left( 1-\alpha \right)$:
+$$
+P\left[ \chi_{a}^{2}\leq \frac{nS^{2}}{\sigma ^{2}}\leq
+\chi_{b}^{2}\right]=1-\alpha.
+$$
+D'aquí, invertint el pivot,
+\begin{eqnarray*}
+P\left[ \frac{1}{\chi_{a}^{2}}\geq \frac{\sigma ^{2}}{nS^{2}}\geq \frac{1}{%
+\chi_{b}^{2}}\right] &=&1-\alpha \\
+P\left[ \frac{nS^{2}}{\chi_{a}^{2}}\geq \sigma ^{2}\geq \frac{nS^{2}}{\chi_{b}^{2}}%
+\right] &=&1-\alpha
+\end{eqnarray*}
+obtenim l'interval de confiança al  $1-\alpha$\% per a $\sigma$:
+\begin{equation*}
+\left[ \frac{nS^{2}}{\chi_{\alpha /2}^{2}},\frac{nS^{2}}{\chi_{1-\alpha /2}^{2}}%
+\right] =\left[ \frac{(n-1)S^{2}}{\chi_{\alpha /2}^{2}},\frac{(n-1)S^{2}}{%
+\chi_{1-\alpha /2}^{2}}\right].
+\end{equation*}
+
+Un cop s'ha determinat l'expressi\'{o} general dels intervals de
+confiança, la seva utilitzaci\'{o} \'{e}s autom\`{a}tica, \
+(suposades certes les condicions d'aplicaci\'{o}).
+
+\begin{example}
+En un procés de control de qualitat s'ha mesurat el gruix de 12
+peces i s'ha obtingut els resultats següents:
+\begin{equation*}
+\begin{array}{cccccc}
+7.02 & 6.87 & 6.95 & 6.88 & 6.88 & 6.93 \\
+6.91 & 7.09 & 6.96 & 6.89 & 7.06 & 6.85\\
+\end{array}
+\end{equation*}
+La mitjana i la desviació típica han estat:
+\begin{tabular}{l}
+$\hat{X}=6.946\approx 6.95$ \\
+$\hat{S}=0.0797$\\
+\end{tabular}
+Desitgem estimar el gruix mitja, construint intervals de confiança
+per a $\mu$ si
+\begin{enumerate}
+\item  Se sap que $\sigma =0.15$
+\item  Se suposa $\sigma =$ desconeguda.
+\end{enumerate}
+\begin{enumerate}
+\item intervals de confiança al 99\% per $\mu $, $\sigma $ desconeguda. Hem de
+calcular:
+\begin{equation*}
+\hat{X}\pm Z_{\alpha /2}\frac{\sigma }{\sqrt{n}}
+\end{equation*}
+Substituint pels valors obtinguts, i tenint en compte que, aquí
+$z_{\alpha /2}=z_{0.01/2}=2.58$ l'interval resulta:
+\begin{equation*}
+6.946\pm 2.58\ast \frac{0.15}{\sqrt{12}}=6.946\pm 0.1117=\left(
+6.8343,7.0577\right) \approx \left( 6.83,7.06\right)
+\end{equation*}
+\item Si $\sigma $ és desconeguda hem d'estimar-la i l'interval
+ara és:
+\begin{equation*}
+\hat{X}\pm t_{\alpha /2,n-1}\frac{\hat{S}}{\sqrt{n}}
+\end{equation*}
+Substituint pels valors obtinguts, i tenint en compte que, aquí
+$t_{n-1, \alpha /2}=t_{7,0.01/2}=3.11$ l'interval resulta:
+\begin{equation*}
+6.946\pm 3.11\ast \frac{0.0797}{\sqrt{12}}=\left(
+6.8748,7.0179\right) \simeq \left( 6.87,7.02\right).
+\end{equation*}
+\end{enumerate}
+En contra del que semblaria raonable esperar, si fos $\hat
+S\approx\sigma$ els primers intervals són més amples. Això
+s'explica perquè
+\begin{equation*}
+\frac{\sigma }{\hat{S}}>\frac{Z_{\alpha /2}}{t_{\alpha /2}}.
+\end{equation*}
+Si resolem l'exemple amb un programa d'ordinador, com
+\emph{STATGRAPHICS} obtenim el llistat següent:
+
+\begin{verbatim}
+                          One-Sample Analysis Results
+--------------------------------------------------------------------
+                             7.02 6.87 6.95 6.88 6.93 6.91 7.09 6.96
+Sample Statistics: Number of Obs.       11
+                   Average              6.94636
+                   Variance             6.34545E-3
+                   Std. Deviation       0.0796584
+                   Median               6.93
+
+Confidence Interval for Mean:           99    Percent
+                   Sample 1             6.87023 7.0225     10 D.F.
+
+Confidence Interval for Variance:       95     Percent
+                   Sample 1             3.09789E-3 0.0195434     10 D.F.
+\end{verbatim}
+\end{example}
+
+\subsection{Intervals de confiança per problemes de 2 mostres en poblacions normals}
+
+Els intervals de confiança que hem vist ens serveixen per a
+l'estimaci\'{o} d'un par\`{a}metre: $\theta =\mu $ \ o \
+$\theta=\sigma^{2}$.
+
+Una altre situaci\'{o} d'interés \'{e}s aquella on tenim 2
+par\`{a}metres. La forma intu\"{i}tiva d'abordar aquest problema,
+\'{e}s a trav\`{e}s del contrast d'hipòtesis\footnote{Tot i que
+els contrastos d'hipòtesis s'estudien més endavant en el curs,
+podem suposar que l'alumne que segueix aquest material ja té una
+idea intuïtiva del seu significat, i aprofitar així la intuïció
+associada al problema de dues mostres} $\theta _{1}=\theta _{2}$
+vs $\theta _{1}\neq \theta _{2}$, per\`{o} en determinades
+situacions tamb\'{e} ens pot
+interessar estimar la ra\'{o} $\theta _{1}/\theta _{2}$ o la diferencia $%
+\theta _{1}-\theta _{2}$. Com formularem mes endavant, de forma
+m\'{e}s acurada, l'acceptaci\'{o} de que $\theta _{1}=\theta
+_{2}$ pot resultar equivalent a que un intervals de confiança per
+$\theta _{1}-\theta _{2}$ contingui el $0$ que un interval de
+confiança per $\theta_{1}/\theta _{2}$ contingui l'$1$.
+
+\subsubsection{Intervals de confiança per a la difer\`{e}ncia de
+mitjanes}
+
+Suposem que tenim 2 poblacions $X\sim N\left( \mu _{1},\sigma
+_{1}^{2}\right)$ i $Y\sim N\left( \mu _{2},\sigma _{2}^{2}\right)
+$ i que volem construir un intervals de confiança per a la
+diferencia de mitjanes $\mu _{1}-\mu _{2}$.
+
+Estrictament hem de distingir 3 situacions diferents, tot i que a
+la pr\`{a}ctica aquestes es redueixen \ a les dues \'{u}ltimes:
+
+\begin{enumerate}
+\item $\sigma _{1}^{2}$ i $\sigma _{2}^{2}$ s\'{o}n conegudes, és
+a dir $\sigma_{1}^{2}=\sigma_{01}^{2}$ i
+$\sigma_{2}^{2}=\sigma_{02}^{2}$. En aquest cas la diferencia de
+mitjanes ''degudament normalitzada'' segueix una llei normal.
+\item $\sigma_{1}^{2}$ i $\sigma _{2}^{2}$ s\'{o}n desconegudes
+per\`{o} iguals, és a dir:
+$$
+\sigma_{1}^{2}=\sigma _{2}^{2}=\sigma^{2}.
+$$
+En aquest cas, del Teorema de Fisher se'n surt una $t$ de
+Student.
+\item $\sigma _{1}^{2}$ i $\sigma _{2}^{2}$ s\'{o}n desconegudes i
+diferents. En aquest cas, nom\`{e}s es resol b\'{e} de forma
+aproximada.
+\end{enumerate}
+
+\paragraph{Variàncies conegudes}
+
+Si $X\sim N\left( \mu _{1},\sigma _{01}^{2}\right) $ i $%
+Y\sim N\left( \mu _{2},\sigma _{02}^{2}\right) $ llavors
+\begin{equation*}
+\left( \hat{X}-\text{ }\hat{Y}\text{ }\right) \sim N\left( \mu _{1}-\mu _{2},%
+\frac{\sigma _{01}^{2}}{n_{1}}+\frac{\sigma
+_{02}^{2}}{n_{2}}\right)
+\end{equation*}
+de forma que l'estad\'{i}stic,
+\begin{equation*}
+\frac{\left( \hat{X}\text{ }-\hat{Y}\text{ }\right) -\left( \mu
+_{1}-\mu
+_{2}\right) }{\sqrt{\frac{\sigma _{01}^{2}}{n_{1}}+\frac{\sigma _{02}^{2}}{%
+n_{2}}}}\sim N\left( 0,1\right)
+\end{equation*}
+\'{e}s un pivot del qual podem derivar un intervals de confiança
+per $\mu _{1}-\mu_{2}$ al $\left( 1-\alpha \right) \%$. Posant:
+\begin{eqnarray*}
+d&=&\mu _{1}-\mu _{2}\\
+\hat{d} & = & \left( \hat{X}\text{ -}\hat{Y}\text{ }\right)\\
+\sigma _{\hat{d}}&=&\sqrt{\frac{\sigma
+_{01}^{2}}{n_{1}}+\frac{\sigma _{02}^{2}}{n_{2}}}
+\end{eqnarray*}
+l'interval
+\begin{equation*}
+\hat{d}\pm Z_{\alpha /2}\sigma _{\hat{d}\text{ }}
+\end{equation*}
+\'{e}s un intervals de confiança al $\left( 1-\alpha \right) \%$
+per $d$, \'{e}s a dir,
+\begin{equation*}
+\left( \hat{X}-\text{ }\hat{Y}\text{ }\right) \sim Z_{\alpha /2}\sqrt{\frac{%
+\sigma _{01}^{2}}{n_{1}}+\frac{\sigma _{02}^{2}}{n_{2}}}
+\end{equation*}
+\'{e}s un intervals de confiança al $\left( 1-\alpha \right) \%$
+per a $\mu _{1}-\mu _{2}$.
+
+\paragraph{Variàncies desconegudes però iguals}
+
+Si les vari\`{a}ces s\'{o}n desconegudes, com sol ser
+\emph{sempre} el cas, excepte potser en situacions artificials,
+ens basem en el Teorema de Fisher per obtenir un pivot. At\`{e}s
+que:
+\begin{itemize}
+\item  En primer lloc tenim:
+\begin{equation*}
+\hat{d}=\left( \hat{X}\text{ }-\hat{Y}\text{ }\right) \text{ }\sim N\text{\ }%
+\left( \mu _{1}-\mu _{2},\frac{\sigma _{1}^{2}}{n_{1}}+\frac{\sigma _{2}^{2}%
+}{n_{2}}\right)
+\end{equation*}
+\item  A més a més
+\begin{equation*}
+Q=\frac{\left( n_{1}-1\right) \hat{S}_{1}}{\sigma
+_{1}^{2}}+\frac{\left( n_{2}-1\right) \hat{S}_{2}}{\sigma
+_{2}^{2}}\sim X_{n_{1}+n_{2}-2}^{2}
+\end{equation*}
+\end{itemize}
+I per tant, pel teorema de Fisher, l'estadístic
+\begin{equation*}
+\frac{\left( \hat{d}-d\text{ }/\sigma _{\hat{d}}\right)
+}{\sqrt{Q/\left( n_{1}+n_{2}-2\right) }}
+\end{equation*}
+segueix una $t$ $de$ $Student$ amb $\left( n_{1}+n_{2}-2\right) $ \emph{%
+g.d.ll.}, \'{e}s a dir:
+\begin{equation*}
+\frac{\left[ \left( \hat{X}\text{ }-\hat{Y}\text{ }\right)
+-\left( \mu
+_{1}-\mu _{2}\right) \right] \text{ }/\text{ }\sqrt{\frac{\sigma _{1}^{2}}{%
+n_{1}}+\frac{\sigma _{2}^{2}}{n_{2}}}}{\sqrt{\left[ \frac{\left(
+n_{1}-1\right) \hat{S}_{1}}{\sigma _{1}^{2}}+\frac{\left(
+n_{2}-1\right) \hat{S}_{2}}{\sigma _{2}^{2}}\right] }\text{
+}/\text{ }\left( n_{1}+n_{2}-2\right) }\sim t_{n_{1}+n_{2}-2}.
+\end{equation*}
+
+Òbviament, com depèn de $\sigma _{1}^{2}$ i $\sigma _{2}^{2}$ la
+distribuci\'{o} d'aquest estad\'{i}stic, no \'{e}s \'{u}til per
+fer un intervals de confiança. Si $\sigma _{1}^{2}=\sigma
+_{2}^{2}$ si que ho ser\`{a}, ja que aleshores l'estadístic
+esdevé:
+\begin{equation*}
+\frac{\left( \hat{X}-\hat{Y}\right) -\left( \mu _{1}-\mu _{2}\right) }{S_{p}%
+\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{2}}}}
+\end{equation*}
+on
+$$
+S_{p}=\frac{\left( n_{1}-1\right) \hat{S}_{1}+\left(
+n_{2}-1\right) \hat{S}_{2}}{n_{1}+n_{2}+2}
+$$
+\'{e}s una mitjana ponderada de els estimacions sense biaix
+$\hat{S}_{1}^{2}$ i $\hat{S}_{2}^{2}$ de les vari\`{a}nces $\sigma
+_{1}^{2}$ i $\sigma_{2}^{2}$.
+
+Resumint: L'estad\'{i}stic
+\begin{equation*}
+\frac{\left( \hat{X}-\hat{Y}\right) -\left( \mu _{1}-\mu _{2}\right) }{S_{p}%
+\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{2}}}}
+\end{equation*}
+\'{e}s un pivot per a $\mu _{1}-\mu _{2}$ del tipus
+$$
+\left( \hat{d}-d\right) /\hat{S}%
+_{\hat{d}}\sim t_{n_1+n_2-2}
+$$
+del qual podem obtenir un interval de confiança per a $\mu
+_{1}-\mu _{2}$ al $\left( 1-\alpha \right)\%$. Com hem vist abans
+podem agafar dos valors qualsevols $t_{1}\left( \alpha \right)$,
+$t_{2}\left( \alpha \right)$ tals que:
+\begin{equation*}
+P\left[ t_{1}\left( \alpha \right) \leq \frac{\hat{d}-d}{\hat{S}_{%
+\hat{d}}}\leq t_{2}\left( \alpha \right) \right]
+\end{equation*}
+i resolent les equacions $\left\{
+\begin{array}{c}
+t_{1} \left( \alpha \right) \leq
+\frac{\hat{d}-d}{\hat{S}_{\hat{d}}}\\
+t_{2}\left( \alpha \right) \leq
+\frac{\hat{d}-d}{\hat{S}_{\hat{d}}}
+\end{array}
+\right\} $ obtenir els extrems de l'interval de confiança. A la
+pr\`{a}ctica solem agafar intervals de confiança simètrics, és a
+dir posem:
+\begin{eqnarray*}
+t_{1}\left( \alpha \right) &=&t_{n_{1}+n_{2}-2,\alpha /2} \\
+t_{2}\left( \alpha \right) &=&t_{n_{1}+n_{2}-2,\alpha /2}
+\end{eqnarray*}
+de forma que l'interval de confiança per a $\mu _{1}-\mu _{2}$
+queda:
+\begin{equation*}
+\left( \hat{X}_{1}-\hat{X}_{2}\right) \pm \sqrt{\frac{\left(
+n_{1}-1\right) \hat{S}_{1}+\left( n_{2}-1\right) \hat{S}_{2}}
+{n_{1}+n_{2}+2}\ast \frac{%
+n_{1}n_{2}}{n_{1}n_{2}}}\ast t_{n_{1}+n_{2}-2,\alpha /2}
+\end{equation*}
+
+\paragraph{Variàncies desconegudes i diferents}
+
+Si les vari\`{a}nces de les dues poblacions no es poden
+considerar iguals ens trobem amb un problema que, encara no té
+solució exacta i que e sconeix amb el nom de ``problema de
+Behrens--Fisher''. Hi ha molts procediments aproximats per
+resoldre'l. Ä continuació se'n descriu un, citat al llibre de
+Daniel Peña (\cite{Penya-87a}).
+
+Quan les variancies són desconegudes i diferents un interval de
+confiança aproximat de nivell $\left( 1-\alpha \right)$ per a
+$\mu _{1}-\mu _{2}$ \'{e}s:
+\begin{equation*}
+\left( \hat{X}_{1}-\hat{X}_{2}\pm t_{\left( \alpha /2;%
+\text{ }g\right) }\sqrt{\frac{\hat{S}_{1}^{2}}{n_{1}}+\frac{\hat{S}_{2}^{2}}{%
++n_{2}}}\right)
+\end{equation*}
+on $g$ són els graus de llibertat que es calculen de la manera seg\"{u}ent: $%
+g=n_{1}+n_{2}-2-\triangle$ on $\triangle $ \'{e}s l'enter m\'{e}s
+proxim a:
+\begin{equation*}
+\triangle =\text{arrodonit de }\left[ \frac{\left( \left(
+n_{2}-1\right) \hat{S}_{1}-\left(
+n_{1}-1\right) \hat{S}_{2}\right) ^{2}}{\left( n_{1}-1\right) \hat{S}%
+_{1}^{2}+\left( n_{1}-1\right) \hat{S}_{2}^{2}}\right]
+\end{equation*}
+\qquad \qquad on $S_{i}=\hat{S}_{i}^{2}$ $/$ $n_{i}$\
+
+El terme corrector s'interpreta de la manera següent:
+\begin{itemize}
+\item  Si $S_{1}^{2}>>S_{2}^{2}$  i $n_{1}=n_{2}$ llavors
+$\triangle \approx n_{2}-1$ i els g.d.ll. depenen de la
+presici\'{o} amb que estimem $S_{1}$.
+\item  Si
+$n_{1}=n_{2}$ i $S_{1}^{2}>>S_{2}^{2}$ llavors el terme corrector
+s'anul.la.
+\item  Si $n_{1}>>n_{2}$ llavors el terme corrector és alt i
+baixen els graus de llibertat.
+\end{itemize}
+
+\subsubsection{Interval de confiança per a la ra\'{o} de vari\`{a}nces}
+
+Suposem que tenim 2 poblacions $X\sim N\left( \mu
+_{1},\sigma_{1}^{2}\right)$ i $Y\sim N\left( \mu _{2},\sigma
+_{2}^{2}\right) $ i que volem construir un intervals de confiança
+per a la raó de variàncies (No pot ser per a la diferència de
+variàncies ja que, per a aquesta no disposem de pivot!).
+
+Donades dues mostres independents de mides $n_{1}$ i $n_{2}$
+d'$X$ i $Y$ sabem que:
+\begin{eqnarray*}
+X_{1} &\sim &N\left( \mu _{1},\sigma _{1}\right)
+\Rightarrow \frac{\left( n_{1}-1\right) \hat{S}%
+_{1}^{2}}{\sigma _{1}^{2}}\sim X_{n_{1}-1}^{2} \\
+Y &\sim &N\left( \mu _{2},\sigma _{2}\right)
+\Rightarrow \frac{\left( n_{2}-1\right) \hat{S}%
+_{2}^{2}}{\sigma _{2}^{2}}\sim X_{n_{2}-2}^{2}.
+\end{eqnarray*}
+
+El quocient entre dues $\chi^{2}$ dividides pels seus graus de
+llibertat segueix una distribució $F$ de Fisher:
+\begin{equation*}
+\frac{X_{1}^{2}/\text{ }n_{1}}{X_{2}^{2}/\text{ }n_{2}}\sim
+F_{n_{2}}^{n_{1}},
+\end{equation*}
+i per tant l'estadístic:
+\begin{equation*}
+\frac{\frac{\left( n_{1}-1\right) \hat{S}_{1}^{2}}{\sigma _{1}^{2}}\text{ }/%
+\text{ }\left( n_{1}-1\right) }{\text{ }\frac{\left( n_{2}-1\right) \hat{S}%
+_{2}^{2}}{\sigma _{2}^{2}}\text{ }/\text{ }\left( n_{2}-1\right)
+}\sim F_{n_{2}}^{n_{1}}
+\end{equation*}
+és un pivot per a la raó de variàncies, i del qual podem obtenir
+un interval de confiança per a $\sigma_1^2/\sigma_2^2$:
+\begin{eqnarray*}
+P\left[ F_{1-\alpha /2}\leq \frac{\hat{S}_{1}^{2}}{\hat{S}_{2}^{2}}\text{ }/%
+\text{ }\frac{\sigma _{1}^{2}}{\sigma _{2}^{2}}\leq F_{\alpha /2}\right] &=&P%
+\left[ \frac{1}{F_{\alpha /2}}\leq \frac{\sigma _{1}^{2}\text{ }/\text{ }%
+\sigma _{2}^{2}}{\hat{S}_{1}^{2}\text{ }/\text{ }\hat{S}_{2}^{2}}\leq \frac{1%
+}{F_{1-\alpha /2}}\right] = \\
+&=&P\left[ \frac{\hat{S}_{1}^{2}\text{ }/\text{
+}\hat{S}_{2}^{2}}{F_{\alpha
+/2}}\leq \frac{\sigma _{1}^{2}\text{ }}{\sigma _{2}^{2}}\leq \frac{\hat{S}%
+_{1}^{2}\text{ }/\text{ }\hat{S}_{2}^{2}}{F_{1-\alpha /2}}\right]
+=1-\alpha
+\end{eqnarray*}
+
+\begin{example}
+El nombre de peces produ\"{i}t per 2 m\`{a}quines d'una
+f\`{a}brica en 5 dies, ha estat
+\begin{eqnarray*}
+A &=&50,48,53,60,37 \\
+B &=&40,51,62,55,64
+\end{eqnarray*}
+\begin{enumerate}
+\item Constru\"{i}u un intervals de confiança al 95\% per a la ra\'{o} de vari\`{a}nces
+i feu-lo servir per decidir si sembla raonable assumir que $\sigma _{1}=\sigma _{2}$
+\item Constru\"{i}m un intervals de confiança per $\mu _{1}-\mu _{2}$ al 95\% sota les dues suposicions:
+\begin{enumerate}
+\item $\sigma _{1}^{2} =\sigma _{2}^{2}$
+\item $\sigma _{1}^{2} \neq \sigma _{2}^{2}$
+\end{enumerate}
+\end{enumerate}
+
+Comencem per construir l'interval de confiança pera les
+vari\`{a}nces. Consultant les taules de la $F$ de Fisher obtenim:
+\begin{eqnarray*}
+F(4,4,0.05) &=&6.3388 \\
+F(4,4,0.95) &=&\frac{1}{F(4,4,0.05)}=\frac{1}{6.3388},
+\end{eqnarray*}
+d'on l'intervals de confiança per a $\sigma_1^2/\sigma_2^2$ és:
+\begin{equation*}
+\left[ \frac{\left( 8.38/9.61\right) ^{2}}{6.3883};\frac{%
+\left(8.38/ 9.61\right) ^{2}}{1\text{ }/\text{ }6.3883}%
+\right] =\left[ 0.206;8.401\right]
+\end{equation*}
+
+L'intervals de confiança cont\'{e} l'1 i per tant \emph{sembla
+raonable acceptar} que $\sigma_{1}^{2}=\sigma _{2}^{2}$ ja que en
+aquest cas la raó val 1.
+
+Com:
+\begin{eqnarray*}
+&&\bar{X}_{1}-\bar{Y}=49.6-54.4 =-4.8 \\
+&&\hat{S}_{T}^{2} =\frac{8.38^{2}+9.61^{2}}{2}=81.29\Rightarrow
+\hat{S}_{T}=9.02,
+\end{eqnarray*}
+l'interval de confiança per a la diferència de mitjanes, quan
+suposem variàncies iguals val:
+$$
+-4.80\pm t_{8}\ast 9.02\sqrt{\frac{9}{5}} = -4.80\pm 13.18=\left(
+-17.95,\ 8.35\right).
+$$
+
+Si suposem $\sigma _{1}^{2}\neq \sigma _{2}^{2}$ l'intervals de
+confiança ser\`{a}
+\begin{eqnarray*}
+&&-4.8\pm t_{\alpha /2,\text{ }g}\sqrt{\frac{\hat{S}_{1}^{2}}{n_{1}}+%
+\frac{\hat{S}_{2}^{2}}{n_{2}}} \\
+&& g =n_{1}+n_{2}-2-\triangle \Rightarrow \\
+&&\triangle =\frac{4\ast 14.04-4\ast 18\ast 47}{4\ast
+(14.04^{2}+18\ast 47^{2})}
+\end{eqnarray*}
+El valor de $\triangle$ un cop arrodonit és zero de forma que
+l'interval de confiança és:
+$$
+-4.8\pm 2.31\ast 5.7 =\left (-4.8\pm 13.17 \right ),
+$$
+que és gairebé idèntic a l'anterior, amb consonància amb el que
+hem observat de que les  variàncies són iguals ambdós intervals
+coincideixen
+\end{example}
+
+\subsection{El m\`{e}tode del pivot en poblacions no normals}
+
+Tots els exemples que hem vist fins ara suposen normalitat de la
+població, però el mètode del pivot es pot aplicar sempre i quan
+es donin les condicions amb que l'hem definit:
+\begin{example}
+\begin{eqnarray*}
+X &\sim &f\left( x;\theta \right) =\frac{3x^{2}}{\theta
+^{3}},\quad 0\leq x\leq \theta \\
+L\left( x_{1}.......x_{n};\theta \right) &=&\prod_{i=1}^{n}\frac{3x_{i}^{2}}{%
+\theta ^{3}}=\frac{3^{n}\prod_{i=1}^{n}x_{i}^{2}}{\theta ^{3n}}
+\end{eqnarray*}
+
+\begin{equation*}
+\log L\left( \bX;\hat{\theta}\right) =n\log 3-2\sum \log
+x_{i}-3n\log \theta
+\end{equation*}
+
+Observem que podem fer:
+\begin{equation*}
+\frac{\partial \log L\left( \bX;\hat{\theta}\right) }{\partial \log \hat{\theta%
+}}=0\Rightarrow \frac{-3n}{\hat{\theta}}=0
+\end{equation*}
+i ens queda un expressi\'{o} que no t\'{e} sentit!!!!$\uparrow $.
+
+Analitzem la forma de la funci\'{o} $\log L\left(
+\bX;\hat{\theta}\right) $
+
+\begin{equation*}
+\log L\left( \bX;\hat{\theta}\right) \alpha =-2\sum \log
+x_{i}-3n\log \theta =K(x)-3n\log \theta
+\end{equation*}
+
+Si $\theta <1$%
+\begin{eqnarray*}
+\log x_{i} &<&0\Rightarrow k\left( x\right) \\
+-3n\log \theta &>&0
+\end{eqnarray*}
+
+\emph{L'EMV \'{e}s} $x_{n}\Leftarrow \left\{
+\begin{array}{c}
+\text{Si }\hat{\theta}^{\ast }<x_{\left( n\right) }\text{\emph{no
+\'{e}s
+versemblable}} \\
+\text{Si }\hat{\theta}^{\ast }>x_{\left( n\right) }\text{ }L\left(
+\bX;\theta \right) \text{\emph{\'{e}s m\'{e}s petit}}
+\end{array}
+\right\} $
+
+Si
+\begin{equation*}
+X\sim f\left( \bX;\theta \right) =\frac{3x^{2}}{\theta ^{3}}\text{
+\ \ \ \ \ \ \ \ \ \ }0\leq x\leq \theta
+\end{equation*}
+llavors, l'\emph{EMV} de $\theta $ \'{e}s $\hat{\theta}=x_{\left(
+n\right) }$ .
+
+La \emph{distribuci\'{o} de }$\hat{\theta}_{MV}$ \'{e}s:
+\begin{equation*}
+F\left( x_{\left( n\right) }\right) =P\left[ X_{\left( n\right) }\leq x%
+\right] =P\left[ X_{\left( 1\right) }\leq x\right] \ast
+.......\ast P\left[ X_{\left( n\right) }\leq x\right]
+=\prod_{i=1}^{n}P\left[ X_{\left( i\right) }\leq x\right]
+=P\left[ X\leq x\right] ^{n}
+\end{equation*}
+
+on
+\begin{equation*}
+P\left[ X\leq x\right] =\int_{0}^{x}\frac{3t^{2}}{\theta ^{3}}dt=\frac{3t^{3}%
+}{3\theta ^{3}}\mid _{0}^{x}=\left( \frac{x}{\theta }\right) ^{3}
+\end{equation*}
+d'on
+\begin{equation*}
+F\left( x_{\left( n\right) }\right) =\left( \frac{x_{\left( n\right) }}{%
+\theta }\right) ^{3n}=\left( \frac{\hat{\theta}}{\theta }\right)
+^{3n}
+\end{equation*}
+
+Cosiderem la quantitat;
+\begin{equation*}
+T\left( x;\theta \right) =\left( \frac{x_{\left( n\right)
+}}{\theta }\right) ^{3n}=F\left( x_{\left( n\right) }\right)
+\end{equation*}
+
+Aquesta funci\'{o} s'obt\'{e} aplicant la transformaci\'{o}
+$F\Rightarrow $ \'{e}s una \emph{transformaci\'{o} integral }de
+$x_{\left( n\right) }\Rightarrow \left\{
+\begin{array}{c}
+T\left( \bX;\theta \right) \sim U\left( 0,1\right) \\
+F_{t}\left( t\right) =t \\
+f_{t}\left( t\right) =1
+\end{array}
+\right\} $ No dep\`{e}n de $\theta \rightarrow $ Es una
+\emph{quantitat pivotal}.
+
+$T\left( \bX;\theta \right) =\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}\sim U\left( 0,1\right) $
+
+Posem:
+\begin{equation*}
+P\left[ T_{1}(\alpha )\leq T(\bX;\theta )\leq T_{2}\left( \alpha \right) %
+\right] =1-\alpha
+\end{equation*}
+
+i busquem els valors (dos funcions) que verifiquin aquesta
+igualtat.
+
+Si per simetria imposem que cada cua limiti una probabilitat
+d'$\alpha /2$ tenim:
+\begin{eqnarray*}
+\int_{T_{1}\left( \alpha \right) }^{1}f_{T}\left( t\right) dt
+&=&\int_{0}^{T_{2}\left( \alpha \right) }f\left( t\right) dt=1-\alpha \\
+\int_{T_{1}\left( \alpha \right) }^{1}dt &=&\int_{0}^{T_{2}\left(
+\alpha
+\right) }dt=1-\alpha \\
+1-T_{1}\left( \alpha \right) &=&1-\alpha \Rightarrow
+1-T_{1}\left( \alpha
+\right) =1-\alpha \\
+T_{2}\left( \alpha \right) -0 &=&1-\alpha \Rightarrow T_{2}\left(
+\alpha \right) =1-\alpha
+\end{eqnarray*}
+
+Ara posant
+\begin{eqnarray*}
+T\left( \bX;\theta \right) &=&\left( \frac{\bX_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{1}\left( \alpha \right) =\alpha \\
+T\left( \bX;\theta \right) &=&\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{2}\left( \alpha \right) =1-\alpha
+\end{eqnarray*}
+
+Podem a\"{i}llar???????????????
+
+\begin{eqnarray*}
+T\left( \bX;\theta \right) &=&\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{1}\left( \alpha \right) =\alpha \\
+\frac{x_{\left( n\right) }}{\theta } &=&\sqrt[3n]{\alpha } \\
+????? &=&\theta \left( \bX\right) =\frac{x_{\left( n\right) }}{\sqrt[3n]{%
+1-\alpha }}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+T\left( \bX;\theta \right) &=&\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{2}\left( \alpha \right) =1-\alpha \\
+\frac{x_{\left( n\right) }}{\theta } &=&\sqrt[3n]{\alpha } \\
+????? &=&\theta \left( \bX\right) =\frac{x_{\left( n\right) }}{\sqrt[3n]{%
+1-\alpha }}
+\end{eqnarray*}
+
+Per disposar de dades amb que provar aquests intervals podem
+generar una mostra amb $\theta =0.5$ de grandaria $n=9$. El
+resultat de la simulació són els valors següents:
+\begin{equation*}
+0.19,0.48,0.46,0.27,0.37,0.44,0.46,0.41,0.49
+\end{equation*}
+
+D'aqu\'{i} $x_{\left( q\right) }=$ maxim $=0.49$ i
+l'\emph{intervals de confiança} \'{e}s
+\begin{equation*}
+IC\Longrightarrow \left[ \frac{0.49}{\sqrt[27]{0.05}},\frac{0.49}{\sqrt[27]{%
+0.95}}\right] =\left[ 0.5506,0.4937\right]
+\end{equation*}
+\end{example}
+
+
+\subsection{Intervals de confiança en poblacions no normals}
+
+Suposem que $X$ no segueix una \emph{D.\ Normal }per\`{o} si
+t\'{e} mitjana i vari\`{a}n\c{c}a finites, i, que \emph{coneixem
+}$\sigma .$
+
+El \emph{TCL} ens garanteix que, en aquest cas
+\begin{equation*}
+\frac{\bar{X}-\mu }{\sigma /\sqrt{n}}\Rightarrow ^{\pounds
+}N\left( 0,1\right)
+\end{equation*}
+
+i \ per tant, per mostres grans podem obtenir un \emph{intervals
+de confiança} per $\mu $ fins i
+tot en el cas on $X$ no \'{e}s normal $\left( n\geq 30\right) $: Un intervals de confiança al $%
+\left( 1-\alpha \right) \%$ aproximat per a $\mu $ \'{e}s
+\begin{equation*}
+\hat{X}\pm Z_{\alpha /2}\sigma /\sqrt{n}
+\end{equation*}
+
+Suposem que $\sigma $\emph{\'{e}s desconeguda.} En aquest cas se
+sol, tamb\'{e}, fer servir \emph{l'aproximaci\'{o} normal}, tot i
+que, la seva validesa resulta molt discutible (Nom\'{e}s se sol
+considerar v\`{a}lida quan $n\geq 100$).
+
+Uns intervals de confiança \emph{aproximadissims, }al $\left(
+1-\alpha \right) \%$ per a $\mu $ s\'{o}n:
+
+\begin{equation*}
+\hat{X}\pm Z_{\alpha /2}\text{ }\hat{S}\text{ }/\sqrt{n}
+\end{equation*}
+
+Aquesta $\uparrow $ aproximaci\'{o} \'{e}s ampliament utilitzada.
+
+\subsection{Intervals de confiança aproximats}
+\subsection{Intervals de confiança bayesians}

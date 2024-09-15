@@ -1,0 +1,205 @@
+
+\subsection{El m\`{e}tode del pivot en poblacions no normals}
+
+Tots els exemples que hem vist fins ara suposen normalitat de la
+població, però el mètode del pivot es pot aplicar sempre i quan
+es donin les condicions amb que l'hem definit:
+\begin{example}
+\begin{eqnarray*}
+X &\sim &f\left( x;\theta \right) =\frac{3x^{2}}{\theta
+^{3}},\quad 0\leq x\leq \theta \\
+L\left( x_{1}.......x_{n};\theta \right) &=&\prod_{i=1}^{n}\frac{3x_{i}^{2}}{%
+\theta ^{3}}=\frac{3^{n}\prod_{i=1}^{n}x_{i}^{2}}{\theta ^{3n}}
+\end{eqnarray*}
+
+\begin{equation*}
+\log L\left( \bX;\hat{\theta}\right) =n\log 3-2\sum \log
+x_{i}-3n\log \theta
+\end{equation*}
+
+Observem que podem fer:
+\begin{equation*}
+\frac{\partial \log L\left( \bX;\hat{\theta}\right) }{\partial \log \hat{\theta%
+}}=0\Rightarrow \frac{-3n}{\hat{\theta}}=0
+\end{equation*}
+i ens queda un expressi\'{o} que no t\'{e} sentit!!!!$\uparrow $.
+
+Analitzem la forma de la funci\'{o} $\log L\left(
+\bX;\hat{\theta}\right) $
+
+\begin{equation*}
+\log L\left( \bX;\hat{\theta}\right) \alpha =-2\sum \log
+x_{i}-3n\log \theta =K(x)-3n\log \theta
+\end{equation*}
+
+Si $\theta <1$%
+\begin{eqnarray*}
+\log x_{i} &<&0\Rightarrow k\left( x\right) \\
+-3n\log \theta &>&0
+\end{eqnarray*}
+
+\emph{L'EMV \'{e}s} $x_{n}\Leftarrow \left\{
+\begin{array}{c}
+\text{Si }\hat{\theta}^{\ast }<x_{\left( n\right) }\text{\emph{no
+\'{e}s
+versemblable}} \\
+\text{Si }\hat{\theta}^{\ast }>x_{\left( n\right) }\text{ }L\left(
+\bX;\theta \right) \text{\emph{\'{e}s m\'{e}s petit}}
+\end{array}
+\right\} $
+
+Si
+\begin{equation*}
+X\sim f\left( \bX;\theta \right) =\frac{3x^{2}}{\theta ^{3}}\text{
+\ \ \ \ \ \ \ \ \ \ }0\leq x\leq \theta
+\end{equation*}
+llavors, l'\emph{EMV} de $\theta $ \'{e}s $\hat{\theta}=x_{\left(
+n\right) }$ .
+
+La \emph{distribuci\'{o} de }$\hat{\theta}_{MV}$ \'{e}s:
+\begin{equation*}
+F\left( x_{\left( n\right) }\right) =P\left[ X_{\left( n\right) }\leq x%
+\right] =P\left[ X_{\left( 1\right) }\leq x\right] \ast
+.......\ast P\left[ X_{\left( n\right) }\leq x\right]
+=\prod_{i=1}^{n}P\left[ X_{\left( i\right) }\leq x\right]
+=P\left[ X\leq x\right] ^{n}
+\end{equation*}
+
+on
+\begin{equation*}
+P\left[ X\leq x\right] =\int_{0}^{x}\frac{3t^{2}}{\theta ^{3}}dt=\frac{3t^{3}%
+}{3\theta ^{3}}\mid _{0}^{x}=\left( \frac{x}{\theta }\right) ^{3}
+\end{equation*}
+d'on
+\begin{equation*}
+F\left( x_{\left( n\right) }\right) =\left( \frac{x_{\left( n\right) }}{%
+\theta }\right) ^{3n}=\left( \frac{\hat{\theta}}{\theta }\right)
+^{3n}
+\end{equation*}
+
+Cosiderem la quantitat;
+\begin{equation*}
+T\left( x;\theta \right) =\left( \frac{x_{\left( n\right)
+}}{\theta }\right) ^{3n}=F\left( x_{\left( n\right) }\right)
+\end{equation*}
+
+Aquesta funci\'{o} s'obt\'{e} aplicant la transformaci\'{o}
+$F\Rightarrow $ \'{e}s una \emph{transformaci\'{o} integral }de
+$x_{\left( n\right) }\Rightarrow \left\{
+\begin{array}{c}
+T\left( \bX;\theta \right) \sim U\left( 0,1\right) \\
+F_{t}\left( t\right) =t \\
+f_{t}\left( t\right) =1
+\end{array}
+\right\} $ No dep\`{e}n de $\theta \rightarrow $ Es una
+\emph{quantitat pivotal}.
+
+$T\left( \bX;\theta \right) =\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}\sim U\left( 0,1\right) $
+
+Posem:
+\begin{equation*}
+P\left[ T_{1}(\alpha )\leq T(\bX;\theta )\leq T_{2}\left( \alpha \right) %
+\right] =1-\alpha
+\end{equation*}
+
+i busquem els valors (dos funcions) que verifiquin aquesta
+igualtat.
+
+Si per simetria imposem que cada cua limiti una probabilitat
+d'$\alpha /2$ tenim:
+\begin{eqnarray*}
+\int_{T_{1}\left( \alpha \right) }^{1}f_{T}\left( t\right) dt
+&=&\int_{0}^{T_{2}\left( \alpha \right) }f\left( t\right) dt=1-\alpha \\
+\int_{T_{1}\left( \alpha \right) }^{1}dt &=&\int_{0}^{T_{2}\left(
+\alpha
+\right) }dt=1-\alpha \\
+1-T_{1}\left( \alpha \right) &=&1-\alpha \Rightarrow
+1-T_{1}\left( \alpha
+\right) =1-\alpha \\
+T_{2}\left( \alpha \right) -0 &=&1-\alpha \Rightarrow T_{2}\left(
+\alpha \right) =1-\alpha
+\end{eqnarray*}
+
+Ara posant
+\begin{eqnarray*}
+T\left( \bX;\theta \right) &=&\left( \frac{\bX_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{1}\left( \alpha \right) =\alpha \\
+T\left( \bX;\theta \right) &=&\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{2}\left( \alpha \right) =1-\alpha
+\end{eqnarray*}
+
+Podem a\"{i}llar???????????????
+
+\begin{eqnarray*}
+T\left( \bX;\theta \right) &=&\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{1}\left( \alpha \right) =\alpha \\
+\frac{x_{\left( n\right) }}{\theta } &=&\sqrt[3n]{\alpha } \\
+????? &=&\theta \left( \bX\right) =\frac{x_{\left( n\right) }}{\sqrt[3n]{%
+1-\alpha }}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+T\left( \bX;\theta \right) &=&\left( \frac{x_{\left( n\right) }}{\theta }%
+\right) ^{3n}=T_{2}\left( \alpha \right) =1-\alpha \\
+\frac{x_{\left( n\right) }}{\theta } &=&\sqrt[3n]{\alpha } \\
+????? &=&\theta \left( \bX\right) =\frac{x_{\left( n\right) }}{\sqrt[3n]{%
+1-\alpha }}
+\end{eqnarray*}
+
+Per disposar de dades amb que provar aquests intervals podem
+generar una mostra amb $\theta =0.5$ de grandaria $n=9$. El
+resultat de la simulació són els valors següents:
+\begin{equation*}
+0.19,0.48,0.46,0.27,0.37,0.44,0.46,0.41,0.49
+\end{equation*}
+
+D'aqu\'{i} $x_{\left( q\right) }=$ maxim $=0.49$ i
+l'\emph{intervals de confiança} \'{e}s
+\begin{equation*}
+IC\Longrightarrow \left[ \frac{0.49}{\sqrt[27]{0.05}},\frac{0.49}{\sqrt[27]{%
+0.95}}\right] =\left[ 0.5506,0.4937\right]
+\end{equation*}
+\end{example}
+
+\subsection{Intervals de confiança asimptòtics}
+
+Si la mostra es prou gran es possible aplicar el \emph{TCL
+}b\'{e} sobre la mitjana $\sigma $ sobre $\hat{\theta}$ quan
+aquest sigui \emph{AN}. El procediment es for\c{c}a general
+perque l'\emph{EMV} es \emph{AN}.
+
+
+\subsubsection{Intervals de confiança en poblacions no normals}
+
+Suposem que $X$ no segueix una \emph{D.\ Normal }per\`{o} si
+t\'{e} mitjana i vari\`{a}n\c{c}a finites, i, que \emph{coneixem
+}$\sigma .$
+
+El \emph{TCL} ens garanteix que, en aquest cas
+\begin{equation*}
+\frac{\bar{X}-\mu }{\sigma /\sqrt{n}}\Rightarrow ^{\pounds
+}N\left( 0,1\right)
+\end{equation*}
+
+i \ per tant, per mostres grans podem obtenir un \emph{intervals
+de confiança} per $\mu $ fins i
+tot en el cas on $X$ no \'{e}s normal $\left( n\geq 30\right) $: Un intervals de confiança al $%
+\left( 1-\alpha \right) \%$ aproximat per a $\mu $ \'{e}s
+\begin{equation*}
+\hat{X}\pm Z_{\alpha /2}\sigma /\sqrt{n}
+\end{equation*}
+
+Suposem que $\sigma $\emph{\'{e}s desconeguda.} En aquest cas se
+sol, tamb\'{e}, fer servir \emph{l'aproximaci\'{o} normal}, tot i
+que, la seva validesa resulta molt discutible (Nom\'{e}s se sol
+considerar v\`{a}lida quan $n\geq 100$).
+
+Uns intervals de confiança \emph{aproximadissims, }al $\left(
+1-\alpha \right) \%$ per a $\mu $ s\'{o}n:
+
+\begin{equation*}
+\hat{X}\pm Z_{\alpha /2}\text{ }\hat{S}\text{ }/\sqrt{n}
+\end{equation*}
+
+Aquesta $\uparrow $ aproximaci\'{o} \'{e}s ampliamnet utilitzada.

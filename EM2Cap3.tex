@@ -1,0 +1,1377 @@
+\chapter{MÈTODES D'OBTENCIÓ D'ESTIMADORS}
+
+
+En el cap\'{i}tol anterior hem analitzat el problema de
+l'estimaci\'{o} puntual des del punt de vista de, \emph{donat un
+estimador}, veure \emph{``qu\`{e} tan bo \'{e}s''} per estimar un
+par\`{a}metre.
+
+Una altra q\"{u}esti\'{o} que ens podem plantejar, de fet la
+primera qüestió que cal plantejar-se en la pràctica, \'{e}s com
+s'obt\'{e} un estimador \emph{``raonablement bo} d'un
+par\`{a}metre. De fet, des del punt de vista pr\`{a}ctic sembla
+raonable comen\c{c}ar per veure com s'obt\'{e} un estimador i, un
+cop obtingut, analitzar ``quant bo resulta.
+
+Hi ha molts m\`{e}todes per obtenir estimadors, cadasc\'{u}n dels
+quals ens pot portar a uns resultats de diferent qualitat.
+
+Els principals m\`{e}todes d'estimació s\'{o}n:
+
+\begin{enumerate}
+\item  M\`{e}tode dels moments \item  M\`{e}tode de la m\`{a}xima
+versemblan\c{c}a
+%\item  M\`{e}tode dels m\'{i}nims quadrats\item
+\item M\`{e}tode de Bayes \item  Altres m\`{e}todes
+\end{enumerate}
+
+\section{El m\`{e}tode dels moments}
+
+Aquest m\`{e}tode va ser introduït per K.Pearson a finals del
+S.XIX i \'{e}s el principi en que ens basem quan fem una estimació
+de la mitjana o de la vari\`{a}ncia poblacional per a la mitjana o
+la vari\`{a}ncia mostrals.
+
+La idea del m\`{e}tode dels moments \'{e}sfor\c{c}a
+intu\"{\i}tiva. Si el que volem estimar (un o
+m\'{e}s)par\`{a}metres) \'{e}s funci\'{o} dels moments
+poblacionals aleshores una estimaci\'{o} raonable pot consistir en
+agafar com estimador la mateixa funci\'{o} on els moments
+poblacionals han estat substitu\"{\i}ts pels moments mostrals.
+
+At\`{e}s que aquests darrers s\'{o}n estimadors consistents dels
+moments poblacionals, en condicions bastant generals es pot
+garantir que els estimadors obtinguts seran estimadors consistents
+per les funcions dels moments poblacionals estimades.
+
+Alguns exemples t\'{\i}pics d'estimadors basats en el m\`{e}tode dels
+moments s\'{o}n:
+\[
+\widehat{\mu }=\overline{X}_n\qquad \widehat{\sigma
+}=\sqrt{S^2}\qquad \widehat{\sigma ^2}=S^2
+\]
+
+Sigui un model estad\'{\i}stic, $\modest$, i $\Sample$ una mostra
+aleat\`{o}ria simple d'$X$. Siguin $m_1$, $m_2$,$...$,$m_k$ els
+moments poblacionals d'ordre $1,2,...,k$ d'$X$, que suposem que
+existeixen,
+$$
+m_k=E(X^k)
+$$
+i $a_1$, $a_2$,$...$,$a_k$ els moments mostrals respectius
+$$a_k(\Sample)=\frac 1n \Sumin X_i^k.$$
+Suposem que estem interessats en estimar:
+$$
+\theta=h\left( m_1,m_2,...,m_p\right),
+$$
+on $h$ \'{e}s una funci\'{o} coneguda.
+\begin{definition}
+El m\`{e}tode dels moments consisteix en estimar $\theta$ per
+l'estad\'{\i}stic
+$$
+T(\bX)=h\left( a_1,a_2,...,a_p\right)
+$$
+\end{definition}
+
+\paragraph{Observacions}
+\begin{itemize}
+\item El m\`{e}tode s'est\'{e}n de forma senzilla a
+l'estimaci\'{o} de moments conjunts. Podem fer servir $\frac 1 n
+\Sumin X_iY_i$ per estimar $E(XY)$ etc.
+\item Per la llei feble dels grans nombres
+$$
+a_k(\Sample)=\frac 1n \Sumin X_i^k \cinprob E(X^k),
+$$
+de manera que si el que volem \'{e}s estimar els moments mostrals el
+m\`{e}tode garanteix que els estimadors s\'{o}n consistents i sense
+biaix. En aquest cas, a m\'{e}s, els estimadors s\'{o}n asimpt\`{o}ticament
+normals. Si el que es desitja estimar \'{e}s una funci\'{o} $h$ cont\'{\i}nua
+dels moments aleshores el m\`{e}tode garanteix que l'estimador
+$T(\bX)$ consistent i, sota certes condicions de regularitat
+tamb\'{e} \'{e}s asimpt\`{o}ticament normal.
+\end{itemize}
+
+\begin{example}
+Sigui $X\sim \Gamma \left( p,\alpha \right)$. Volem estimar $p$ i
+$\alpha$. Enlloc de con\`{e}ixer la funci\'{o} $h(\theta_1,\theta_2)$
+sabem que:
+\begin{eqnarray*}
+m_1&=&\frac p\alpha =E(X) \\
+m_2&=&\frac{p(p+1)}{\alpha ^2}={E(X^2)}\\
+&=& V(X)+\left[ E(X)\right] ^2= \frac p{\alpha ^2}+\left( \frac
+p\alpha \right) ^2=\frac{p^2+p}{\alpha ^2}=%
+\frac{p(p+1)}{\alpha^2}
+%{V(X)= {E(X^2)} - \left[ E(X)\right]}%
+\end{eqnarray*}
+
+De manera que podem obtenir les funcions desitjades
+``a\"{\i}llant'' $p$ i $\alpha$ com funcions d'$m_1$ i $m_2$:
+\begin{eqnarray*}
+\alpha ^2&=&\frac{p^2}{m_1^2} \\
+\alpha ^2&=&\frac{p(p+1)}{m_2}
+\end{eqnarray*}
+Procedint per igualaci\'{o}:
+
+\begin{eqnarray*}
+\frac{p^2}{m_1^2}&=&\frac{p(p+1)}{m_2} \\
+\frac p{m_1}&=&\frac{p+1}{m_2} \\
+pm_2&=&pm_1^2+m_1^2\\
+p\left( m_2-m_1^2\right) &=& m_1^2 \\
+p&=&\frac{m_1^2}{m_2-m_1^2}\\
+\alpha &=&
+\frac{\frac{m_1^2}{m_2-m_1^2}}{m_1}=\frac{m_1}{m_2-m_1^2}.
+\end{eqnarray*}
+
+Els estimadors pel m\`{e}tode dels moments s'obtindran ara
+substitu\"{\i}nt $p$ i $\alpha$ per $\hat p$ i $\hat \alpha$ en
+l'expressi\'{o} anterior, \'{e}s a dir:
+
+\begin{eqnarray*}
+\widehat{p}&=&\frac{a_1^2}{a_2-a_1^2} \\
+\end{eqnarray*}
+
+Fem el mateix per al par\`{a}metre $\alpha$:
+
+\begin{eqnarray*}
+\widehat{\alpha }&=&\frac{a_1}{a_2-a_1^2}\\
+\end{eqnarray*}
+
+\end{example}
+
+\section{El m\`{e}tode del m\`{a}xim de versemblan\c{c}a}
+
+\subsection{Introducci\'{o}}
+
+El m\`{e}tode de la m\`{a}xima versemblan\c{c}a, introduït per
+Fisher, és un mètode d'estimació que es basa en la funció de
+versemblança, introduïda en el capítol anterior. Bàsicament
+consisteix en agafar com estimadors dels par\`{a}metres aquells
+valors que facin m\'{e}s probable observar precisament all\`{o}
+que s'ha observat, és a dir que facin que la mostra observada
+resulti més \emph{versemblant}.
+
+\begin{example}
+Agafem 5 papers. En cadsac\'{u} hi posem o b\'{e} un ``+'' o
+b\'{e} un ``-'', sense que es s\`{a}piga que hi ha en cada paper,
+i els desem en una bossa. El nostre objectiu és estimar el nombre
+de papers amb el signe``-'' escrit. Treiem tres papers,
+tornant-los a posar després de cada extracció, i observem que ha
+surtit el següent:``++-''. Els valors possibles per a la
+probabilitat de ``-'', diguem-ne $p$ són:
+$$
+\begin{tabular}{|c|c|}
+\hline
+  \text{A la bossa hi ha} & p\\\hline
+  4``+'', 1``-'' & 0,2 \\
+  3``+'', 2``-'' & 0,4 \\
+  2``+'', 3``-'' & 0,6 \\
+  1``+'', 4``-'' & 0,8\\\hline
+\end{tabular}
+$$
+Suposem que la variable $X$ mesura el nombre d'``-'' en tres
+extraccions consecutives i que, per tant segueix una distribució
+binomial:
+$$
+X\sim B\left( 3,p(``-")\right) .
+$$
+La probabilitat de treure un ``-'' és:
+$$
+P_p\left[ X=1\right] =\binom 31\cdot p^1\left( 1-p\right) ^2.
+$$
+Per cadascun dels valors de $p$ les probabilitats quedaran:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline p & $P_p\left[ X=1\right]$ \\\hline
+0.2&  $3\cdot 0.2\cdot 0.8^2=0.384 $\\
+0.4& $3\cdot 0.4\cdot 0.6^2=0.432 $\\
+0.6& $3\cdot 0.6\cdot 0.4^2=0.288 $\\
+0.8& $3\cdot 0.8\cdot 0.2^2=0.096$
+  \\\hline
+\end{tabular}
+\end{center}
+
+El valor de $p$ que dóna una probabilitat més gran a la mostra, és
+a dir que la fa més versemblant, és $p=0.4$. El mètode del màxim
+de versemblança consisteix precisament en agafar aquest valor com
+estimació de $p$.
+\end{example}
+
+\subsection{La funci\'{o} de versemblan\c{c}a}
+
+Un cop introduit el m\`{e}tode amb un exemple, podem passar a
+definir-lo amb més precisi\'{o}. Per aix\`{o} comen\c{c}arem pel
+concepte de funci\'{o} de versemblan\c{c}a.
+
+En el capítol anterior hem presentat la funció de versemblança com
+la funció que resulta de considerar que, en la funció de
+probabilitat de la mostra, el paràmetre és variable i la mostra
+queda fixada.
+És a dir:
+$$
+\underbrace{f(\sample;\theta)}_{\bx \text{ varia, }\theta \text{
+fix.}} \longrightarrow \underbrace{L(\theta;\sample)}_{\bx \text{
+fix, }\theta \text{ varia.}}
+$$
+
+Aquesta definició és bàsicament correcta. En el cas de les
+variables discretes, on $f(\sample;\theta)$ representa la
+probabilitat de la mostra, fixat $\theta$ resulta intuïtivament
+clar dir que la versemblança representa la ``probabilitat de la
+mostra per cada valor del paràmetre''.
+
+Referint-nos a l'exemple introductori resulta senzill veure que
+es tracta de ``dos punts de vista'' sobre la mateixa funció.
+Fixat un valor del paràmetre, p.ex. $0.4$, podem considerar la
+probabilitat de diverses mostres possibles, com $x=0$, $x=1$, ...,
+fins $x=3$:
+
+\begin{eqnarray*}
+f(\sample;\theta)&=& P_{0.4}\left[ X=x\right],\ x=0,1,...,3\\
+&=&\binom 3x\cdot 0.4^x\left( 0.6\right)^{3-x}.
+\end{eqnarray*}
+
+Anàlogament, fixada una mostra, p.ex. $x=1$, podem considerar la
+probabilitat d'aquesta per diversos valors del paràmetre,
+$p=0,0.2,...,1$.
+\begin{eqnarray*}
+L(\sample;\theta)&=& P_{p}\left[ X=1\right],\ x=0,0.2,0.4,...,1\\
+&=& 3\cdot p\left( 1-p\right)^2.
+\end{eqnarray*}
+
+%Obviament es tracta de funcions diferents però d'altra banda
+%també resulta clar que fixat $x$ i $p$ ambdues coincidiran.
+
+%No aprofundirem més sobre el significat de la funció de
+%versemblança ja que això ultrapassaria el nivell d'aquest curs,
+%Pot trobar-se una bóna reflexió sobre el seu significat a ls
+%llibres de Martin Pliego y  Ruíz--Maya (1995,
+%\cite{Ruiz-Maya-95}, capítol 6) o al de Daniel Peña (1987,
+%\cite{Penya-87a}, capítol 5). Farem notar només les observacions
+%següents:
+
+En el cas de les distribucions absolutament contínues el
+significat de la funció de versemblança ja no és intuïtivament tan
+clar com en el cas de les discretes. En aquest cas, la funció de
+densitat de la mostra ja no representa la probabilitat d'aquesta
+com en el cas de les discretes. Alguns autors miren de solucionar
+això explicant que existeix una coneguda aproximació en que la
+funció de densitat és la probabilitat d'un esdeveniment
+``infinitesimal''.
+\newline En realitat tampoc no és precís amoïnar-se molt per aquest concepte,
+ja que sovint es fa èmfasi en que la versemblança no és una mesura
+de probabilitat sinó de ``confiança'' o credibilitat en la mostra
+donat un valor del paràmetre. Segons aquest enfocament tampoc en
+el cas de les variables discretes la identificació
+versemblança--probabilitat és del tot certa.
+
+El que és important en la funció de versemblança, a l'hora de fer
+inferències, és la part que és funció del paràmetre. Això fa que
+sovint es consideri que l'expressió de la funció de versemblança
+mantingui només aquella part de $f(\sample;\theta)$ que depèn de
+$\theta$, ignorant la part que depengui només de la mostra. És a
+dir, si podem factoritzar $f(\sample;\theta)$ com
+$$
+f(\bx;\theta)=c(\bx)\cdot g(\bx;\theta),
+$$
+podrem prescindir de la ``constant'' $c(x)$ (constant perquè no
+depèn de $\theta)$ a l'hora de considerar la versemblança.
+$$
+L(\theta;\bx)=g(\bx;\theta)\propto f(\bx;\theta).
+$$
+Això fa que $L(\theta;\bx)$ no té perquè integrar a 1, com en el
+cas de les probabilitats i que depengui de les unitats de mesura.
+El llibre de Daniel Peña i l'apèndix del capítol anterior es
+revisa la problemàtica associada a aquesta característica de la
+versemblança. En la pràctica el que determina és que, per
+comparar versemblances la forma raonable de fer-ho serà a través
+de quocients de versemblances, però no de llur diferència.
+\begin{example}
+Si $X$ \'{e}s discreta, $X\sim \cal{P}(\lambda )$, i suposem
+$n=1$(mostres de tamany 1), tenim que la f.d.p. de la mostra es:
+\[
+P\left[ x;\lambda \right] =e^{-\lambda }\frac{\lambda ^x}{x!}
+\]
+amb $x=0,1,...$ Ara si hem observat $x=5$ la funci\'{o} de
+versemblan\c{c}a val:
+\[
+L\left( \lambda ;5\right) =e^{-\lambda }\lambda ^5\left[ \frac
+1{5!}\right]
+\]
+Com només ens interessa la part que és funci\'{o} de $\lambda$
+podem ignorar $\frac 1{5!}$, és a dir:
+\[
+L\left( \lambda ;5\right) =e^{-\lambda }\lambda ^5 \propto
+P\left[ \bx;\lambda \right].
+\]
+\end{example}
+\begin{example}
+Si donada una mostra de mida 1, p.ex.  $x=2$, d'una llei de
+Poisson $\cal{P}(\lambda)$ volem comparar les seves versemblances
+respecte dels valors del paràmetre $\lambda = 1.5$ o $\lambda=3$
+el que farem serà basar-nos en la raó de versemblances:
+\begin{eqnarray*}
+\Lambda \left(\bx \right) &=&\frac{L\left( \lambda_1;
+x\right)}{L\left(\lambda_2;x \right)}
+=\frac{L\left(1.5; 2\right)}{L\left(3;2 \right)}\\
+&=&\frac{e^{-1.5 }1.5 ^2\left[ \frac 1{2!}\right]}{e^{-3 }3
+^2\left[ \frac 1{2!}\right]}=\frac{e^{-1.5 }1.5 ^2}{e^{-3 }3
+^2}=\frac{0.5020}{0.4481}=1.12.
+\end{eqnarray*}
+Com es veu, en basar-nos en la raó de versemblances la part
+corresponent només a la mostra no es té en compte. La raó de
+versemblances suggereix que el valor $\lambda=1.5$ fa la mostra
+més versemblant.
+\end{example}
+
+%L'ús de la versemblança en problemes d'inferència estadística es
+%pot resumir en els següents principis, trets de Ruiz--Maya (1995,
+%\cite{Ruiz-Maya-95}.
+%\begin{enumerate}
+%\item \textbf{Llei de versemblan\c{c}a}
+%\newline
+%Una mostra informa millor sobre un cert valor $\theta _1$ que
+%sobre un altre $\theta _2$ del par\`{a}metre si la
+%versemblan\c{c}a del primer \'{e}s major que la del segon.
+%\[
+%L\left(\theta _1;\bx\right) > L\left(\theta _2;x \right)
+%\]
+%$x$ informa millor sobre $\theta_1$ que sobre $\theta_2.$
+%\newline
+%Si dues funcions de versemblan\c{c}a s\'{o}n proporcionals
+%contenen la mateixa informaci\'{o}. Aix\'{i} doncs la desigualtat
+%anterior s'ha d'entendre un cop eliminats els efectes (possibles
+%efectes) de proporcionalitat.%
+%
+%\item \textbf{Principi de versemblan\c{c}a}
+%\newline
+%Tota la informaci\'{o} continguda en la mostra que permeti
+%escollir entre un dels dos valors del par\`{a}metre es troba en
+%el quocient de les dues versemblances anomenat \emph{ra\'{o} de
+%versemblan\c{c}a}
+%\[
+%\lambda \left(\bx \right) =\frac{L\left( \theta _1; \bx\right)}
+%{L\left(\theta_2;\bx \right)}
+%\]
+%De forma que:
+%\begin{eqnarray*}
+%\text{Si: }&& \lambda \left( \bx\right) > 1\ \text{ escollirem } \theta_1 \\
+%\text{Si: }&& \lambda \left( \bx\right) <1\ \text{ escollirem } \theta_2 \\
+%\text{Si: }&& \lambda \left( \bx\right) =1\ \text{ és indiferent}
+%\end{eqnarray*}
+%\end{enumerate}
+
+\subsection{El m\`{e}tode del m\`{a}xim de versemblan\c{c}a}
+
+Si partim de les dues idees que hem vist en la introducci\'{o}:
+
+\begin{itemize}
+\item  Escollir com estimaci\'{o} el valor que fa m\`{a}xima la probabilitat
+de la mostra observada
+
+\item  La versemblan\c{c}a de la mostra \'{e}s una aproximaci\'{o} a la
+probabilitat d'aquesta com funci\'{o} del valor del par\`{a}metre.
+\end{itemize}
+
+Una forma raonable de definir l'EMV \'{e}s doncs com aquell
+que faci m\`{a}xima la versemblan\c{c}a.
+\begin{definition}
+Un estimador $T:\Omega \longrightarrow \Theta $
+\'{e}s un estimador del m\`{a}xim de versemblan\c{c}a pel par\`{a}metre$%
+\theta $ si compleix:
+\[
+L\left( T(\bx);\ \bx\right) =\stackunder{\theta \epsilon \Theta
+}{\sup }L\left( \theta;\bx\right)
+\]
+Com passa sovint en problemes de maximitzaci\'{o}, aquest valor
+ni existeix necessàriament ni t\'{e} per que ser \'{u}nic. Ara
+b\'{e}, sota certes condicions (les habituals pels problemes de
+m\`{a}xims i m\'{i}nims) el problema es podr\`{a} reduir a buscar
+un m\`{a}xim per a la funci\'{o} de versemblan\c{c}a.
+\end{definition}
+
+\begin{example}\label{Ex-EMV-1}
+Suposem que $x_1,...,x_n$ \'{e}s una mostra d'una poblaci\'{o} de
+Bernouilli,  $X\sim Be(p)$,  on volem estimar $p$. La funci\'{o}
+de massa de la probabilitat d'$X$ \'{e}s:
+\[
+P\left[ X=x_i\right] =P(x_i;p)=p^{x_i}\left( 1-p\right) ^{1-x_i}\
+on\ x_i\in\{0,1\};\ i=1,...,n.
+\]
+La funci\'{o} de versemblan\c{c}a \'{e}s:
+\[
+L\left( p;\bx \right) =\Prodin p^{x_i}\left( 1-p\right) ^{1-x_i}=
+p^{\Sumin x_i}\left( 1-p\right)^{\Sumin (1-x_i)}
+\]
+Hem de buscar el m\`{a}xim de $L\left( p;\bx\right) $. En aquest
+cas, com en altres, \'{e}s m\'{e}s senzill buscar el m\`{a}xim del
+seu logaritme, que, atès que \'{e}s una funci\'{o} mon\`{o}tona,
+\'{e}s el mateix que el m\`{a}xim de L\footnote{ A més, al
+treballar amb la derivada del logaritme d'$L$ apareix la funció
+``score'' introduïda en el capítol anterior, la qual cosa
+suggereix una relació entre la informació de Fisher i l'EMV, que
+si bé existeix, no explorem aquí. Podeu trobar-la a Peña (1987,
+\cite{Penya-87a}).}.
+$$
+\ln L\left(p; x\right) =( \Sumin x_i\ ) \cdot \ln p+ ( n-\Sumin
+x_i) \cdot \ln ( 1-p).
+$$
+Derivem respecte $p$:
+$$
+\frac{\partial \ln L\left( p;x\right) }{\partial p}=\frac{\Sumin
+x_i}p- \frac{n-\Sumin x_i}{1-p},
+$$
+i igualem a zero la derivada, plantejant el que s'anomena
+l'equació de versemblança, les solucions de la qual ens conduiran
+eventualment a l'estimador del màxim de versemblança.
+$$
+\frac{\Sumin x_i-n \hat p}{\hat p(1-\hat p)}=0\Rightarrow
+\hat{p}=\frac{\Sumin x_i}n.
+$$
+Si la segona derivada \'{e}s negativa en $\widehat{p}$ aleshores
+ser\`{a} un m\`{a}xim:
+\begin{eqnarray*}
+\frac{\partial ^2\ln L\left( p;\ x\right) }{\partial p^2}
+&=&\frac \partial {\partial p}\left( \frac{\Sumin
+x_i-n\,p}{p(1-p)}\right) =\frac{-n\left[ p(1-p)\right] -\left(
+\Sumin x_i-np\right) \cdot
+\left(1-2p\right) }{p^2\left( 1-p^2\right) }= \\
+&=&\frac{-np+np^2-\Sumin x_i-np-2p\Sumin x_i-2np^2}{p^2\left( 1-p\right) ^2}= \\
+&=& \frac{\left[ \Sumin x_i\left( 1+2p\right)
+-np^2\right]}{p^2\cdot (1-p)^2},
+\end{eqnarray*}
+que és negatiu quan $p=\hat p$, de forma que, $\hat p$ és
+efectivament un màxim.
+\end{example}
+
+El mètode analític exposat en l'exemple anterior, consistent en
+el càlcul d'un extrem d'una funció, no es pot aplicar en totes
+les situacions. En aquests casos una alternativa pot ser estudiar
+directament la funció de versemblança. Veiem-ne un exemple:
+
+\begin{example}\label{exemple-maxim}
+Sigui $X_1,...,X_n\stackrel{iid}{\sim }X\sim U(0,\theta )\qquad
+\theta >0$ desconegut. Sabem que:
+\[
+f(x; \theta )=\left\{
+\begin{array}{c}
+\frac 1\theta \text{ si }0<\min \left\{ x_i\right\} \leq \max
+\left\{
+x_i\right\} \leq \theta \\
+0\qquad \text{en cas contrari}
+\end{array}
+\right\}
+\]
+La derivada respecte $\theta$ és $-\frac n{\theta^{n-1}}$, que
+s'anul.la quan $\theta\tendsto \infty$ i que duu a una solució sense
+sentit de l'equació de versemblança. Una inspecció de la gràfica de
+la funció de versemblança  revela que l'EMV, en aquest cas, \'{e}s
+$\max \left\{ X_i,...,X_n\right\}$. Efectivament considerem
+qualsevol altre valor $\theta^*$ diferent del màxim:
+\begin{eqnarray*}
+&& \text{Si }\theta^* > X_{\left( n\right) } \Rightarrow \frac
+1{\left( {\theta}^{*}\right) ^n}<\frac 1{\left(X_{n}\right) ^n}, \\
+&& \text{Si }{\theta}^{*} < X_{\left( n\right) }  \Rightarrow
+L\left( {\theta}^{*}; \bx \right) =0,
+\end{eqnarray*}
+ja que si un estimador pren un valor inferior al màxim de la
+mostra hi haurà algun valor mostral, $x_i$ per al qual es
+verifiqui que $\theta^*<x_i$ la qual cosa fa la mostra
+inversemblant, i per tant l'estimador no és admissible.
+
+A la vista de l'anterior deduïm que el valor que maximitza
+$L\left( \theta;\bx \right) $\'{e}s el m\`{a}xim de la mostra.
+
+\begin{figure}
+\vskip 1cm
+\includegraphics{./imatges/LklhUniforme.eps}
+\caption{Funció de versemblança per una distribució uniforme}
+\label{Versemblansa-Dist-Uniforme}
+\end{figure}
+
+\end{example}
+
+\begin{example}\label{Ex-EMV-Normal}
+El mètode del màxim de versemblança s'estén de forma immediata
+als paràmetres $K$--dimensionals. Considerem el cas de la llei
+normal $X\sim N\left( \mu ,\sigma ^2\right).$ Aquí el paràmetre
+$\theta$ és bidimensional, és a dir:
+$\theta=(\mu,\sigma^2)\in\Theta=\Real\times\Real^+$
+\begin{enumerate}
+\item La funció de versemblança d'una mostra de mida $n$ és:
+$$
+L\left ((\mu,\sigma^2);\bx\right)=\Prodin
+\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x_i-\mu)^2}{2\sigma^2}}=
+\frac{1}{(2\pi)^{n/2}(\sigma^2(^{n/2}}e^{-\frac{\Sumin(x_i-\mu)^2}{2\sigma^2}}
+$$
+\item Treient logaritmes
+$$
+\log L\left ((\mu,\sigma^2);\bx\right)= -\frac{n}{2}\log (2\pi)
+-\frac{n}{2}\log (\sigma^2) -\frac{\Sumin(x_i-\mu)^2}{2\sigma^2}.
+$$
+\item La derivada d'$L()$ és la matriu de derivades:
+$$
+D\log L \left ((\mu,\sigma^2);\bx\right) =\left(
+\begin{array}{c}
+\frac{\partial \log L((\mu,\sigma^2);\bx)}{\partial \mu} \\
+\frac{\partial \log L((\mu,\sigma^2);\bx)}{\partial \sigma^2}
+\end{array} \right)
+=\left\{\begin{array}{c}
+\frac{\Sumin(x_i-\mu)}{\sigma^2}\\
+\frac{\Sumin(x_i-\mu)^2}{2\sigma^4}-\frac{n}{2\sigma^2}.
+\end{array}\right.
+$$
+\item Plantejant i resolent l'equació de versemblança tenim:
+$$
+D\log L \left ((\hat\mu,\hat\sigma^2);\bx\right)
+=\left\{\begin{array}{c}
+\frac{\Sumin(x_i-\hat\mu)}{\hat\sigma^2}=0\\
+\frac{\Sumin(x_i-\hat\mu)^2}{2\hat\sigma^4}=\frac{n}{2\hat\sigma^2},
+\end{array}\right.
+$$
+d'on les arrels de l'equació de versemblança són:
+$$
+\hat mu=\bar x,\quad \hat \sigma^2=\frac{\Sumin(x_i-\bar
+x)^2}{n}=s^2.
+$$
+\item Per decidir si les arrels de l'equació de versemblança
+corresponen a un màxim analitzem la matriu de derivades segones,
+anomenada \emph{Hessiana}.
+$$
+H=\left(\begin{array}{cc} \frac{\partial^2 z}{\partial x^2} &
+\frac{\partial^2 z}{\partial x\partial y}  \\
+\frac{\partial^2 z}{\partial y\partial x} & \frac{\partial^2
+ z}{\partial y^2}
+\end{array} \right).
+$$
+Una condició suficient per a que un punt $(x_0,y_0)$ sigui un
+màxim és que el determinant d'$H$ sigui positiu i el menor en la
+posició ``11'' negatiu, és dir:
+$$\text {Si } |H|>0 \text{ i } \left.\frac{\partial^2 z}{\partial
+x^2}\right|_{(x_0,y_0)}<0 \Longrightarrow \text{Hi ha un màxim
+relatiu en }(x_0,y_0).$$ Si avaluem el Hessià en el punt $(\bar
+x, s^2)$ tenim:
+$$
+H=\left (\begin{array}{cc}
+ -\frac{n}{s^2} & 0\\
+0 & -\frac{n}{2s^4}
+\end{array} \right).
+$$
+Les condicions d'extrem que hem donat més amunt es verifiquen:
+$H_{11}<0$ i $|H|>0$, de manera que podem concloure que
+l'estimador del màxim de versemblança de $(\mu,\sigma^2)$ és,
+efectivament $(\bar x, s^2)$.
+\end{enumerate}
+\end{example}
+
+\subsection{Propietats dels estimadors del m\`{a}xim de versemblan\c{c}a}
+
+El m\`{e}tode del MV consisteix en escollir el valor $\theta \
+\in \Theta $ que fa m\`{a}xima $L\left( \hat{\theta};\bx \right)
+$, és a dir es basa en agafar la moda de la funció de
+versemblança.La moda \'{e}s una característica amb pitjors
+propietats que la mitjana o la mediana de forma que les propietats
+dels estimadors obtinguts per aquest m\`{e}tode \emph{poden ser}
+pobres en mostres petites. Tot i així, quan $n\longrightarrow
+\infty $, les propietats milloren considerablement, motiu pel
+qual de vegades esconsidera un mètode principalment adient per
+mostres grans.
+
+Les demostracions de les propietats dels EMV són feixugues i no
+es presenten aquí. Podeu trobar-les a Martin Pliego i Ruíz Maya
+(1997,~\cite{Ruiz-Maya-95}) o Vélez i García
+(1993,~\cite{Velez-93}).
+
+\subsubsection{Biaix}
+
+Els EMV no s\'{o}n necessàriament estimadors sense biaix. Compte
+però!, això no significa que hagin de tenir biaix.
+\begin{itemize}
+\item En un exemple anterior hem vist que l'estimador del màxim
+de versemblança de $p$ és la freqüència relativa, que és un
+estimador sense biaix de $p$.
+\item En un altre exemple hem obtingut que
+l'estimador del màxim de versemblança del màxim en una població
+amb distribució uniforme és el màxim de la mostra, que com havíem
+vist en el capítol anterior és un estimador amb biaix del màxim
+poblacional. El seu biaix val:
+\[
+b_{X_{(n)}}(\theta ) =\underbrace{\frac n{n+1}\theta}_{E\left (
+X_{(n)}\right)}  -\theta =-\frac 1{n+1}\theta.
+\]
+\end{itemize}
+Com passa sovint, si hi ha biaix aquest depèn d'$1/n$ (``és $
+\text{O}(\frac 1 n)$") i per tant s'anul.la quan $n \rightarrow
+\infty$. És a dir, tot i si l'EMV té biaix, és
+\emph{asimptòticament sense biaix}.
+
+\subsubsection{Consist\`{e}ncia}
+
+Sota condicions generals els EMV s\'{o}n consistents'', \'{e}s a dir $\hat{%
+\theta}_n\stackunder{n\rightarrow \infty }{\longrightarrow
+}\theta $ en probabilitat (\emph{Veure Mart\'{i}n Pliego (V.2) pag
+202}).
+\begin{example}
+Els mateixos exemples que hem comentat al parlar del biaix serveixen
+per il.lustrar aquesta propietat. La freqüència relativa és un
+estimador consistent de $p$ per la llei dels grans nombres i el
+màxim de la mostra, ho és com hem vist en un exemple.
+\end{example}
+
+Aquesta propietat serveix per a establir la propietat comentada a
+l'apartat anterior, és a dir, tot i poder tenir biaix els EMV
+s\'{o}n assimpt\`{o}ticament sense biaix.
+$$
+\text{Suposem que: }\hat{\theta}_{MV}\stackrel{P}{\rightarrow
+}\theta _0\ \text{ és a dir: }\ \lim P\left[ \left|
+\hat{\theta}_{MV}-\theta _0\right|
+>\varepsilon \right] =0
+$$
+La desigualtat de Txebytxev permet posar:
+\begin{eqnarray*}
+&&P\left[ \left| \hat{\theta}_{MV}-\theta _0\right| >\varepsilon
+\right] \leq
+\frac{Var\left( \hat{\theta}_{MV}\right) }{\varepsilon ^2} \\
+&&\text {Si: }\ \hat{\theta}_{MV}\stackrel{P}{\rightarrow }\theta
+_0 \Rightarrow
+Var\left( \hat{\theta}_{MV}\right) \rightarrow 0 \\
+&&\text{d'on: }\ \frac{Var\left( \hat{\theta}_{MV}\right)
+}{\varepsilon ^2} \rightarrow 0 \Rightarrow P\left[ \left|
+\hat{\theta}_{MV}-\theta _0\right|
+>\varepsilon \right] \rightarrow 0 \\
+&&\text{i per tant }\ \hat{\theta}_{MV}\stackrel{P}{\rightarrow
+}E\left( \ \hat{\theta}_{MV}\right)
+\end{eqnarray*}
+Ara b\'{e}s una succesi\'{o}, tan si és de variables aleatòries
+com si no ho és, nom\'{e}s pot tendir cap a un
+l\'{i}mit de manera que
+\begin{eqnarray*}
+&&\text{Si }\ \hat{\theta}_{MV}\stackrel{P}{\rightarrow }\theta _0 \\
+&&\text{i }\ \hat{\theta}_{MV}\stackrel{P}{\rightarrow }E\left( \ \hat{\theta}%
+_{MV}\right) \\
+&&\text{aleshores } \theta _0 =E\left( \ \hat{\theta}%
+_{MV}\right),
+\end{eqnarray*}
+i per tant l'estimador és asimptòticament sense biaix. La
+``gr\`{a}cia'' d'aquesta justificaci\'{o} \'{e}s que en general no
+cal trobar el biaix per establir que no n'hi ha.
+
+\subsubsection{Efici\`{e}ncia}
+
+Si existeix un estimador, la vari\`{a}ncia del qual \'{e}s igual
+a la Cota de Crmaer-Ra\'{o}, aquests \'{e}s  l'única soluci\'{o}
+de l'equació de versemblança. És a dir si existeix alg\'{u}n
+estimador eficient aquest coincideix amb l'estimador del màxim de
+versemblança. Aquesta propietat és senzilla de veure i permet
+relacionar conceptes de forma interessant.
+
+Suposem que es compleixen les condicions de regularitat i que tenim
+un estimador eficient, $\hat{\theta}$, és a dir la vari\`{a}ncia del
+qual \'{e}s igual a la cota de Cramer Rao.
+
+Si un estimador és
+eficient podem posar, identificant la constant $K(\theta, n)$ amb
+$I(\theta)$:
+\[
+\frac{\partial \ln L\left( \bx;\theta \right) }{\partial \theta
+}=I\left( \theta \right) \left[ \hat{\theta}-\theta \right]
+\]
+Observem que el membre de l'esquerra és la derivada respecte de
+$\theta$ de $\ln L\left( \bx;\theta \right)$, que, igualada a
+zero, forma l'equació de versemblança. Òbviament $\hat \theta$ és
+solució d'aquesta ja que si substituïm $\hat \theta$ per $\theta$
+en l'expressió anterior obtenim:
+$$
+I\left( \hat \theta \right) \left[ \hat{\theta}-\hat \theta
+\right]=0.
+$$
+És a dir, pel fet de ser eficient  $\hat{\theta}$ és una solució
+de l'equació de versemblança. Per veure si és un màxim tornem a
+derivar:
+\[
+\frac{\partial ^2\ln L\left( \bx;\theta \right) }{\partial \theta
+^2}=I^{\prime }\left( \theta \right) \left[ \hat{\theta}-\theta
+\right] -I\left( \theta \right)
+\]
+Avaluem la segona derivada en $\theta =\hat{\theta}$
+\[
+\left[ \frac{\partial ^2\ln L\left( \bx;\theta \right) }{%
+\partial \theta ^2}\right] _{\theta =\hat{\theta}}=I^{\prime }\left( \theta
+\right) \left[ \hat{\theta}-\theta \right] -I\left( \theta
+\right) =-I\left( \hat{\theta}\right)
+\]
+i, atès que $I\left( \theta \right) >0$ deduïm que
+\[
+\left[ \frac{\partial ^2\ln L\left( \bx;\theta \right) }{%
+\partial \theta ^2}\right] _{\theta =\hat{\theta}}<0
+\]
+
+El resultat anterior permet establir que, sota les condicions de
+regularitat necessàries, l'estimador eficient, és a dir amb
+vari\`{a}ncia igual a la Cota de Cramer--Rao és necessàriament
+l'estimador del màxim de versemblança.
+
+De l'anterior no se'n dedueix, però, que qualsevol estimador del
+màxim de versemblança sigui eficient.
+\begin{example}
+Com hem vist en l'exemple \ref{Ex-EMV-Normal} en una població
+normal, $N(\mu,\sigma^2)$, l'estimador del màxim de versemblança
+de $\sigma^2$ és $S^2=\Sumin(X_i-\MX)^2/n$, però no és
+l'estimador eficient de $\sigma^2$. Del fet que $(n\
+S^2)/\sigma^2$ té distribució $\chi^2_{(n-1)}$ es dedueix que la
+variància de $S^2$ és $var(S^2)=2(n-1)\sigma^4/n^2$, que no
+coincideix amb la CCR que val $2\sigma^4/n$.
+\end{example}
+La secció següent mostra però que, de forma similar a com passava
+amb el biaix, si be els EMV no són necessàriament eficients sí són
+asimptòticament eficients.
+
+\subsubsection{Normalitat i Efici\`{e}ncia Assimpt\`{o}tiques}
+
+Les propietats citades fins aquí estableixen que els estimadors
+del màxim de versemblança, si bé poden tenir un mal comportament
+en mostres petites, tenen bones propietats quan les mostres es
+fan grans. Aquesta idea queda del tot ben establerta amb aquesta
+propietat que, en certa manera, reuneix i estén les anteriors.
+Sota condicions de regularitat apropiades els EMV s\'{o}n
+asimptòticament normals amb mitjana $\theta $ i variància $\frac
+1{I(\theta )}$ \'{e}s a dir:
+$$
+\hat{\theta}\sim AN \left( \theta, \frac 1{ I\left( \theta
+\right)}\right),
+$$
+o, el que és el mateix:
+$$
+\frac{\hat{\theta}-\theta}{\sqrt{I\left( \theta \right) }}\stackrel{L%
+}{\rightarrow }N\left( 0,1\right).
+$$
+Fixem-nos que aquesta propietat implica que l'EMV sigui
+asimptòticament sense biaix, ja que la seva esperança, en el
+límit és $\theta$, i asimptòticament eficient, ja que la seva
+variància, en el límit, coincideix amb la cota de Cramer--Rao.
+Podeu trobar demostracions d'aquest resultat a (\emph{Mart\'{i}n
+Pliego (V.2) pag 205 i ss}).
+
+\subsubsection{Sufici\`{e}ncia}
+
+Si $T=T\left( \bx\right) $ \'{e}s un estad\'{i}stic suficient per
+al par\`{a}metre $\theta $, llavors l'EMV de $\theta $,
+$\hat{\theta}$, \'{e}s funci\'{o} de $T\left( \bX\right)$.
+
+Pel fet que $T$ és suficient podem descompondre $L\left(\theta;\bX
+\right)$ aplicant el teorema de factoritzaci\'{o}:
+\begin{eqnarray*}
+L\left( \theta;\bX \right) &=&g\left( T;\theta \right)
+\cdot h\left( \bX\right) \\
+\ln L\left(\theta;\bX \right) &=& \ln g\left( T;\theta \right)
++\ln h\left( \bX\right).
+\end{eqnarray*}
+Derivant respecte $\theta$, al ser $\hat \theta$ l'estimador del
+màxim de versemblança de $\theta$ és solució de l'equació resultant:
+\begin{eqnarray*}
+\left[ \frac{\partial \ln L\left( \theta;\bX \right) }{%
+\partial \theta }\right] _{\theta =\hat{\theta}_{MV}} &=&0 \\
+\left[ \frac{\partial \ln g\left( T(\bX);\theta \right) }{%
+\partial \theta }\right] _{\theta =\hat{\theta}_{MV}} &=&0
+\end{eqnarray*}
+podent deduir que el valor que maximitza $L\left( \theta;\bx;
+\right)$, $\hat{\theta}$, tamb\'{e} fa m\`{a}xim $\ln g\left(
+T(\bX);\theta \right)$ i també $\ln g\left( T(\bX);\theta
+\right)$. Això implica que $\hat \theta$ sigui funció de $T$,
+l'estadístic suficient, ja que, en la primera expressió, el valor
+de $\theta$ que duu al màxim és $\hat \theta=\hat \theta(\bX)$ i
+en la segona és  $\theta^*=\theta^*(T)$ de manera que,
+efectivament l'estimador del màxim de versemblança és funció de
+l'estadístic suficient.
+
+Observem que, un cop més, aquesta propietat no afirma que
+l'estimador del màxim de versemblança sigui un estadístic
+suficient sinó que el que diu és que, si un paràmetre té un
+estadístic suficient aleshores l'estimador del màxim de
+versemblança serà funció d'aquest.
+\begin{example}
+Considerem una població $X\sim U[\theta,\theta+1]$,
+$\theta\in\Real$. Llavors
+$$
+f_{\theta}(\bX)=1\cdot\mathbf{1}_{\left (\theta\leq \min X_i\leq
+\max X_i\leq \theta+1\right)}(\bX).
+$$
+L'estadístic suficient per a $\theta$ és $\left (\min X_i\leq \max
+X_i\right)$. Qualsevol valor de $\theta$ que satisfaci $\max
+x_i-1 \leq \theta \leq \min x_i$ és un estimador del màxim de
+versemblança de $\theta$. En particular ho és $\min_{1\leq i\leq
+n}X_i$ que no és suficient.
+\end{example}
+
+\subsubsection{Invari\`{a}ncia funcional}
+
+Si $\hat{\theta}$ \'{e}s l'EMV de $\theta $ i $g(\theta )$ \'{e}s
+una funci\'{o} mon\`{o}tona de $\theta$ aleshores
+$g(\hat{\theta})$ \'{e}s l'EMV de $g\left( \theta \right)$.
+
+Quan la funció és bijectiva la propietat és immediata (veure
+(\emph{Mart\'{i}n Pliego (V.2) pag 209}). Si no ho és resulta el
+resultat és més complex (veure Casella-Berger, 1990 (\cite
+{Casella-90}).
+%Sigui $\hat{\theta}$, l'EMV de $\theta $ i $\Phi =g(\theta )$. Al ser $%
+%g(\theta )\ $un a un, la funci\'{o} es pot invertir $h=g^{-1}$
+%\[
+%\theta =h(\Phi )=g^{-1}\left( \Phi \right)
+%\]
+%$L\left(\theta;\bX \right) $ assoleix el m\`{a}xim en
+%$\theta=\hat{\theta} $ per\`{o} com $L\left(\theta;\bX\right)
+%=L\left(h\left( \Phi \right);\bX \right)$ el m\`{a}xim s'assoleix
+%en
+%\[
+%\hat{\theta}=h\left( \Phi \right)
+%\]
+%\'{e}s a dir en:
+%\begin{eqnarray*}
+%\hat{\Phi} &=&g\left( \hat{\theta}\right) \\
+%g\left( \hat{\theta}\right) &=&g\left( h\left( \Phi \right) \right) \\
+%g\left( g^{-1}\left( \Phi \right) \right) &=&\hat{\Phi}.
+%\end{eqnarray*}
+\begin{example}
+L'EMV del par\`{a}metre $\alpha$ en una distribució exponencial
+amb funció de densitat de probabilitat
+$$
+f\left(x, \alpha \right) =\alpha e^{-\alpha x}\mathbf{1}_{x>0}(x)
+$$
+és:
+$$
+\widehat{\alpha }=\frac n{\Sumin X_i}=\frac 1 \MX.
+$$
+Suposem que el que de fet ens interessa és estimar l'esperança
+d'$X$, $E(X)=\frac 1\alpha$. La propietat d'invariància estableix
+que l'estimador del màxim de versemblança de $\frac 1 \alpha$
+serà:
+$$
+\widehat{\left(\frac 1 \alpha\right)}=\frac 1{\hat \alpha}=\MX. $$
+
+\end{example}
+
+
+\section{Estimaci\'{o} Bayesiana}
+
+\subsection{Risc de Bayes i Estimadors de Bayes}
+
+\subsubsection{Introducci\'{o}. Risc de Bayes}
+
+En el capítol anterior, hem introdu\"{i}t els conceptes de
+funci\'{o} de perdua
+\begin{gather*}
+L:\Theta\times\Theta\rightarrow R \\
+\theta,t\rightarrow L\left( \theta,t\right) ,
+\end{gather*}
+i risc:
+\begin{equation*}
+R_{T}\left( \theta\right) =E_{\theta}\left[ L\left(
+\theta,t\right) \right] ,
+\end{equation*}
+associats a un estimador i un valor del par\`{a}metre.
+
+Aix\`{o} permet, donats dos estimadors $T_1$, $T_2$, definir
+$T_{1}$ com preferible a $T_{2}$ si
+\begin{equation*}
+\begin{array}{cccc}
+R_{T_{1}}\left( \theta \right)  & \leq  & R_{T_{2}}\left( \theta
+\right)  & \forall \theta \in \Theta
+\\
+R_{T_{1}}\left( \theta^* \right)  & < & R_{T_{2}}\left( \theta^*
+\right)  & \text{ Per a algun } \theta^*.
+\end{array}
+\end{equation*}
+
+El problema per\`{o} es que sovint ens trobem amb que:$\qquad$%
+\begin{equation*}
+\begin{array}{cccc}
+R_{T_{1}}\left( \theta\right) & < & R_{T_{2}}\left( \theta\right)
+& \forall
+\\
+R_{T_{1}}\left( \theta\right) & > & R_{T_{2}}\left( \theta\right)
+&
+\end{array}
+\end{equation*}
+de forma que el criteri anterior no ens serveix.
+
+Per solucionar el problema plantejat podem optar entre dues
+estratègies:
+\begin{enumerate}
+\item  Restingir la classe dels estimadors, estudiant nom\'{e}s estimadors
+sense biaix. Aix\`{o} duu als Estimadors Centrats Uniformement de
+M\'{i}nima Vari\`{a}ncia.
+\item  Mirar de valorar d'alguna manera tota la funci\'{o} $R_{T}\left(
+\theta\right) $, de forma que prengui un \'{u}nic valor
+num\`{e}ric$,R\left( T\right) $ per a cada estimador $T,$ per $\
+$a poder assignar a cada estimador un unic \'{i}ndex de qualitat
+independent de $\theta.$
+\end{enumerate}
+Aquest segon objectiu es pot mirar d'assolir de dues formes que
+duen a dues menes d'estimadors, els estimadors \emph{minimax} i
+els estimadors \emph{Bayesians}. Aqu\'{i} nom\'{e}s considerarem
+els estimadors Bayesians.
+
+\subsubsection{Estimadors de Bayes}
+Un alternativa a la possibilitat de considerar el m\`{a}xim
+d'$R_{T}\left( \theta\right) ,$ amb els problemes que aix\`{o}
+implica, es mirar d'obtenir un valor promig dels riscos de
+$T,R_{T}\left( \theta\right) $ sobre els diversos valors de
+$\theta$.
+
+El problema aqu\'{i} resideix en com escollir la distribuci\'{o}
+sobre la qual efectuem el promig, ja que aquesta influ\"{i}ra,
+sens dubte, sobre el resultat. El que farem per poder aplicar
+aquest criteri serà considerar que $\theta$ es comporta com si fos
+una variable aleatòria enlloc d'una constant. La seva distribució
+s'anomena \emph{distribuci\'{o} a priori} de $\theta$ i se sol
+indicar com $\pi\left( \theta\right)$.
+
+Un cop escollida $\pi\left( \theta\right) $, el \emph{Risc a
+Priori} d'un estimador $T$ respecte d'aquesta
+distribuci\'{o} a priori $\pi$ es defineix
+\begin{equation*}
+R\pi\left( T\right) =\int_{\Theta}R_{T}\left( \theta\right)
+d\pi\left( \theta\right).
+\end{equation*}
+En aquest cas direm que un estimador $T_{1\text{ }}$ser\`{a} preferible a un altre $T_{2\text{ }}$%
+si $R_{\pi}\left( T_{1}\right) <R_{\pi}\left( T_{2}\right) $ de
+forma que el criteri d'òptim ens dura a escollir l'estimador amb
+el menor risc.
+
+El valor m\'{e}s petit que pot assolir el risc a priori s'anomena
+\emph{risc de Bayes} de l'estimador i se sol indicar, donat $T$ ,
+com
+\begin{equation*}
+r_{T}=\inf R_{\pi}\left( T\right).
+\end{equation*}
+El millor estimador en el sentit que hem definit ser\`{a} aquell
+pel qual s'assoleixi el risc de Bayes. Aquest estimador s'anomena
+\emph{estimador d e Bayes}. Es a dir, un estimador $T^{\ast}$
+s'anomena estimador de Bayes de $\theta$ si verifica:
+\begin{equation*}
+R_{\pi}\left( T^{\ast}\right) =r_{T}.
+\end{equation*}
+
+L'anterior suggereix que una forma ``natural'' d'obtenir
+l'estimador de Bayes pot ser la seg\"{u}ent:
+\begin{itemize}
+\item  Escollir una distribuci\'{o} a priori $\pi\left( \theta\right) $
+\item  Calcular el risc a priori $R_{\pi\left( T\right) }$
+\item  Escollir com estimador de Bayes aquell $T$ que fa m\'{i}nim $R_{\pi}\left(
+T\right)$.
+\end{itemize}
+
+L'enfocament anterior \ no \'{e}s sempre viable per causa de la
+dificultat de c\`{a}lcul o perque l'infim no existeixi.
+
+Per aix\`{o}, sovint es pot seguir un cam\'{i} diferent que
+partint del mateix punt, és a dir d'adoptar una distribuci\'{o} a
+priori per al par\`{a}metre, procedeix de manera diferent.
+
+\subsection{L'aproximaci\'{o} Bayesiana}
+
+En línies generals una ``aproximació Bayesiana'' a un
+problema d'inferència relativa a un paràmetre $\theta$ parteix de
+suposar que el par\`{a}metre $\theta$ del que dep\`{e}n el model
+és una variable aleatòria amb una
+distribuci\'{o} $f_{\Theta}\left( \theta\right) $ que anomenem \emph{%
+distribuci\'{o} a priori}. Aquesta distribució no depèn per res
+de les observacions que puguem efectuar, d'aquí el nom de
+\emph{prior}.
+
+L'adopció d'aquesta òptica, ben diferent d'entrada de la
+suposició habitual, de que $\theta$ és una constant, t\'{e} dues
+conseq\"{u}\`{e}ncies principals:
+\begin{itemize}
+\item  En primer lloc $\pi \left( \theta\right) $ contindr\`{a}
+sovint alguna mena d'informaci\'{o} sobre $\theta$ i en tant que
+ens creiem que aquesta \'{e}s correcta, \'{e}s probable que ens
+ajudi a afirmar les infer\`{e}ncies que fem sobre $\theta$
+\item  D'altra banda aquest plantejament ens ajuda a clarificar la forma en
+que durem a terme les an\`{a}lisis. Com sabem la informaci\'{o}
+sobre el valor d'una \emph{v.a}. donada a una altra o altres
+relacionades, s'obt\'{e} de considerar la distribuci\'{o}
+condicional de la primera donades les segones.
+\end{itemize}
+En la pràctica això implicarà que procedim  de la manera següent:
+coneguda la llei a priori de $\theta$, $\pounds\left(
+\theta\right)$ i donades les observacions de la variable,
+$\left(X=x\right)$ la manera d'aconseguir el màxim d'informació
+sobre $\theta$ consistirà en basar-nos en la distribució de
+$\theta$ condicionada per les observacions, que anomenem
+distribució \emph{a posteriori} $\pounds \left(
+\theta/x=x\right)$.
+
+Observem que aquí juguen 3 distribucions diferents:\bigskip
+
+\begin{itemize}
+\item  La \ distribuci\'{o} de les dades, ``la de sempre'' $\pounds \left(
+X\right) $, $\pounds \left( X;\theta\right) $ o $\pounds \left(
+X/\theta\right) $. Com la llei de les dades dep\`{e}n del
+par\`{a}metre, es pot entendre com condicionada a aquest.
+\item  La distribuci\'{o} \ ``a priori'' del par\`{a}metre $\pounds \left(
+\theta\right) $.
+\item  La distribuci\'{o} a posteriori del par\`{a}metre $\pounds \left(
+\theta/X=x\right) $ que s'obtindr\`{a} pel \emph{T. de Bayes}.
+\end{itemize}
+
+\paragraph{El Teorema de Bayes per variables aleat\`{o}ries}
+
+El teorema que combina la \emph{distribuci\'{o} a priori }i les
+dades \ per a formar la\emph{\ distribuci\'{o} a posteriori}
+\'{e}s el teorema de Bayes en la seva versi\'{o} referida a v.a.
+
+Aquest teorema es presenta sovint com adient per a ``invertir''
+l'ordre de les afirmacions en probabilitat \ condicional i.e. per
+obtenir P(A/B) a partir de P(B/A):
+
+\begin{equation*}
+P(B_{j}/A)=\frac{P(A/B_{j})\cdot P\left( B_{j}\right) }{P\left( A\right) }=%
+\frac{P\left( A/B_{j}\right) \cdot P\left( B_{j}\right) }{\sum
+_{i}P\left( A/B_{j}\right) \cdot P\left( B_{j}\right) }
+\end{equation*}
+
+\bigskip En la nostra perspectiva $A$ representa les dades i $%
+B_{1}......B_{k}$ els diferents valors possibles del
+par\`{a}metre.
+
+\bigskip El \emph{Teorema de Bayes }per variables aleat\`{o}ries permet
+trobar la funci\'{o} de densitat d'una v.a. $Y$ condicionada per
+una altra v.a. $X$ a partir de la funci\'{o} de densitat
+(incondicional) d'$Y$ i de la funci\'{o} de densitat d'$X$
+condicionada per $Y$.
+
+\begin{theorem}
+Siguin $X,Y$ dues variablea aleat\`{o}ries amb funcions de
+densitat f$_{X}$, i $\ f_{Y}$ respectivament. Sigui f$_{X|Y=y}$
+la funci\'{o} de densitat condicional d'X donada $Y=y$. Aleshores
+la funci\'{o} de densitat condicional d'Y donada $X=x$ val:
+\begin{align*}
+f_{Y|X=x} & =\frac{f_{XY}{\left( x{,y}\right) }}{f_{X}{\left( x\right) }} \\
+& =\frac{f_{X|Y=y}\left( x\right) {\cdot f_{Y}\left( y\right)
+}}{{\int f_{X|Y=y}\left( x\right) {\cdot f_{Y}\left( y\right)
+dy}}}.
+\end{align*}
+Si les variables $X,Y$ s\'{o}n discretes les integrals es
+substitueixen pels sumatoris corresponents.
+\end{theorem}
+
+Per aplicar aquest teorema hem d'assimilar cadascun dels termes
+anteriors a
+un dels conceptes que hem introdu\"{i}t anteriorment, \'{e}s a dir quines s%
+\'{o}n la funci\'{o} de densitat de les dades, del par\`{a}metre
+i les funcions de densitat prior i posterior. Raonablement
+posarem:
+\begin{align*}
+{f_{Y}\left( y\right) }& \equiv {}\pi \left( \theta \right)
+,\text{ La
+distribuci\'{o} prior del par\`{a}metre} \\
+f_{XY}{\left( x{,y}\right) }& ={p\left( {\theta ,y_{obs}}\right)
+,}\text{ La
+distribuci\'{o} conjunta de dades i par\`{a}metres} \\
+f_{X|Y=y}\left( x\right) & ={p\left( {y_{obs}|\theta }\right)
+,}\text{ La
+distribuci\'{o} de les dades condicionada pel par\`{a}metre} \\
+f_{X}{\left( x\right) }& ={\;p\left( {y_{obs}}\right) ,}\text{ La distribuci%
+\'{o} marginal de les dades, incondicional} \\
+f_{Y|X=x}& =p\left( {\theta |y_{obs}}\right) ,\text{ La
+distribuci\'{o} posterior del par\`{a}metre, donades les dades}
+\end{align*}
+
+Un cop fetes les equival\`{e}ncies resulta clar com la
+utilitzaci\'{o} del teorema de Bayes per densitats ens d\'{o}na
+la f\'{o}rmula per la distribuci\'{o} posterior del par\`{a}metre:
+
+\begin{align*}
+p\left( {\theta|y_{obs}}\right) & =\frac{{p\left( {\theta,y_{obs}}\right) }}{%
+{p\left( {y_{obs}}\right) }} \\
+& =\frac{{p\left( {y_{obs}|\theta}\right) \cdot\pi\left( \theta\right) }}{{%
+\int{p\left( {y_{obs}|\theta}\right) \cdot\pi\left( \theta\right)
+d\theta}}}
+\\
+& \propto p\left( {y_{obs}|\theta}\right) \cdot\pi\left(
+\theta\right) .
+\end{align*}
+
+La distribuci\'{o} posterior del par\`{a}metre representa la
+creen\c{c}a sobre la distribuci\'{o} del par\`{a}metre modificada
+per l'observaci\'{o} de les dades disponibles. \'{E}s a dir, fent
+servir el teorema de Bayes es combinen les creences pr\`{e}vies
+sobre el par\`{a}metre contingudes en la distribuci\'{o} a
+priori, amb l'experi\`{e}ncia de les observacions reflectida en
+les dades per donar la distribuci\'{o} a posterior.
+
+El par\`{a}graf anterior suggereix que la distribuci\'{o} a
+posterior \'{e}s el ``millor'' que es podr\`{a} obtenir donades
+les dades i la prior i per tant \emph{la infer\`{e}ncia Bayesiana
+es basar\`{a} sempre en la distribuci\'{o} posterior}.
+
+\begin{example}{An\`{a}lisi Bayesiana pel par\`{a}metre p d'una
+distribuci\'{o} Binomial}
+
+$X\thicksim B\left( n,p\right) $; n =15; x = 8.
+\begin{equation*}
+\begin{tabular}{||c|c|c|c|c|c||}\hline\hline
+Valors& Prob. & Versemblan\c{c}a & Distribució& Prob. & Prob. \\
+de p & a priori & de la mostra & Conjunta & marginal & a
+posteriori \\ \hline
+$\theta _{\text{\textexclamdown }}$ & $\pi \left( \theta _{\text{%
+\textexclamdown }}\right) $ & p$\left( x/\theta _{\text{\textexclamdown }%
+}\right) $ & p$\left( x,\theta _{\text{\textexclamdown }}\right) $ & p$%
+\left( x\right) $ & p$\left( \theta _{\text{\textexclamdown
+}}/x\right) $ \\\hline
+0.30 & 0.40 & 0.03477 & 0.013908 & 0.075304 & 0.185 \\
+0.35 & 0.30 & 0.07104 & 0.021311 & 0.075304 & 0.283 \\
+0.40 & 0.20 & 0.11806 & 0.023611 & 0.075304 & 0.314 \\
+0.45 & 0.10 & 0.16474 & 0.016474 & 0.075304 & 0.219 \\
+& 1.00 &  & 0.075304 & 0.075304 & 1.000 \\
+\hline\hline
+\end{tabular}
+\end{equation*}
+\end{example}
+
+\subsection{Estimaci\'{o} Bayesiana}
+
+L'enfoc Bayessia dels problemes d'estimaci\'{o} consisteix en
+basar-se en
+\emph{la distribuci\'{o} a posteriori} per fer infer\`{e}ncies \ sobre el par%
+\`{a}metre, entenent que aquesta \'{e}s la que t\'{e} el m\`{a}xim
+d'informaci\'{o}, en el sentit que reuneix el grau previ de
+creencia amb l'evidencia proporcionada per la mostra.
+
+Ja hem vist que la utilitzaci\'{o} del risc de Bayes per trobar
+estimadors optims pot ser complicada i per tant, mirem de trobar
+condicions equivalents a la minimitzaci\'{o} del risc de Bayes.
+
+Una reescritura convenient del risc de Bayes ens dur\`{a} a la
+condici\'{o} que ens interessa.
+
+Observem que amb la notaci\'{o} que hem donat podem definir el
+\emph{Risc a Posteriori }com l'esperan\c{c}a de la funci\'{o}
+p\`{e}rdua respecte la \emph{llei a posteriori }i.e.
+\begin{equation*}
+R\left( t/x\right) =\int_{\pi }L\left( t,\theta \right) \pi
+\left( \theta /x\right) d\theta
+\end{equation*}
+\bigskip
+
+La possibilitat de \ basar-nos en el risc a posteriori per obtenir
+l'estimador de Bayes la dona el teorema seg\"{u}ent que
+enunciarem sense demostraci\'{o}:
+
+\begin{theorem}
+Sigui $X\sim F_{\theta }$ $\theta \in \Theta $ un model estad\'{i}stic i $%
+\pi \left( \theta \right) $ una dsitribuci\'{o} de probabilitat \
+a priori per $\theta .$ Sigui $t$ la classe dels estimadors de
+$\theta $ :
+\end{theorem}
+
+\begin{enumerate}
+\item Si $\forall $ mostra $x$ t.q. $f\left( x\right) $ $\left[
+=\int_{\Theta }f\left( x/\theta \right) \pi \left( \theta \right)
+d\theta \right]$ $\rangle $ $0$ un estimador $T$ de $\theta $
+minimitza en la classe $t$ el risc a posteriori i, a m\'{e}s a m\'{e}s, \ existeix el risc de Bayes $%
+\left( \inf R_{\pi }\left( T\right) \right) $ aleshores $T$ \'{e}s
+l'estimador de Bayes de $\theta $
+\item Si en el cas anterior s'escull una funci\'{o} de p\`{e}rdua
+adient es pot determinar l'estimador de Bayes sense haver de
+rec\'{o}rrer a calcular i minimitzar el risc a posteriori sino a
+partir nom\'{e}s de la distribuci\'{o} a posterior. En concret si
+agafem $L\left( \theta ,t\right) $ aleshores $T$ es:
+\begin{eqnarray*}
+&&\left( \theta -t^{2}\right) \rightarrow T= \text{Mitjana (
+Esperan\c{c}a matem\`{a}tica) de} \pi \left( \theta /x\right)\\
+&&\left| \theta -t\right| \rightarrow  \ T= \text{Mediana de} \pi
+\left( \theta /x\right)\\
+&&\left\{\begin{array}{c}
+0\text{ si }t=0 \\
+1\text{ si }t\neq 0
+\end{array}
+\right\} \text{Moda de } \pi \left( \theta /x\right)
+\end{eqnarray*}
+\end{enumerate}
+
+\begin{example}
+Continuant amb l'exemple anterior podem avaluar la mitjana de la
+distribuci\'{o} posterior (Estimador de Bayes)
+\begin{equation*}
+\begin{tabular}{llll}
+Valors de p & Prob. a priori & Prob. a posteriori & Esperan\c{c}a
+D.
+Posterior \\
+$\theta _{\text{\textexclamdown }}$ & $\pi \left( \theta _{\text{%
+\textexclamdown }}\right) $ & p$\left( \theta _{\text{\textexclamdown }%
+}/x\right) $ & 0.055408 \\
+0.30 & 0.40 & 0.185 & 0.099051 \\
+0.35 & 0.30 & 0.283 & 0.125418 \\
+0.40 & 0.20 & 0.314 & 0.098442 \\
+0.45 & 0.10 & 0.219 & 0.378319 \\
+& 1.00 & 1.000 &
+\end{tabular}
+\end{equation*}
+de forma que tenim
+\begin{equation*}
+\begin{tabular}{ll}
+Estimador del m\`{a}xim de versemblan\c{c}a: 8/15 & 0.533333 \\
+Estimador de Bayes (Mitjana D. Posterior) & 0.378319
+\end{tabular}
+\end{equation*}
+\end{example}
+
+\begin{example}
+La proporci\'{o} de peces defectuoses produ\"{i}des per una
+m\`{a}quina en un dia es $p$. Cada dia $p$ roman constant
+per\`{o} varia d'un dia a l'altre segons certa llei de
+probabilitat. S'examinen $n$ peces i se n'obtenen $k$ de
+defectuoses. Per estimar $p$ considerarem dues distribucions
+prioprs diferents, i per cada una agafarem una funció de pèrdua
+diferent. Com podrem veure els resultats no són molt diferents
+entre ells, la qual cosa és un argument a favor de la robustesa
+d'aquesta metodologia.
+\begin{enumerate}
+\item
+\begin{eqnarray*}
+f\left( p\right) &=&1\qquad 0<p<1,\text{uniforme en (0,1)} \\
+L\left( \hat{p},p\right) &=&p\left( \hat{p}-p\right) ^{2}
+\end{eqnarray*}
+\item
+\begin{eqnarray*}
+f\left( p\right) &=&3p^{2}\qquad 0<p<1 \\
+L\left( \hat{p},p\right) &=&\left( \hat{p}-p\right) ^{2}
+\end{eqnarray*}
+\end{enumerate}
+
+Ho resoldrem per dos camins diferents:
+
+\begin{enumerate}
+\item  En el primer cas, buscarem el valor que faci m\'{i}nim el risc
+posterior $R_{\pi }\left( t\right) $
+
+\item  En el segon cas, obtindrem la llei posterior i calcularem directament
+$E_{\pi }\left( \theta /X=x\right) =T^{\ast }\left( x\right) $
+(Aqu\'{i} ho
+podem fer ja que $L\left( \hat{p},p\right) $ \'{e}s la funci\'{o} p quadr%
+\`{a}tica)
+\end{enumerate}
+
+\paragraph{Comencem pel primer cas:}
+
+$W=f\left( p\right) =1\qquad 0<p<1$
+
+$L\left( X/\theta \right) =g\left( k/p\right)
+=\binom{n}{k}p^{k}\left( 1-p\right) ^{n-k}\qquad k=0,1....n$
+
+Calcularem la \emph{Llei a posteriori:}
+
+\begin{equation*}
+L\left( \theta /X=\breve{x}\right) =h\left( p/k\right)
+=\frac{g\left( k/p\right) \cdot f\left( p\right)
+}{\int_{0}^{1}g\left( k/p\right) \cdot f\left( p\right) dp}=
+\end{equation*}
+
+( pas directe $\Rightarrow $)
+\begin{equation*}
+=\frac{p^{k}\left( 1-p\right) ^{n-k}}{\frac{k!\left( n-k\right)
+!}{\left(
+k+n-k+1\right) }}=\frac{\left( n+1\right) !}{k!\left( n-k\right) !}%
+p^{k}q^{n-k}
+\end{equation*}
+
+En base a la integral:
+\begin{equation*}
+\left\{ \int_{0}^{1}x^{n}\left( 1-x\right)
+^{m}dx=\frac{n!m!}{\left( n+m+1\right) !}\right\} \text{ Aix\`{o}
+\'{e}s una funci\'{o} beta }\beta \left( n-1,m-1\right)
+\end{equation*}
+tenim que:
+\begin{equation*}
+h\left( p/k\right) =\frac{\left( n+1\right) !}{k!\left( n-k\right) !}%
+p^{k}\left( 1-p\right) ^{n-k}
+\end{equation*}
+\'{e}s la\emph{\ llei a posteriori.}
+
+\paragraph{Risc a Posteriori per a la Llei de funci\'{o} de perdua\protect:}
+
+$L_{1}\left( \hat{p},p\right) =p\left( \hat{p}-p\right) ^{2}$ \
+\'{e}s la integral de la \emph{funci\'{o} de perdua }respecte la
+\emph{llei a posteriori}
+
+\begin{eqnarray*}
+R_{h}\left( \hat{p}/k\right) &=&\int_{0}^{1}p\left(
+\hat{p}-p\right) ^{2}\cdot p\cdot p^{k}\left( 1-p\right)
+^{n-k}dp=\\
+&=&\frac{\left( n+1\right) !}{k!\left( n-k\right) !}\int_{0}^{1}\left( \hat{p}%
+-p\right) ^{2}pp^{k}\left( 1-p\right) ^{n-k}dp=\\
+&=&\frac{\left( n+1\right) !}{k!\left( n-k\right) !}\int_{0}^{1}\left( \hat{p}%
+-p\right) p^{k+1}\left( 1-p\right) ^{n-k}dp=
+\end{eqnarray*}
+
+Derivant respecte $\hat{p}$ i igualant a zero, obtenim:
+\begin{equation*}
+\frac{\delta }{\delta \hat{p}}=\frac{\left( n+1\right) !}{k!\left(
+n-k\right) !}\int_{0}^{1}2\left( \hat{p}-p\right) p^{k+1}\left(
+1-p\right) ^{n-k}dp=0
+\end{equation*}
+llavors queda
+\begin{equation*}
+\frac{\left( n+1\right) !}{k!n-k!}\left[ 2\hat{p}%
+\int_{0}^{1}p^{k+1}q^{n-k}dp-2\int_{0}^{1}p^{k+2}q^{n-k}dp\right]
+=0
+\end{equation*}
+
+Podem avaluar, les dues integrals per la f\'{o}rmula anterior i per
+tant, a\"{i}llar $\hat{p}$ que val:
+
+\begin{equation*}
+\hat{p}=\frac{k+2}{n+3}
+\end{equation*}
+
+En el segon cas $W\left( p\right) =3p^{2}$ i $L\left( \hat{p}%
+,p\right) =\left( \hat{p}-p\right) ^{2}$ i per tant, podem obtenir
+directament l'estimador de Bayes calculant \emph{l'esperan\c{c}a
+de la distribuci\'{o} a posteriori:}
+
+\begin{equation*}
+h\left( p/k\right) =\frac{p^{k}\left( 1-p\right) ^{n-k}\left(
+3p^{2}\right)
+}{\int_{0}^{1}p^{k}\left( 1-p\right) ^{n-k}\left( 3p^{2}\right) dp}=\frac{%
+\left( n+3\right) !}{\left( k+2\right) !\left( n-k\right)
+!}p^{k+2}\left( 1-p\right) ^{n-k}
+\end{equation*}
+
+Ara:
+\begin{equation*}
+E_{\pi }\left( p/k\right) =\int_{0}^{1}ph\left( p/k\right)
+dp=\frac{\left(
+n+3\right) !}{\left( k+2\right) !\left( n-k\right) !}\int_{0}^{1}p^{k+3}%
+\left( 1-p\right) ^{n-k}dp=\frac{k+3}{n+4}
+\end{equation*}
+
+Com podem veure en tots dos casos hem obtingut estimacions
+semblants. A més a més, si $n$ (i $k$) són prou grans l'estimació
+no diferirà massa de l'estimació del màxim de versemblança que,
+per a aquest cas valdria $k/n$. Un dels avantatges d'aquests
+estimadors es veu precisament en mostre spetites, o per valors
+petits de $p$. En aquests casos, si $k=0$, l'estimador del màxim
+de versemblança val zero la qual cosa pot no tenir sentit, si
+sabem que $p>0$. Els estimadors de Bayes, en canvi, no valen zero
+en cap cas. Això es pot veure com un reflex d'una informació,
+disponible ``a priori'' que diu que $p$, és, com a mínim, no nul.
+\end{example}
+
+\subsection{Propietats dels estimadors de Bayes}
+
+Els estimadors de Bayes no s\'{o}n únicament òptims en el sentit
+de minimitzar el risc de Bayes. Tenen, tamb\'{e}, algunes propietats t\'{i}%
+piques d'optimalitat. Podeu veure-les més detallades al llibre de
+De Groot (\cite{DeGroot-88}).
+
+Si existeixen l'estimador de Bayes, aleshores verifica les
+propietats següents:
+\begin{enumerate}
+\item  Es consistent i es funci\'{o} de l'estad\'{i}stic suficient
+\item  Es eficient (té variància m\'{i}nima) o asimpt\`{o}ticament eficient
+\item  Es Asimpt\`{o}ticament normal
+\item  Per mostres grans coincideix (quasi segurament) amb l'estimador del màxim de
+versemblança.
+\end{enumerate}

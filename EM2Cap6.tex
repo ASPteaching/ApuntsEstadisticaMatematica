@@ -1,0 +1,933 @@
+\chapter{M\`{E}TODES DE CONSTRUCCI\'{O} DE TESTS}
+
+En el cap\'{\i}tol anterior hem presentat els conceptes b\`{a}sics de
+proves d'hip\`{o}tesis i hem vist que, donada la naturalesa
+antag\`{o}nica dels errors de tipus I i tipus II, l'ideal \'{e}s disposar
+de tests uniformement de m\`{a}xima pot\`{e}ncia. Tamb\'{e} hem vist que aix\`{o}
+nom\'{e}s \'{e}s possible en determinats casos, com quan ambdues
+hip\`{o}tesis s\'{o}n simples o sota certes restriccions sobre la fam\'{\i}lia
+de probabilitats (fam\'{\i}lies amb ra\'{o} de versemblan\c{c}a mon\`{o}tona) o
+sobre els tests (tests centrats en la fam\'{\i}lia exponencial
+uniparam\`{e}trica).
+
+En la pr\`{a}ctica desitgem disposar de m\`{e}todes generals per
+construir contrastos basats en principis raonables que permetin
+dissenyar tests adients en qualsevol circumst\`{a}ncia. En aquest
+cap\'{\i}tol considerarem dos d'aquests m\`{e}todes: \bit
+\item El test de la ra\'{o} de versemblances
+\item Els tests basats en intervals de confian\c{c}a
+\eit
+
+\section{El test de la ra\'{o} de versemblances}
+El {\em test de ra\'{o} de versemblances}\footnote{Aquesta part ha estat desenvolupada per la Dra. Marta Cubedo}, \'{e}s un m\`{e}tode general per
+construir tests (regions cr\'{\i}tiques) per a un problema qualsevol
+de contrast d'hip\`{o}tesis. T\'{e} l'inconvenient que no d\'{o}na lloc de
+forma autom\`{a}tica a tests UMP, tot i que, si existeix el test UMP
+per al problema en q\"{u}esti\'{o} llavors el test el proporciona. A
+canvi d'aquest inconvenient t\'{e} l'avantatge de ser for\c{c}a intu\"{\i}tiu
+i tenir bones propietats, asimpt\`{o}tiques, \'{e}s a dir funciona b\'{e}
+especialment amb mostres grans.
+
+Considerem un model estad\'{\i}stic $\modest$ i sigui
+$\,x=(x_{1},x_{2}, \cdots ,x_{n})\,$ una mostra aleat\`{o}ria simple
+d'una poblaci\'{o} amb densitat de probabilitat $\,f(x;\theta)\,$ on
+$\,\theta = ({\theta}_{1},\,{\theta}_{2}, \cdots
+,{\theta}_{k})\,$ es el vector de par\`{a}metres. Suposarem  endem\'{e}s
+que la funci\'{o} de veresemblan\c{c}a
+$$L(x;\theta )=f(x_{1};\theta ) \cdots f(x_{n};\theta )$$
+\'{e}s estrictament positiva $\,L(x;\theta) >0 \hspace{0.5cm} \forall
+x\in \Omega $
+
+%Recordem brevemente la definici¢n de {\bf estimador
+%m\'{a}ximo-veros\'{\i}mil}:
+%
+%\vspace{15pt} Dada la funci¢n de versemblan\c{c}a $\,L(x;\theta)\,$
+%escogeremos la aproximaci¢n del par\'{a}metro desconocido
+%$\,\theta\,$ que haga m\'{a}ximo el valor de $\,L(x;\theta)$.
+%
+%\vspace{12pt}
+%Para ello, suponiendo $\,L\,$ diferenciable respecto a $\,\theta\,$ y
+%sin un m\'{a}ximo en la frontera del dominio, obtendremos la estimaci¢n
+%m\'{a}ximo-veros\'{\i}mil resolviendo el sistema de ecuaciones:
+%
+%\vspace{10pt}
+%$$\left\{ \begin{array}{lll}
+%{\displaystyle \frac{\partial L}{\partial {\theta}_{1}}} & = & 0 \\
+%           \vdots                                   &   &    \\
+%{\displaystyle \frac{\partial L}{\partial {\theta}_{k}}} & = & 0
+%          \end{array} \right.  $$
+%
+%$$\left\{ \begin{array}{lll}
+%{\displaystyle \frac{\partial \ln{L}}{\partial {\theta}_{1}}} & = & 0 \\
+%           \vdots                                        &   &    \\
+%{\displaystyle \frac{\partial \ln{L}}{\partial {\theta}_{k}}} & = & 0
+%          \end{array} \right.  $$
+% El valor resultante $\,\hat {\theta}\,$ ser\'{a} un m\'{a}ximo si la
+%matriz Hessiana es definida ne\-ga\-ti\-va.
+%
+%\vspace{15pt} En la pr\'{a}ctica se obtiene as\'{\i} dado que el m\'{a}ximo
+%del logaritmo de la funci¢n de versemblan\c{c}a suele ser m\'{a}s
+%manejable y, al ser el logaritmo una funci¢n mon¢tona, el
+%resultado es el mismo que sin el logaritmo.
+%
+%\vspace{15pt}
+
+Donada una partici\'{o} de l'espai de par\`{a}metres $\,\Theta =
+{\Theta}_{0} \cup {\Theta}_{1}\,$ siguin:
+$$L(x;{\Theta}_{0})=\sup_{\theta \in {\Theta}_{0}} {L(x;\theta)}
+\hspace{1cm} L(x;\Theta)=\sup_{\theta \in \Theta} {L(x;\theta)}$$
+\begin{definition}
+Donat un model estad\'{\i}stic, $\modest$ i un problema de contrast
+d'hip\`{o}tesis sobre $\Theta$, $H_0:\ \theta \in\Theta_0$, $H_1:\
+\theta \in(\Theta-\Theta_0)=\Theta_1$, s'anomena ra\'{o} de
+versemblances al quocient
+$$\Lambda {(x)}=\frac{L(x;{\Theta}_{0})}{L(x;\Theta)}.$$
+Observi's que $\,0 \leq \Lambda (x)\leq 1$.
+\end{definition}
+
+\subsection{Construcci\'{o} de tests de ra\'{o} de versemblances}
+
+Sigui $\,H_{0}\,$ la hip\`{o}tesis que es vol provar. Com ja hem vist
+$\, H_{0}\,$ imposa certes restriccions sobre els valors de
+$\,\theta\,$ i determina un subconjunt de $\,\Theta\,$ que
+representarem per $\,{\Theta}_{0}\,$.
+
+Recordem que, donada una m.a.s. $\,x=(x_{1}, \cdots , x_{n})\,$ la
+funci\'{o} de versemblan\c{c}a corresponent \'{e}s:
+$$L(x;\theta)=f(x_{1};\theta) \cdots f(x_{n};\theta)$$
+on suposem fixes els valors mostrals $\,x_{i}, \,\, i=1, \cdots
+,n\,$ i fem variar $\,\theta\,$ sobre $\,\Theta\,$ podrem
+calcular el suprem de la funci\'{o} de versemblan\c{c}a, que amb la
+notaci\'{o} definida anteriorment
+$$L(x;\Theta)=\sup_{\theta \in \Theta} {L(x;\theta)}.$$
+Fent el mateix amb $\,{\Theta}_{0}\,$ i el suprem de la funci\'{o} de
+versemblan\c{c}a restringit a $\,{\Theta}_{0}\,$ es representar\`{a} com:
+$$L(x;{\Theta}_{0})=\sup_{\theta \in {\Theta}_{0}} {L(x;\theta)}.$$
+En la pr\`{a}ctica els ``suprems'' de les expressions anteriors seran
+els ``m\`{a}xims'' i s'obtindran a partir del c\`{a}lcul dels m\`{a}xims d'una
+funci\'{o} real i, en el caso del subespai $\,\Theta_0 \,$, de m\`{a}xims
+amb restriccions.
+
+La idea que fa que aquest test sigui for\c{c}a intu\"{\i}tiu \'{e}s la
+seg\"{u}ent: Si per a una mostra donada el valor de
+$\,{\Lambda}(x)\,$ es gran (pr\`{o}xim a 1), tindrem que el valor de
+$\,L(x;{\Theta}_{0})\,$ ser\`{a} pr\`{o}xim al valor de $\,L(x;\Theta)\,$.
+Aix\`{o} voldr\`{a} dir que no podrem obtenir un valor massa m\'{e}s gran de
+$\,L(x;\theta)\,$ al buscar $\,\theta\,$ en tot l'espai de
+par\`{a}metres $\,\Theta\,$, del que es pugui obtenir buscant
+$\,\theta\,$ en $\,{\Theta}_{0}\,$. Quan aix\`{o} sigui aix\'{\i} ser\`{a}
+indicatiu de que la hip\`{o}tesi nul.la $\,H_{0}\,$ \'{e}s certa.
+
+En vista de l'anterior podem donar la definici\'{o} seg\"{u}ent:
+\begin{definition}
+El test de ra\'{o} de versemblances que contrasta les hip\`{o}tesis:
+
+\vspace{10pt} \hspace{0.5cm}$H_{0}:\,\theta \in {\Theta}_{0}$
+\hspace{0.5cm} contra \hspace{0.5cm} $H_{1}:\,\theta \in
+{\Theta}_{1}=\Theta \setminus {\Theta}_{0}$ \vspace{12pt} al
+nivell de significaci\'{o} $\,\alpha \in (0,1)\,$ \'{e}s el que t\'{e} com
+regi\'{o} cr\'{\i}tica:
+$$W_{\alpha}=\{ x, \,\,\, \Lambda (x) < c_{\alpha} \},$$
+on $\,c_{\alpha}\,$ es determina de manera que l'error de primera
+esp\`{e}cie sigui menor o igual que $\,\alpha\,$, \'{e}s a dir:
+$$P_{\theta} (W_{\alpha}) \leq \alpha, \hspace{0.5cm} \forall \theta \in
+{\Theta}_{0}$$ (Probabilitat de rebutjar $H_{0}$ quan \'{e}s certa
+$\leq \alpha$).
+\end {definition}
+
+\subsubsection{Observacions}
+
+\begin{enumerate}
+\item At\`{e}s que $\,0 \leq \Lambda (x) \leq 1\,$, tamb\'{e} es t\'{e} que
+    $\,0 \leq c_{\alpha} \leq 1$.
+\item Si el model estad\'{\i}stic \'{e}s tal que existeix l'estimador
+del m\`{a}xim de versemblan\c{c}a  $\,\hat{\theta} (x)\,$ per a
+$\,\theta\,$, llavors el denominador de $\,\Lambda (x)\,$ ser\`{a}
+$\,L(x;\Theta)= L(x;\hat {\theta} (x))\,$ i en el numerador es
+considerar\`{a} l'estimador del m\`{a}xim de versemblan\c{c}a restringit a
+$\,{\Theta}_{0}$.
+\item Si considerem $\,{\Theta}_{0}=\{ {\theta}_{0} \} \,$ i
+$\,{\Theta}_{1}=\{ {\theta}_{1} \} \,$ aleshores el test de la
+ra\'{o} de versemblances coincideix amb el que obtindr\'{\i}em aplicant el
+m\`{e}tode de Neyman-Pearson (podeu veure'n la prova en l'appendix d'aquest cap\'{\i}tol).
+
+\end{enumerate}
+
+
+\begin{example}\textbf{Contrast per a la mitjana d'una poblaci\'{o} normal amb vari\`{a}ncia desconeguda}
+
+Considerem una m.a.s. de mida $\,n,\,$ $\,x=(x_{1},
+\cdots,x_{n})\,$  d'una variable aleat\`{o}ria $\,X\,$ que segueix
+una dis\-tri\-bu\-ci\'{o} $\,N({\mu} , {\sigma}^2)\,$.
+
+Es desitja contrastar la hip\`{o}tesi seg\"{u}ent:
+$$H_{0}:\mu={\mu}_{0}\, \hspace{0.5cm} \text{contra} \hspace{0.5cm}
+H_{1}:\mu \neq {\mu}_{0}.$$ Observem que \textbf{No es tracta
+d'hip\`{o}tesis simples} ja que:
+\begin{eqnarray*}
+\Theta&=&\left \{ \theta=(\mu,{\sigma}^2) \in {{\bf R}\times {\bf
+R}^{+}} \right \} \text{ i}\\
+{\Theta}_{0}&=&\left \{ \theta=({\mu}_{0},{\sigma}^{2}),\,\,
+{\sigma} \in {\bf R}^{+} \right \} \end{eqnarray*} Els estimadors
+del m\`{a}xim de versemblan\c{c}a s\'{o}n respectivament la mitjana i la
+vari\`{a}ncia mostrals. Tenim doncs que:
+$$L(x;\Theta)=L(x;\hat{\theta} (x))=L(x;(\bar{x}_{n},S_{n}))={\left[
+\frac{2\pi}{n} \sum_{i=1}^{n} {(x_{i}-\bar{x}_{n})^2}
+\right]}^{-\frac{n}{2}}e^{-\frac{n}{2}}$$ on
+$$\bar{x}_{n}=\frac{1}{n}\sum_{i=1}^{n} {x_{i}} \hspace{1cm}
+S_{n}=\frac{1}{n}\sum_{i=1}^{n} {(x_{i}-\bar{x}_{n})^2}$$ y at\`{e}s
+que
+$$L(x;(\mu , {\sigma}^2))=(2\pi {\sigma}^2)^{-\frac{n}{2}}exp \left[
+\frac{-1}{2{\sigma}^2}\sum_{i=1}^{n} {(x_{i}-\mu )^2} \right] $$
+el valor de $\,{\sigma}^2\,$ que maximitza la funci\'{o} fixada
+$\,\mu={\mu}_{0}\,$ \'{e}s:
+$$\frac{1}{n} \sum_{i=1}^{n} {(x_{i}-{\mu}_{0})^2} $$
+En conseq\"{u}\`{e}ncia:
+$$L(x;{\Theta}_{0})=L \left( x;({\mu}_{0},\frac{1}{n}\sum_{i=1}^{n}
+{(x_{i}-{\mu}_{0})^2})\right) =\left[ \frac{2\pi}{n}
+\sum_{i=1}^{n} {(x_{i}-{\mu}_{0})^2} \right]^{-\frac{n}{2}}
+e^{-\frac{n}{2}}$$ i la ra\'{o} de versemblances quedar\`{a}:
+$$\Lambda (x)=\left[ \displaystyle{ \frac{\sum_{i=1}^{n}
+{(x_{i}-{\mu}_{0})^2}}{\sum_{i=1}^{n} {(x_{i}-\bar{x}_{n})^2}} }
+\right]^{-\frac{n}{2}}$$
+
+Per tal de poder determinar la regi\'{o} cr\'{\i}tica $\,W\,$ del test
+interessa escriure $\,\Lambda (x)\,$ en termes d'un estad\'{\i}stic
+tal que, sota la hip\`{o}tesis nul.la $\,H_{0}\,$ tingui distribuci\'{o}
+coneguda. Amb aquest objetiu considerem la descomposici\'{o} seg\"{u}ent:
+$$\sum_{i=1}^{n} {(x_{i}-{\mu}_{0})^2}=\sum_{i=1}^{n}
+{(x_{i}-\bar{x}_{n})^2} + n(\bar{x}_{n}-{\mu}_{0})^2 $$
+llavors
+$$\Lambda (x)=\left( 1+n\displaystyle{
+\frac{(\bar{x}_{n}-{\mu}_{0})^2}{\sum_{i=1}^{n}
+{(x_{i}-\bar{x}_{n})^2}} }\right)^{-\frac{n}{2}}=\left(
+1+{\displaystyle \frac{t^{2}(x)}{n-1}} \right)^{-\frac{n}{2}}$$
+on
+ $$\, t(x)=\sqrt{n} {\displaystyle
+\frac{\bar{x}_{n}-{\mu}_{0}}{\displaystyle \left(
+\frac{\sum_{i=1}^{n} {(x_{i}-\bar{x}_{n})^2}}{n-1}
+\right)^{\frac{1}{2}} }}\,$$ t\'{e}, segons el teorema de Fisher i
+sota $\,H_{0}\,$, una distribuci\'{o} $t$ de Student amb (n-1) graus
+de llibertat.
+
+Com hem vist en el cap\'{\i}tol anterior (de fet com no hem vist) per
+a aquest contrast no existeix un test UMP ni UMP sense biaix. La
+regi\'{o} cr\'{\i}tica que resulta del test de la ra\'{o} de versemblances \'{e}s
+la seg\"{u}ent:
+$$\begin{array}{lll}
+W_{\alpha} & = & \left\{ x,\,\,{\Lambda}(x) < c_{\alpha}\right\} \\
+      &   &                                          \\
+      & = & \left \{ x,\,\, \left( 1+{\displaystyle
+\frac{t^{2}(x)}{n-1}} \right)^{-\frac{n}{2}} < c_{\alpha} \right
+\}
+\\
+      &   &                                              \\
+      & = & \left \{ x,\,\, {\displaystyle \frac{1}{c_{\alpha}}} <
+\left( 1+{\displaystyle
+\frac{t^{2}(x)}{n-1}} \right)^{\frac{n}{2}}  \right \}           \\
+  &   &                                                  \\
+  & = & \left \{ x,\,\, \left [ {\left (
+{\displaystyle \frac{1}{c_{\alpha}}} \right )^{\frac{2}{n}}-1
+}\right ](n-1) < t^{2}(x)
+\right \} \\
+  &   &                                                     \\
+  & = & \left \{ x,\,\, \left [ {\left (
+{\displaystyle \frac{1}{c_{\alpha}} } \right )^{\frac{2}{n}}-1 }
+\right ]^{\frac{1}{2}}(n-1)^{\frac{1}{2}} < |t(x)| \right \}
+\end{array}$$
+
+Diguem:  $$\,\,t_{\alpha}=\left [ \left ( {\displaystyle
+\frac{1}{c_{\alpha}}} \right )^{\frac{2}{n}}-1 \right
+]^{\frac{1}{2}}(n-1)^{\frac{1}{2}}$$ Llavors tindrem:
+$$\begin{array}{lll}
+W_{\alpha} & = & \left \{ x,\,\, |t(x)| > t_{\alpha} \right \}  \\
+&   &                                                         \\
+& = & \left\{ x,\,\, -t_{\alpha} > t(x) \right\} \cup \left\{
+x,\,\, t(x) > t_{\alpha} \right\}
+\end{array}$$
+on $\,t_{\alpha}\,$ es determina de manera que $\,P\left(
+|t_{n-1}| > t_{\alpha} \right) =\alpha \,$ on $\,\alpha \,$ \'{e}s el
+nivell de significaci\'{o} del test i $\,t_{n-1}\,$ \'{e}s la distribuci\'{o}
+t de Student amb (n-1) graus de llibertat.
+\end{example}
+
+
+\subsection{Propietats asimpt\`{o}tiques}
+
+Hem vist que el test de la ra\'{o} de versemblances dona lloc a la
+regi\'{o} cr\'{\i}tica:$$W_{\alpha}=\left \{x,\,\, \Lambda (x) < c_{\alpha}
+\right \}$$ Per determinar $\,c_{\alpha}\,$ de manera que
+$\,P_{\theta}(W_{\alpha}) \leq {\alpha}\,$, con $\,{\theta} \in
+{\Theta}_{0}\,$, cal con\`{e}ixer la distribuci\'{o} de l'estad\'{\i}stic
+$\,\Lambda (x)\,$.
+\bit
+\item En alguns casos $\,\Lambda (x)\,$,
+o una transformaci\'{o} seva, segueix (sota $\,H_{0}\,$) una
+distribuci\'{o} coneguda: t de Student, F de Fisher, etc., i el
+problema de determinar el valor de $\,c_{\alpha}\,$ queda resolt
+buscant-lo en les taules de la distribuci\'{o} corresponent.
+\item Quan no \'{e}s possible assimilar la distribuci\'{o} de $\,\Lambda (x)\,$
+a cap distribuci\'{o} coneguda podem fer servir el teorema que
+s'enuncia a continuaci\'{o}. \eit
+\begin{theorem}
+\textbf{Teorema de Wilks} Sigui $\,r\,$ la dimensi\'{o} de
+$\,{\Theta}_{0}\,$ (subconjunt de ${\Real}^r$ corresponent al
+subespai sota la hip\`{o}tesi nul.la ) i $\,k\,$ la dimensi\'{o} de
+$\,\Theta\,$ (subconjunt de ${\Real}^k$ corresponent a l'espai
+total de par\`{a}metres). \newline Sota certes condicions de
+regularitat, si la hip\`{o}tesis $\,H_{0}\,$ \'{e}s certa es t\'{e} que
+l'estad\'{\i}stic:
+$$U(x)= -2\ln {(\Lambda (x))}$$
+convergeix en llei cap a una $\,{\chi}^{2}_{k-r}\,$ quan la mida
+mostral $\,n\,$ tendeix a infinit.
+\end{theorem}
+
+L'aplicaci\'{o} d'aquest teorema consisteix en que permet obtenir una
+aproximaci\'{o} del valor $\,c_{\alpha}\,$ tal que $\,\Lambda (x) <
+c_{\alpha}\,$. Si apliquem logaritmes i multipliquem por (-2)
+obtenim:
+$$-2\ln {(\Lambda (x))} > -2\ln {(c_{\alpha})}.$$
+Si indiquem $\,{\chi}^{2}_{\alpha}=-2\ln {(c_{\alpha})}\,$ la
+regi\'{o} cr\'{\i}tica quedar\`{a} transformada de la forma seg\"{u}ent:
+$$W_{\alpha}=\left \{  x,\,\, U(x) > {\chi}^{2}_{\alpha} \right \}$$
+on $\,{\chi}^{2}_{\alpha}\,$ es busca en les taules de la
+$\,{\chi}^{2}_{k-r}\,$ amb un nivell de significaci\'{o} $\,\alpha$.
+
+Cal tenir en compte que aquest \'{e}s un resultat asimpt\`{o}tic, i per
+tant, el teorema de Wilks nom\'{e}s es podr\`{a} aplicar en els casos en
+que la mida mostral sigui gran.
+
+\subsection{Exemples}
+\begin{example}
+Considerem el model estad\'{\i}stic associat a una m.a.s. de mida $\,n,\,$ $\,x=(x_{1}, \cdots,x_{n})\,$  d'una variable aleatoria $\,X\,$ que segueix  una dis\-tri\-bu\-ci\'{o}
+de Bernouilli de par\`{a}metre $(p)$.
+
+Volem contrastar la hip\`{o}tesi seg\"{u}ent:
+$$H_{0}:p=p_{0}\, \hspace{0.5cm} \text{contra} \hspace{0.5cm} H_{1}:p \neq p_{0}$$
+Es tracta d'una hip\`{o}tesis simple contra una hip\`{o}tesi composta ja que
+ $\Theta=\left \{ p \in (0,1)\right \}$ i ${\Theta}_{0}=\left \{ p_{0} \right \}$
+
+L'estimador del m\`{a}xim de versemblan\c{c}a \'{e}s la mitjana mostral
+$\,\bar{x}_{n}\,$ que en aquest cas representa la freq\"{u}\`{e}ncia
+relativa d'aparici\'{o} d'un esdeveniment amb probabilitat $\,p\,$. Aix\'{\i} doncs s'obti\'{e} que:
+$$L(x;\Theta)=L(x;\hat{p} (x))=L(x;\bar{x}_{n})=
+{\bar{x}_{n}}^{n\bar{x}_{n}}(1 - \bar{x}_{n})^{n-n\bar{x}_{n}}$$
+on: $\,\bar{x}_{n}=\frac{1}{n}\sum_{i=1}^{n} {x_{i}},$, como en l'exemple 1, i sota la hip\`{o}tesi nul.la:
+$$L(x;{\Theta}_{0})=L \left( x;p_{0} \right)
+= {p_{0}}^{n\bar{x}_{n}}(1-p_{0})^{n-n\bar{x}_{n}}$$
+i la ra\'{o} de versemblances quedar\'{a}:
+$$\Lambda (x)=\displaystyle{ \left( \frac{p_{0}}{\bar{x}_{n}}
+\right)^{n\bar{x}_{n}} \left( \frac{1-p_0}{1-\bar{x}_n}
+\right)^{n-n\bar{x}_n} }$$
+Per  poder determinar la regi\'{o} cr\'{\i}tica $\,W\,$ del
+test de ra\'{o} de versemblances , interessa escriure
+$\,\Lambda (x)\,$ en termes d'un estad\'{\i}stic tal que, sota la
+hip\`{o}tesis nul.la $\,H_{0}\,$ tengui distribuci\'{o} coneguda i
+calcular:
+$$P \left[ \Lambda(x)={\displaystyle \left( \frac{p_{0}}{\bar{x}_{n}}
+\right)^{n\bar{x}_{n}} \left( \frac{1-p_0}{1-\bar{x}_n}
+\right)^{n-n\bar{x}_n}} < c_{\alpha} \right] \leq \alpha $$
+
+Podr\'{\i}em mirar d'analitzar la distribuci\'{o} de
+$\,\Lambda (x) \,$ o d'una funci\'{o} mon\'{o}tona d'ella, per\`{o}
+como aix\`{o} no \'{e}s senzill podems fer servir l'aproximaci\'{o}
+donada pel teorema de Wilks:
+$$-2\ln {(\Lambda (x))}
+\stackrel{n\rightarrow \infty}{\longrightarrow} {\chi}^{2}_{1}$$
+i la regi\'{o} cr\'{\i}tica queda:
+$$W_{\alpha}=\left\{ x,\,\,\,
+-2\ln {(\Lambda (x))}
+> {\chi}^{2}_{1;\alpha} \right\}$$
+on $\,{\chi}^{2}_{1;\alpha}\,$ es busca en les
+taules de la distribuci\'{o} $\,{\chi}^{2}_{1}\,$ de manera que deixi
+una cua a la dreta d'\`{a}rea $\,\alpha\,$.
+\end{example}
+
+\begin{example}
+Sigui $\,x_{1}, \cdots ,x_{n_{1}}\,$ una mostra aleat\`{o}ria
+simple d'una variable aleat\`{o}ria $\,X\,$ amb distribuci\'{o}
+Poisson$\,({\lambda}_{1} )\,$  i sigui $\,y_{1}, \cdots
+,y_{n_{2}}\,$  una mostra aleatoria simple de la variable
+$\,Y\,$ amb distribuci\'{o} Poisson$\,({\lambda}_{2})\,$.
+
+Volem contrastar:
+\begin{eqnarray*}
+H_{0}&&:\ {\lambda}_{1} =  {\lambda}_{2}\\
+H_{1}&&:\ {\lambda}_{1}\neq {\lambda}_{2}
+\end{eqnarray*}
+ Podemos considerar els seg\"{u}ents espais de par\`{a}metres:
+\begin{eqnarray*}
+\Theta &=& \left \{ ({\lambda}_{1},{\lambda}_{2})\,\, |
+\,\, {\lambda}_{1}>0, \,\, {\lambda}_{2}>0 \right \}\\
+{\Theta}_{0} &=& \left \{ (\lambda ,\lambda )\,\, | \,\, {\lambda}>0
+\right \}
+\end{eqnarray*}
+
+El contrast es pot formular llavors tamb\'{e}:
+\begin{eqnarray*}
+H_{0}&:&\,\, ({\lambda}_{1},{\lambda}_{2}) \in {\Theta}_{0}\\
+H_{1}&:&\,\, ({\lambda}_{1},{\lambda}_{2}) \in \Theta
+\setminus {\Theta}_{0}
+\end{eqnarray*}
+La funci\'{o} de versemblan\c{c}a per a la mostra
+$\,(x,y)=(x_{1}, \cdots ,x_{n_{1}},y_{1}, \cdots ,y_{n_{2}})\,$
+\'{e}s:
+$$L \left( (x,y);({\lambda}_{1},{\lambda}_{2}) \right) =
+e^{-n_{1}{\lambda}_{1}}
+{\displaystyle \frac{{\lambda}_{1}^{\sum_{i=1}^{n_{1}}
+x_{i}} } {x_{1}! \cdots x_{n_{1}}!} }e^{-n_{2}{\lambda}_{2}}
+{\displaystyle \frac{{\lambda}_{2}^{\sum_{i=1}^{n_{2}} y_{i}} }{y_{1}!
+\cdots y_{n_{2}}!} } $$
+Resolent les equacions de versemblan\c{c}a:
+$${\displaystyle \frac{\partial{\ln L}}{\partial{{\lambda_{1}}}} }=0
+\hspace{1cm} {\displaystyle \frac{\partial{\ln
+L}}{\partial{{\lambda_{2}}}} }=0 $$
+s!`obt\'{e}:
+$$\hat{\lambda}_{1}=\bar{x}_{n_{1}}={\displaystyle \frac{1}{n_{1}}}
+\sum_{i=1}^{n_{1}} {x_{i}}
+\hspace{1.5cm}
+\hat{\lambda}_{2}=\bar{y}_{n_{2}}={\displaystyle \frac{1}{n_{2}}}
+\sum_{i=1}^{n_{2}} {y_{i}} $$
+Aleshores:
+$$L\left( (x,y);\Theta \right) =L\left( (x,y);(\hat{x},\hat{y})
+\right)
+=e^{-n_{1}\bar{x}_{n_{1}}}{\displaystyle
+\frac{\bar{x}_{n_{1}}^{n_{1}\bar{x}_{n_{1}}} }{x_{1}! \cdots
+x_{n_{1}}!}}
+e^{-n_{2}\bar{y}_{n_{2}}}
+{\displaystyle \frac{\bar{y}_{n_{2}}^{n_{2}\bar{y}_{n_{2}}}
+}{y_{1}! \cdots y_{n_{2}}!} }$$
+La funci\'{o} de versemblan\c{c}a en $\,{\Theta}_{0}\,$ \'{e}s:
+$$L\left( (x,y);(\lambda ,\lambda ) \right)=e^{-n\lambda}
+{\displaystyle \frac{{\lambda}^{({\sum_{i=1}^{n_1}
+x_{i}}+{\sum_{i=1}^{n_2} y_{i}})}}{x_{1}! \cdots
+x_{n_{1}}!\,y_{1}! \cdots y_{n_{2}}!}} \hspace{0.5cm} (n=n_{1}+n_{2})$$
+La soluci\'{o} de l'ecuaci\'{o} de versemblan\c{c}a \'{e}s, en aquest cas:
+$$\hat{\lambda}=\bar{z}={\displaystyle \frac{1}{n_{1}+n_{2}} }\left(
+{\sum_{i=1}^{n_{1}} x_{i}}+{\sum_{i=1}^{n_{2}} y_{i}} \right)$$
+Obtenim doncs:
+$$L\left( (x,y);{\Theta}_{0} \right)=e^{-n\bar{z}}
+{\displaystyle \frac{\bar{z}^{(n_{1}+n_{2})\bar{z}}} {x_{1}! \cdots
+x_{n_{1}}!\,y_{1}! \cdots y_{n_{2}}!} }$$
+i la ra\'{o} de versemblances queda:
+$$\Lambda (x,y)={\displaystyle \frac{L\left( (x,y);{\Theta}_{0}
+\right)}{L\left( (x,y);\Theta \right)} }
+={\displaystyle
+\frac{\bar{z}^{(n_{1}+n_{2})\bar{z}}}{\bar{x}^{n_{1}\bar{x}}
+\,\bar{y}^{n_{2}\bar{y}}} }$$
+Sabem, pel teorema de Wilks, que sota
+$\,H_{0}\,$ i per $\,n_{1}\,$ i $\,n_{2}\,$ grans, la
+distribuci\'{o} d'$\,U=-2\ln {(\lambda (x))}\,$ \'{e}s una
+$\,{\chi}^{2}\,$ amb $\,(dim{\Theta}-dim{{\Theta}_{0}}=2-1=1)\,$
+graus de llibertat.
+Per tant la regi\'{o} cr\'{\i}tica quedar\`{a}:
+$$W_{\alpha}=\left\{ (x,y) \,\, | \,\, -2\ln {\Lambda (x)} >
+{\chi}^{2}_{\alpha} \right\}$$
+i el valor de $\,{\chi}^{2}_{\alpha}\,$ es buscar\`{a} en
+la taula de la distribuci\'{o} $\,{\chi}^{2}_{1}$ .
+\end{example}
+
+
+\section{Contrastos basats en intervals de confian\c{c}a}
+
+Si es revisen els conceptes i exemples que hem vist fins ara
+sobre proves d'hip\`{o}tesis i intervals de confian\c{c}a veiem que hi ha
+una semblan\c{c}a. Anem a concretar aquesta relaci\'{o} i veure com podem
+fer servir un interval de confian\c{c}a per acceptar o rebutjar una
+hip\`{o}tesi.
+
+\subsection{Realitzaci\'{o} de proves d'hip\`{o}tesis a partir d'intervals
+de confian\c{c}a}
+Donat un model estad\'{\i}stic $\modest$,
+$\Theta\subset\Real$, i donat un valor $\theta_0 \in \Theta$
+volem contrastar la hip\`{o}tesis:
+\beqa
+H_0:&&\ \theta=\theta_0\\
+H_1:&&\ \theta\neq \theta_0.
+\eeqa
+Suposem que disposem d'un interval de confian\c{c}a de nivell
+$\gamma$ per a $\theta$, \'{e}s a dir una parella d'estad\'{\i}stics
+$T_1()$, $T_2()$ tals que, donada una mostra aleat\`{o}ria simple,
+$\bx$, d'$X$ es verifiqui:
+$$
+P_\theta\left\{\bx: \ \theta\in [T_1(\bx),T_2(\bx)]\right\}\geq
+\gamma ,\ \forall\theta\in\Theta.
+$$
+Aleshores el conjunt:
+$$
+A_0=\left\{\bx: T_1(\bx)\leq \theta_0\leq T_2(\bx)\right \}
+$$
+defineix la regi\'{o} d'acceptaci\'{o} d'un test amb nivell de
+significaci\'{o} $\alpha=1-\gamma$, o el que \'{e}s el mateix, el conjunt
+$$
+A_0^c=\left\{\bx: \left (\theta_0\leq T_1(\bx)\right) \bigcup
+\left (T_2(\bx) \geq \theta_0 \right)\right \},
+$$
+defineix la regi\'{o} cr\'{\i}tica d'un test de nivell de significaci\'{o}
+$\alpha=1-\gamma$. Que aix\`{o} \'{e}s aix\'{\i} \'{e}s immediat ´ja que $A_0^c$
+verifica la definici\'{o} de regi\'{o} cr\'{\i}tica:
+$$
+P_{\theta_0}(A_0^c)=1-P_{\theta_0}\left\{\bx: \theta_0\in
+[T_1(\bx),T_2(\bx)]\right \}\leq 1-\gamma.
+$$
+\begin{example}
+Sigui $\bX_1$, una mostra d'una poblaci\'{o} normal
+$N(\mu_1,\sigma_1)$ i $\bX_2$ una altra mostra provinent d'una
+poblaci\'{o} $N(\mu_2, \sigma_2)$ independent de l'anterior. El test
+\beqa
+H_0:&&\ \mu_1 =\mu_2\\
+H_1:&&\ \mu_1\neq\mu_2
+\eeqa
+\'{e}s equivalent a
+\beqa
+H_0:&&\ \mu_1 -\mu_2 =0 \\
+H_1:&&\ \mu_1 -\mu_2 \neq 0.
+\eeqa
+Si suposem les vari\`{a}ncies iguals, aleshores, com hem vist en el
+cap\'{\i}tol d'intervals de confian\c{c}a, l'expressi\'{o}
+$$
+\left(\overline{X}_1-\overline{X}_2\right) \pm t_{\frac \alpha 2}\sqrt{\dfrac{\hat{%
+S}_1^2}{n_1}+\dfrac{\hat{S}_2^2}{n_2}}
+$$
+\'{e}s un interval de confian\c{c}a per a la difer\`{e}ncia de mitjanes.
+Podem fer-lo servir per acceptar o rebutjar la hip\`{o}tesi
+d'igualtat de mitjanes de la manera seg\"{u}ent:
+\begin{itemize}
+\item Si l'interval cont\'{e} el 0 aleshores acceptarem la hip\`{o}tesis
+d'igualtat de mitjanes i
+\item Si l'interval no cont\'{e} el zero la rebutjarem.
+\end{itemize}
+\end{example}
+
+\begin{example}
+Sigui $\bX_1$, una mostra d'una poblaci\'{o} normal
+$N(\mu_1,\sigma_1)$ i $\bX_2$ una altra mostra provinent d'una
+poblaci\'{o} $N(\mu_2, \sigma_2)$ independent de l'anterior. El test
+\beqa
+H_0:&&\ \sigma_1\sp 2=\sigma_2\sp 2\\
+H_1:&&\ \sigma_1\sp 2\neq\sigma_2\sp 2
+\eeqa
+\'{e}s equivalent a
+\beqa
+H_0:&&\ \frac{\sigma_1\sp 2}{\sigma_2\sp 2}=1\\
+H_1:&&\ \frac{\sigma_1\sp 2}{\sigma_2\sp 2}\neq 1.
+\eeqa
+Donada una mostra aleat\`{o}ria simple d'$X$  indiquem per
+$\hat{S}_1^2$ i $\hat{S}_2^2$ les vari\`{a}ncies mostrals corregides
+aleshores, com hem vist en el cap\'{\i}tol d'intervals de confian\c{c}a,
+l'expressi\'{o}:
+$$
+\left( \frac{\hat{S}_1^2\left/ \hat{S}_2^2\right. }
+{F_{n_2-1,1-\alpha /2}^{n_1-1}},\frac{\hat{S}_1^2\left/
+\hat{S}_2^2\right. }{F_{n_2-1,\alpha /2}^{n_1-1}}\right),
+$$
+\'{e}s un interval de confian\c{c}a de nivell $1-\alpha$ per a la ra\'{o} de
+vari\`{a}ncies. Per fer-lo servir per acceptar o rebutjar la hip\`{o}tesi
+d'igualtat de vari\`{a}ncies procedirem de la manera seg\"{u}ent:
+\begin{itemize}
+\item Si, un cop constru\"{\i}t l'interval a partir de la mostra
+observem, que cont\'{e} l'1 aleshores acceptarem la hip\`{o}tesi
+d'igualtat de vari\`{a}ncies.
+\item Si l'interval no cont\'{e} l'1 la rebutjarem.
+\end{itemize}
+\end{example}
+
+\begin{example}
+En un estudi es va mesurar el greix
+corporal de 10 corredores i de 10 nadadores obtenint-se els
+resultats seg\"{u}ents:
+\vskip 0.5cm
+\begin{tabular}{|c|c|}
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  \hline
+  Corredores & 11.2 10.1 9.4 8.3 8.2 7.6 7.3 6.9 5.0 3.7 \\
+  Nedadores & 14.1 15.1 11.4 9.2 12.7 13.7 11.9 8.7 7.0 9.0
+ \\ \hline
+\end{tabular}
+\vskip 0.5cm
+Les mitjanes mostrals s\'{o}n 7.77 i 11.28
+respectivament i les vari\`{a}ncies mostrals s\'{o}n: 5.06 i 7.257.
+L'interval de confian\c{c}a al 90\% per a la ra\'{o} de vari\`{a}ncies \'{e}s:
+$(0.219431,\ 2.21743)$. Com aquest interval cont\'{e} l'1 podem
+acceptar que les dues mostres provenen de variables amb la
+mateixa vari\`{a}ncia. L'interval de confian\c{c}a per a la difer\`{e}ncia de
+mitjanes, suposades les vari\`{a}ncies iguals \'{e}s: $(-5.84247,
+-1.17753)$. Com l'interval no cont\'{e} el zero podem rebutjar la
+hip\`{o}tesis d'igualtat de mitjanes i decidir que les dues mitjanes
+s\'{o}n diferents
+
+Molts paquets inform\`{a}tics fan servir nom\'{e}s l'interval de
+confian\c{c}a per comparar les vari\`{a}ncies de poblacions normals. Per
+exemple el programa STATGRAPHICS d\'{o}na el llistat seg\"{u}ent, on es
+pot veure no nom\'{e}s l'\'{u}s de l'interval de confian\c{c}a per a la ra\'{o}
+de vari\`{a}ncies sin\'{o} tamb\'{e} l'\'{u}s de l'interval de confian\c{c}a per a la
+difer\`{e}ncia de mitjanes com alternativa a la prova d'hip\`{o}tesis.
+\begin{verbatim}
+                         Two-Sample Analysis Results
+------------------------------------------------------------------------
+                                        Sample 1     Sample 2     Pooled
+Sample Statistics: Number of Obs.       10           10             20
+                   Average              7.77         11.28        9.525
+                   Variance             5.06233      7.25733      6.15983
+                   Std. Deviation       2.24996      2.69394      2.4819
+                   Median               7.9          11.65        9.1
+
+Difference between Means = -3.51 Conf. Interval For Diff. in
+Means:      95    Percent
+ (Equal Vars.)    Sample 1 - Sample 2   -5.84247 -1.17753        18 D.F.
+ (Unequal Vars.)  Sample 1 - Sample 2   -5.84779 -1.17221      17.4 D.F.
+
+Ratio of Variances = 0.697547 Conf. Interval for Ratio of
+Variances:  90    Percent
+                  Sample 1   Sample 2   0.219431 2.21743      9    9 D.F.
+
+Hypothesis Test for H0: Diff = 0        Computed t statistic =
+-3.16233
+                       vs Alt: NE       Sig. Level = 5.3905E-3
+                    at Alpha = 0.05     so reject H0.
+
+\end{verbatim}
+\end{example}
+
+\subsection{Comparaci\'{o} entre intervals de confian\c{c}a i tests
+d'hip\`{o}tesis} Com hem vist la informaci\'{o} que d\'{o}na l'interval de
+confian\c{c}a t\'{e} una gran analogia amb la que d\'{o}na un test. Per
+exemple considerem els punts seg\"{u}ents:
+\vskip 0.5cm
+\begin{tabular}{||l|l|l||}
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  \hline\hline
+ & {\em Interval de confian\c{c}a} & {\em Test d'hip\`{o}tesis} \\ \hline
+ a)&Deixa de cobrir el par\`{a}metre & Error de tipus I \\\hline
+  b)&Recobreix valors incorrectes & Error de tipus II \\\hline
+  c)& Mida de mostra necess\`{a}ria per  & Mida de mostra necess\`{a}ria per  \\
+  & limitar la longitud de l'interval&assolir una pot\`{e}ncia donada \\
+  \hline\hline
+\end{tabular}
+\vskip 0.5cm
+
+La taula anterior suggereix que, donar un interval de confian\c{c}a
+pot ser m\'{e}s informatiu que donar el resultat d'un test si no es
+coneix l'aspecte de la funci\'{o} de pot\`{e}ncia d'aquest. \'{E}s a dir, amb
+l'interval ens fem una idea de la magnitud de l'error de tipus
+II, que no ens fem amb el test.
+
+La contrapartida de l'anterior es troba en els p-valors, que no
+tenen un equivalent immediat amb l'interval de confian\c{c}a.
+L'interval de confian\c{c}a \'{e}s equivalent al test tradicional
+``dicot\`{o}mic'' on la hip\`{o}tesi s'accepta (si l'interval recobreix
+el valor del par\`{a}metre que proposa la hip\`{o}tesi nul.la)  o es
+rebutja (si no el recobreix) sense poder quantificar la
+intensitat d'aquesta acceptaci\'{o} o rebuig. El p-valor, sense
+contrapartida en l'interval de confian\c{c}a, permet
+precisar m\'{e}s la conclusi\'{o}, donant un valor a partir del qual
+caldria fixar el nivell de significaci\'{o} per passar d'acceptar a
+rebutjar la hip\`{o}tesi.
+
+\section{Tests asimpt\`{o}tics}
+
+Alguns tests molt utilitzats en la pr\`{a}ctica es basen en
+estad\'{\i}stics de test dels quals no es coneix la distribuci\'{o} exacta
+sin\'{o} nom\'{e}s la seva distribuci\'{o} asimpt\`{o}tica. Podem donar la
+definici\'{o} seg\"{u}ent:
+\begin{definition}
+Un test d'hip\`{o}tesis s'anomena asimpt\`{o}tic si la seva regi\'{o}
+cr\'{\i}tica, $W_\alpha$ es construeix a partir d'alguna aproximaci\'{o}
+asimpt\`{o}tica, \'{e}s a dir si es verifica que:
+$$
+\lim_{n\rightarrow\infty}P\left\{\bx\in W_\alpha|H_0\right\}\leq
+\alpha,
+$$
+per totes aquelles mostres on la probabilitat anterior estigui
+definida.
+\end{definition}
+Els tests asimpt\`{o}tics s\'{o}n molt utilitzats en la pr\`{a}ctica, sovint
+amb mostres de mida no massa gran, la qual cosa fa que puguin
+derivar-se conclusions err\`{o}nies de la seva utilitzaci\'{o}. De manera
+informal podem diferenciar els seg\"{u}ents grups de tests
+asimpt\`{o}tics: \begin{enumerate}
+\item Tests derivats d'aproximacions normals basades en el teorema
+central del l\'{\i}mit. Els m\'{e}s coneguts s\'{o}n els contrastos per a la
+mitjana i la proporci\'{o} poblacionals en mostres de poblacions no
+normals.
+\item Tests de la ra\'{o} de versemblances, en aquells casos en que cal
+fer servir el teorema de Wilks, i altres tests
+equivalents com el test de Wald o el test dels ``scores'' de Rao.
+(veieu p.ex. Ruiz-Maya \cite{Ruiz-Maya-95}).
+\item Tests basats en la distribuci\'{o} $\chi^2$ per contrastar
+l'ajust d'unes dades a una distribuci\'{o} o per analitzar taules de
+conting\`{e}ncia. Aquests tests s'estudien en el cap\'{\i}tol
+\ref{capitol-khi-quadrat}.
+\item Alguns tests no param\`{e}trics per problemes d'una mostra o dues mostres.
+Sovint aquests tests tenen un equivalen asimpt\`{o}ticament normal
+que es pot fer servir quan la mida de la mostra \'{e}s prou gran.
+Aquests tests s'estudien en el cap\'{\i}tol
+\ref{capitol-No-Parametrica}
+\end{enumerate}
+
+\subsection{Tests asimpt\`{o}tics per poblacions normals}
+\begin{enumerate}
+\item Sigui $\Sample$ una m.a.s. d'una variable $X$ amb distribuci\'{o} \textbf{qualsevol}, esperan\c{c}a $\mu=EX$ i vari\`{a}ncia $\sigma^2$ coneguda. L'estad\'{\i}stic 
+$$
+Z=\frac{\ds{\bar{X}-\mu_0}}{\ds\sqrt{\sigma^2/n}} \cinlaw N(0,1).
+$$
+Per contrastar la hip\`{o}tesi $H_0:\mu=\mu_0$ enfront de 
+$\mu \neq \mu_0 $ (respectivament $\mu > \mu_0$, \ $\mu < \mu_0$) el test consistent en rebutjar $H_0$ si $|Z| > \zem$ (respectivament $Z   > \ze$,\ $Z<-\ze$) \'{e}s un test asimpt\`{o}tic de nivell $\alpha$.
+
+\item Sigui $\Sample$ una m.a.s. d'una variable $X$ amb distribuci\'{o} \textbf{qualsevol}, esperan\c{c}a $\mu=EX$ i vari\`{a}ncia $\sigma^2$ desconeguda. L'estad\'{\i}stic 
+$$
+Z=\frac{\ds{\bar{X}-\mu_0}}{\ds\sqrt{S^2/n}} \cinlaw N(0,1).
+$$
+Per contrastar la hip\`{o}tesi $H_0:\mu=\mu_0$ enfront de 
+$\mu \neq \mu_0 $ (respectivament $\mu > \mu_0$, \ $\mu < \mu_0$) el test consistent en rebutjar $H_0$ si $|Z| > \zem$ (respectivament $Z   > \ze$,\ $Z<-\ze$) \'{e}s un test asimpt\`{o}tic de nivell $\alpha$.
+\textbf{Atenci\'{o}:}L'aspecte d'aquest test \'{e}s el mateix que l'anterior, per\`{o} aqu\'{\i} no es coneix $\sigma$. La converg\`{e}ncia continua essent certa merces a l'aplicaci\'{o} del teorema de Slutsky\footnote {B\`{a}sicament aquest teorema estableix que si $X_n\cinlaw X$ i $Y_n\cinprob c \text{ (constant)}$  aleshores $Y_n X_n \cinlaw cY$ (veure Sanz, M. (\cite{Sanz-99}))}:
+$$
+\left\{ \begin{array}{l}
+Z=\frac{\ds{\bar{X}-\mu_0}}{\ds\sqrt{\sigma^2/n}} \cinlaw N(0,1)\\
+S^2\cinprob \sigma^2
+\end{array}\right.\Longrightarrow_{Slutsky}
+Z=\frac{\ds{\bar{X}-\mu_0}}{\ds\sqrt{S^2/n}} \cinlaw N(0,1).
+$$
+En la pr\`{a}ctica el que vol dir aix\`{o} \'{e}s que, per poder fer servir aquesta doble aproximaci\'{o} caldr\`{a} que la mostra sigui for\c{c}a gran (potser $n>100$ enlloc de l'usual $n>30$.
+
+\item Sigui $\Sample$ una m.a.s. d'una variable $X$ amb distribuci\'{o} binomial $B(n,p)$. Sigui $p_0\in (0,1)$. L'estad\'{\i}stic 
+$$
+Z=\frac{\ds\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}\cinlaw N(0,1)
+$$
+Per contrastar la hip\`{o}tesi $H_0:\ p=p_0$ enfront de 
+$p \neq p_0 $ (respectivament $p > p_0$, \ $p < p_0$) el test consistent en rebutjar $H_0$ si $|Z| > \zem$ (respectivament $Z   > \ze$,\ $Z<-\ze$) \'{e}s un test asimpt\`{o}tic de nivell $\alpha$.
+En la pr\`{a}ctica se sol requerir que $p_0>0.05$ i $1-p_0>0.05$ o si m\'{e}s no que la mostra sigui prou gran: $np_0>5$ i $n(1-p_0)>5$.
+\end{enumerate}
+Aquests tests es generalitzen de forma immediata al cas de dues mostres.
+
+\section{Demostracions}
+
+{\em \textbf{Aquest apartat no \'{e}s mat\`{e}ria d'examen, per\`{o} la segona demostraci\'{o} \'{e}s for\c{c}a interessant i per aquest motiu les he mantingudes}}
+
+\subsection{El Test de Neyman-Pearson com a cas particular del
+TRV}
+
+\begin{proposition}
+Si considerem $\,{\Theta}_{0}=\{ {\theta}_{0} \} \,$ i
+$\,{\Theta}_{1}=\{ {\theta}_{1} \} \,$ aleshores el test de la
+ra\'{o} de versemblances coincideix amb el que obtindr\'{\i}em aplicant el
+m\`{e}tode de Neyman-Pearson.
+\end{proposition}
+
+Suposem que el nivell de significaci\'{o} \'{e}s $\,\alpha\,$, \'{e}s a dir
+$$P_{\theta} (W_{\alpha}) \leq \alpha, \hspace{0.5cm} \forall \theta \in
+{\Theta}_{0}$$ Considerem la regi\'{o} d'acceptaci\'{o}
+$\,W_{\alpha}^C\,$ que s'obt\'{e} pel test de la ra\'{o} de versemblances
+i fem algunes transformacions.
+
+Indicarem  $\,L(x;{\theta}_{0}) \vee L(x;{\theta}_{1})=\max \{
+L(x;{\theta}_{0})\, , \,L(x;{\theta}_{1}) \}$
+
+$$\begin{array}{lll}
+ W_{\alpha}^C & = & \left\{ x,
+\,\,{\displaystyle \frac{L(x;{\theta}_{0})}{L(x;{\theta}_{1})
+ \vee L(x;{\theta}_{1})} } \geq c_{\alpha} \right\}                  \\
+       &   &                                                       \\
+       & = & \left\{ x, \,\, {\displaystyle \frac{L(x;{\theta}_{0}) \vee
+L(x; {\theta}_{1})}{L(x;{\theta}_{0})} } \leq
+{\displaystyle \frac{1}{c_{\alpha}} } \right\}  \\
+       &   &                                      \\
+       & = & \left\{ x,\,\, L(x;{\theta}_{0})\leq L(x;{\theta}_{1}),\,
+ \, {\displaystyle \frac{L(x;{\theta}_{1})}{L(x;{\theta}_{0})} } \leq
+{\displaystyle \frac{1}{c_{\alpha}} } \right\} \hspace{0.5cm} \cup \\
+       &   &                                                       \\
+       &   & \left\{ x,\,\, L(x;{\theta}_{0}) \geq L(x;{\theta}_{1}),
+\,\, 1 \leq {\displaystyle \frac{1}{c_{\alpha}} } \right\}     \\
+       &   &                                                        \\
+       & = & \left\{ x,\,\, L(x;{\theta}_{0})\leq L(x;{\theta}_{1}),\,
+ \, {\displaystyle \frac{L(x;{\theta}_{1})}{L(x;{\theta}_{0})} } \leq
+{\displaystyle \frac{1}{c_{\alpha}} }
+ \right\} \cup \left\{ x,\,\, L(x;{\theta}_{0}) \geq L(x;{\theta}_{1})
+ \right\}                                                           \\
+       &   &                                                        \\
+       & \stackrel{(*)}{=} & \left\{ x, \,\,
+ {\displaystyle \frac{L(x;{\theta}_{1})}{L(x;{\theta}_{0})} } \leq
+k_{\alpha} \right\} \\
+       &   &                                                       \\
+       & = & \tilde{W}_{\alpha}^C
+\end{array}$$
+essent $\,\tilde{W}_{\alpha}^C\,$ la regi\'{o} d'acceptaci\'{o} obtinguda
+mitjan\c{c}ant el test  de Neyman-Pearson.
+
+Vegem c\'{o}m s'obt\'{e} l'\'{u}ltima igualtat $(*)$
+
+Si $\,x\,$ es tal que $\,L(x;{\theta}_{0}) \geq
+L(x;{\theta}_{1})\,$ aleshores, de forma equivalent es t\'{e}
+$$\,{\displaystyle \frac{L(x;{\theta}_{1})}{ L(x;{\theta}_{0})} } \leq
+ 1\,.$$
+A m\'{e}s: $$\,{c_{\alpha} \leq 1} \Leftrightarrow {1 \leq
+{\displaystyle \frac{1}{c_{\alpha}}}\,}$$
+Si anomenem:
+$$\begin{array}{lll}
+ A & = &\left\{ x,\,\,L(x;{\theta}_{0})\leq L(x;{\theta}_{1}),\,\,
+{\displaystyle \frac{L(x;{\theta}_{1})}{L(x;{\theta}_{0})} } \leq
+{\displaystyle \frac{1}{c_{\alpha}} } \right\}                     \\
+   &   &                                                           \\
+ B & = & \left\{ x,\,\, L(x;{\theta}_{0}) \geq L(x;{\theta}_{1})\right\}
+\\
+   &   &                                                            \\
+   & = & \left\{ x,\,\, L(x;{\theta}_{0}) \geq L(x;{\theta}_{1}), \,\,
+ {\displaystyle \frac{L(x;{\theta}_{1})}{L(x;{\theta}_{0})}} \leq 1 \leq
+ {\displaystyle \frac{1}{c_{\alpha}} } \right\}
+\end{array}$$
+s'obtindr\`{a} que, si prenem $\,k_{\alpha}={\displaystyle
+\frac{1}{c_{\alpha}} } \,$:
+$$A \cup B=\left\{ x,\,\,
+{\displaystyle \frac{L(x;{\theta}_{1})}{L(x;{\theta}_{0})} }
+\leq k_{\alpha} \right\} = {\tilde{W}_{\alpha}^C} $$
+\begin{flushright}
+ \#
+\end{flushright}
+
+\subsection{Teorema de Wilks} Per simplificar els c\`{a}lculs es
+considerar\`{a} el cas: dim ($\Theta_0$) =0, \'{e}s a dir, suposarem:
+($\Theta_0 =\{ \theta_0 \}$).
+
+Considerem una m.a.s. de mida $n$, $\,x=(x_1, \cdots,x_n)$, d'una
+va\-ria\-ble aleat\`{o}ria $X$ amb densitat $f(X;\theta)$ i anomenem
+$\, \hat{\theta}_{n}\,$ a l'estimador del m\`{a}xim de versemblan\c{c}a
+de $\,\theta$. Aleshores tindrem:
+$$
+\begin{array}{lll}
+U(x) & = & -2\ln {\Lambda}(x)\,\, =\,\,-2\left[ \ln L(x_1, \cdots
+, x_n;
+{\theta}_{0}) - \ln L(x_1, \cdots , x_n; \hat{\theta}_n) \right]  \\
+& = & 2\left[ \ln L(x; \hat{\theta}_n) - \ln L(x; \theta_{0})
+\right] \, \, = \,\, 2\left[ l_n(\hat{\theta}_n) -
+l_n({\theta}_0) \right]
+\end{array}$$
+on $l_n(\theta)= \ln L(x;\theta) = {\displaystyle \sum_{m=1}^{n}
+\ln f(x_m;\theta) } $.
+
+Farem el desenvolupament en s\`{e}rie de Taylor de la funci\'{o}
+$l_n(\theta)$ en el punt $\hat{\theta}_n$:
+$$
+ \begin{array}{lll}
+l_n(\theta) & = & l_n(\hat{\theta}_n) + \left( {\displaystyle
+\frac{\partial}{\partial {\theta_i}} } \ln L(x;\hat{\theta}_n)
+\right)_{i=1, \cdots ,k}^{'}
+(\theta - \hat{\theta}_n) \\
+&  & + {\displaystyle \frac{1}{2}} (\theta - \hat{\theta}_n)'
+\left( {\displaystyle
+\frac{{\partial}^2}{{\partial}{\theta_i}{\partial}{\theta_j}} }
+\ln L(x;\hat{\theta}_n) \right)_{i,j=1, \cdots ,k} (\theta -
+\hat{\theta}_n)
++ o_{p}(1) \\
+& = & l_n(\hat{\theta}_n) + {\displaystyle
+\frac{1}{2}\sum_{i=1}^{k}\sum_{j=1}^{k} } \left( {\displaystyle
+\frac{{\partial}^2
+l_n(\theta)}{{\partial}{\theta_i}{\partial}{\theta_j}} }
+\right)_{\theta=\hat{\theta}_n} (\theta_i - \hat{\theta}_{ni})
+(\theta_j- \hat{\theta}_{nj}) + o_p(1) \\
+
+\vspace{10pt} & = & l_n(\hat{\theta}_n) + {\displaystyle
+\frac{1}{2}} (\theta - \hat{\theta}_n)' \left( {\displaystyle
+\sum_{m=1}^{n}}{\displaystyle \frac{{\partial}^2 \ln
+f(x_m;\theta)}{{\partial}{\theta_i}{\partial}{\theta_j}}  }
+\right)_{\mbox{\scriptsize $\begin{array}{l}
+            i,j= 1, \cdots , k  \\
+            \theta = \hat{\theta}_n
+          \end{array}$}}(\theta - \hat{\theta}_n) \\
+&  & + o_p(1)
+\end{array}
+$$
+
+L'expressi\'{o} $\,o_{p}(1)\,$ indica que la suma dels
+termes restants convergeix en probabilitat cap a zero.
+
+At\`{e}s que $\hat{\theta}_n$ \'{e}s un estimador del m\`{a}xim de
+versemblan\c{c}a es verifica:
+$$ \left( {\displaystyle
+\frac{\partial}{\partial {\theta_i}} } \ln L(x;\hat{\theta}_n)
+\right) = 0 \hspace{0.5cm} \forall i=1, \cdots ,k$$ i els termes
+amb derivades parcials primeres desapareixen de la segona
+igualtat.
+
+Sabem que, sota certes condicions de regularitat, la matriu
+d'informaci\'{o} de Fisher: $I_{\theta}$, es calcula de la forma
+seg\"{u}ent:
+$$
+I_{\theta}= E \left[ \left( {\displaystyle \frac{{\partial} \ln
+f(X;\theta)}{{\partial}{\theta}} } \right)^2 \right] = E \left[ -
+{\displaystyle \frac{{\partial}^2 \ln
+f(X;\theta)}{{\partial}{\theta_i}{\partial}{\theta_j}} } \right]
+$$
+A m\'{e}s a m\'{e}s sabem que si $\hat{\theta}_n$ \'{e}s l'estimador del
+m\`{a}xim de versemblan\c{c}a de $\theta$, s'estableix, fent servir el
+T.C.L., que es asint\'{o}ticament Normal i verifica que (quan
+$n\rightarrow \infty$):
+$$\hat{\theta}_n \stackrel{\cal L}{\longrightarrow} N \left( \theta ,
+{\displaystyle \frac{1}{nI_{\theta}}} \right)$$ \'{e}s a dir:
+$$\sqrt{n} (\hat{\theta}_n - \theta) \stackrel{\cal L}{\longrightarrow}
+N \left( 0 , I_{\theta}^{-1} \right).$$
+
+Finalmente es dedueix tamb\'{e} que:
+$$
+n(\hat{\theta}_n - \theta)'I_{\theta}
+(\hat{\theta}_n - \theta) \stackrel{\cal L}{\longrightarrow}
+{\chi}_{k}^{2}.
+$$
+Ara sumem i restem el terme ${\displaystyle
+\frac{1}{2} n(\theta - \hat{\theta}_n)'I_{\theta}(\theta -
+\hat{\theta}_n) }$ al desenvolupament de Taylor de $l_n(\theta)$
+i obtenim:
+$$
+\begin{array}{lll}
+l_n(\theta)& = & l_n(\hat{\theta}_n)-{\displaystyle
+\frac{1}{2}}n(\theta
+- \hat{\theta}_n)'I_{\theta}(\theta - \hat{\theta}_n) \\
+&   &  + {\displaystyle \frac{1}{2}}n(\theta-\hat{\theta}_n)'
+\left[ {\displaystyle \frac{1}{n}} \left( {\displaystyle
+\sum_{m=1}^{n}}{\displaystyle \frac{{\partial}^2 \ln
+f(x_m;\theta)}{{\partial}{\theta_i}{\partial}{\theta_j}}  }
+\right)_{\theta = \hat{\theta}_n} + I_{\theta} \right] (\theta
+-\hat{\theta}_n) + o_p(1)
+\end{array}$$
+
+Arreglant una mica aquesta igualtat obtenim:
+$$ \begin{array}{lll}
+2 \left[ l_n(\hat{\theta}_n) - l_n(\theta) \right] & = &
+n(\theta - \hat{\theta}_n)'I_{\theta}(\theta - \hat{\theta}_n) \\
+&  & - n(\theta-\hat{\theta}_n)' \left[ {\displaystyle
+\frac{1}{n}} \left( {\displaystyle \sum_{m=1}^{n}}{\displaystyle
+\frac{{\partial}^2 \ln
+f(x_m;\theta)}{{\partial}{\theta_i}{\partial}{\theta_j}}  }
+\right)_{\theta = \hat{\theta}_n} + I_{\theta} \right] (\theta
+-\hat{\theta}_n) \\
+&  & -2o_p(1)
+\end{array}$$
+
+Sabem que:
+$$o_p(1) \stackrel{\cal P}{\longrightarrow} 0$$
+i, fent servir la llei forta dels grnas nombres per v.a. I.I.D.
+amb espe\-ran\c{c}a finita, es t\'{e}:
+$${\displaystyle \frac{1}{n} }
+\left( {\displaystyle \sum_{m=1}^{n}}{\displaystyle
+\frac{{\partial}^2 \ln
+f(x_m;\theta)}{{\partial}{\theta_i}{\partial}{\theta_j}}  }
+\right) \stackrel{\cal P}{\longrightarrow} -I_{\theta}$$
+
+Tenint en compte que la converg\`{e}ncia en probabilitat implica la
+converg\`{e}ncia en distribuci\'{o}, els dos darrers termes de la dreta de
+la igualtat convergeixen en distribuci\'{o} cap al zero. A m\'{e}s a m\'{e}s
+tenim:
+$$n(\hat{\theta}_n - \theta)'I_{\theta}
+(\hat{\theta}_n - \theta) \stackrel{\cal L}{\longrightarrow}
+{\chi}_{k}^{2}$$ d'on se'n surt finalment:
+$$U(x)= -2\ln{\Lambda(x)}= 2 \left[ l_n(\hat{\theta}_n) - l_n(\theta)
+\right] \stackrel{\cal L}{\longrightarrow} {\chi}_{k}^{2}$$
+\begin{flushright}
+ \#
+\end{flushright}
+
+\subsubsection{Observaci\'{o}}
+El test de la raz\'{o}n de versemblan\c{c}a es consistent, es a
+dir:
+$$\lim_{n\rightarrow \infty} P\left[ -2\ln {\Lambda}(x) >
+{\chi}_{k,\alpha}^{2} \,\, | \,\, {\theta} \in {\Theta}_1 \right]
+=1$$

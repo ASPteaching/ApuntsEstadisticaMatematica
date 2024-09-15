@@ -1,0 +1,127 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[latin1]{inputenc}
+\usepackage[catalan]{babel}
+\language=1
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[dvips]{graphicx}
+%\usepackage{theorem}
+
+\setlength{\parindent}{0pt}
+\def\ll{\ifmmode{\mathchar"321C}\else%
+l\discretionary{-}{l}{\kern-.12em\hbox{${\cdot}$}\kern-.13eml}\fi}
+\def\LL{L\discretionary{-}{L}{\kern-.09em\hbox{${\cdot}$}\kern-.16emL}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Ind}{\mathbf{1}}
+\newcommand{\Alg}{{\cal A}}
+\newcommand{\iid}{\stackrel{iid}{\sim }X}
+\newcommand{\bX}{\mathbf{X}} %Una mostra, com un vector, en negreta. Majuscules
+\newcommand{\bx}{\mathbf{x}}%Una mostra, com un vector, en negreta. Minúscules
+\newcommand{\Sx}{\stackunder{\sim }{X}} %Una mostra, amb una tilde a sota. Majuscules
+\newcommand{\sx}{\stackunder{\sim }{x}}%Una mostra, amb una tilde a sota. Minúscules
+
+\newcommand{\Sample}{X_1,X_2,\dots,X_n}
+\newcommand{\sample}{x_1,x_2,\dots,x_n}
+\newcommand{\YSample}{Y_1,Y_2,\dots,Y_n}
+\newcommand{\ysample}{y_1, y_2,\dots,y_n}
+\newcommand{\Sumin}{{\sum_{i=1}^n}}
+\newcommand{\Prodin}{{\prod_{i=1}^n}}
+\newcommand{\Fnx}{F_n(x)}
+\newcommand{\bias}{b_T(\theta)}
+\newcommand{\te}{T}
+\newcommand{\teX}{T(\bX)}
+\newcommand{\tex}{t(\bx)}
+%\newcommand{\T2}{\widehat{\theta}_2}
+\newcommand{\modest}{\left\{ X\sim F_\theta:\theta\in\Theta\right\}}
+\newcommand{\Mx}{\overline{x}}
+\newcommand{\MX}{\overline{X}}
+%\newcommand{\th}{\widehat{\theta}}
+\newcommand{\beqa}{\begin{eqnarray*}}
+\newcommand{\eeqa}{\end{eqnarray*}}
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\ben}{\begin{enumerate}}
+\newcommand{\een}{\end{enumerate}}
+%\renewcommand{\thesubsection}{\thesection-\Alph{subsection}}
+\newcommand{\ze}{z_{2\alpha}}
+%\newcommand{\zee}{z_{2\alpha}}
+\newcommand{\zem}{z_{\alpha}}
+%\newcommand{\te}{t_{\alpha}}
+\newcommand{\tee}{t_{2\alpha}}
+\newcommand{\tem}{t_{\alpha/2}}
+
+\newcommand{\citalib}[6]{\bibitem{#1} #2\ (#3).\ {\em{ #4}}.\  #5. \ #6.}
+%\citalib{Alcaide-92}     %paraula clau per a la cita
+%{Alcaide, J.}            %autors
+%{1996}                   %any
+%{Metodolog!`a de la prog} %Titol
+%{Mc Graw-Hill}           %Editorial
+%{Madrid}                 %Lloc
+\newcommand{\ds}{\displaystyle}
+%\newcounter{thm}[section]
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{proof}{Demostraci\'{o}}
+\newcounter{cor}[section]
+\newtheorem{corollary}[cor]{Coro{\ll}ari}
+%Inicialment ho feia aix\'{\i}
+%\newcounter{examp}[subsection]
+%\newtheorem{example}[examp]{Exemple}
+%\newcounter{def}[section]
+%\newtheorem{definition}[def]{Definici\'o}
+%El Paco proposa canviar-ho a:
+\newtheorem{teorema}{Teorema}[chapter]
+%{\theorembodyfont{\rmfamily}%
+\newtheorem{exercici}{Exercici [chapter]}
+\newtheorem{example}{Exemple}[section]
+\newtheorem{definition}{Definici\'o}[chapter]
+
+\newcounter{prop}[chapter]
+\newtheorem{proposition}[prop]{Proposici\'o}
+\newcounter{lema}[chapter]
+\newtheorem{lemma}[lema]{Lema}
+
+\newcommand{\cinlaw}{\buildrel {\cal L} \over \longrightarrow }
+\newcommand{\cinprob}{\buildrel {P} \over \longrightarrow }
+\newcommand{\tendsto}{\stackunder{n\rightarrow \infty }{\longrightarrow}}
+
+%%%Definit al Scientific Workplace
+\def\stackunder#1#2{\mathrel{\mathop{#2}\limits_{#1}}}%
+\def\dfrac#1#2{{\displaystyle {#1 \over #2}}}%
+% Per generar documents pdf
+%\pdfcompreslevel=9
+%\pdfoutput=1
+%
+%Per incloure imatges
+%
+%\begin{figure}[hbtp]
+%\vspace{-3cm} \special{center
+%         ./IMATGES/CLINES.wmf,
+%         \the\hsize 12cm}
+%\vspace{12cm} \vspace{3cm} \caption{\sl } \label{Figura}
+%\end{figure}
+%\clearpage
+
+
+\includeonly{tapa,EM2-Intro,EM2Cap1,EM2Cap2,EM2Cap3,EM2Cap4,EM2Cap5,EM2Cap6,EM2Cap7,EM2Cap8,EM2Bib}
+%\includeonly{EM2Cap3}
+
+\begin{document}
+\include{tapa}
+\thispagestyle{empty}
+\null
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\include{EM2-Intro}
+\include{EM2Cap1}
+\include{EM2Cap2}
+\include{EM2Cap3}
+\include{EM2Cap4}
+\include{EM2Cap5}
+\include{EM2Cap6}
+\include{EM2Cap7}
+\include{EM2Cap8}
+\include{EM2Bib}
+\end{document}

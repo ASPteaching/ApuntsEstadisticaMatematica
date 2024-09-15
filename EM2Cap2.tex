@@ -1,0 +1,1878 @@
+\chapter{ESTIMACIO PUNTUAL}
+
+\section{El problema de l'estimació puntual}
+
+Informalment, l'estimació de paràmetres consisteix en buscar
+aproximacions als valors d'aquests, calculables a partir d'una
+mostra, que siguin el més acurades possible. El problema, és clar,
+és que per mesurar què tan acurades són aquestes aproximacions
+caldria conèixer els valors dels paràmetres i, com aquests són
+sempre desconeguts, ens hem de basar en l'utilització d'estimadors
+amb bones propietats que, en algun sentit, ens garanteixin aquesta
+proximitat.
+
+Més formalment podem plantejar el problema de la manera següent:
+\par
+Sigui $X$ una v.a. amb distribució $F_\theta$ on $\theta
+=(\theta_1,\dots,\theta_k)\in\Theta\subset\Real^k$ i sigui $X_1,
+X_2,\dots,X_n$ una mostra de $n$ v.a. de $X$. El problema de
+l'estimació puntual consisteix en obtenir alguna aproximació de
+$\theta$ en base a la informació disponible en la mostra
+mitjançant un estimador de $\theta$ que definim a continuació.
+
+\begin{definition}
+Sigui $\Sample$ una mostra aleatòria simple de $X$ amb distribució
+$F_\theta$ on $\theta\in\Theta\subset\Real^k $. Un estadístic
+$T(\Sample)$ s'anomena un estimador puntual de $\theta $ si $T$ és
+una aplicació de $\Real^n$ en $\Theta$, és a dir, si pren valors
+sobre el mateix conjunt que els paràmetres.
+\end{definition}
+
+\begin{example}
+Sigui $X_1,X_2,\dots,X_n$ una mostra aleatòria simple d'una v.a.
+de Poisson $X\sim P(\lambda)$. Per estimar $\lambda$ podem fer
+servir:
+
+\[
+\begin{split}
+T_{1}&=\bar{X}=\frac 1n\sum_{i=1}^n X_i \\
+T_{2}&=s^2=\frac 1n\sum_{i=1}^n ( X_i-\bar{X})^2
+\end{split}
+\]
+ja que $E(X)=\mathrm{var}(X)=\lambda$, però també
+\[
+\begin{split}
+T_{3}&=\frac 2{n(n+1)}\sum_{i=1}^n X_i\cdot i \\
+T_{4}&=X_i
+\end{split}
+\]
+\end{example}
+
+\begin{example}
+Sigui $\Sample$ una m.a.s. de $X\sim B(1,p)$, amb $p$ desconegut.
+Podem estimar $p$ de les següents maneres:
+\[
+\begin{split}
+T_1 &=\bar{X}=(1/n)\sum_{i=1}^n X_i \\
+T_2 &=1/2 \\
+T_3 &=(X_1+X_2)/2
+\end{split}
+\]
+\end{example}
+
+En cada cas resulta clar que alguns estimadors no són
+gaire raonables mentre que la decisió entre els altres no està
+necessàriament clara. Bàsicament ens haurem d'ocupar de
+dos problemes:
+\begin{itemize}
+\item  Donat un model estadístic $\modest$, com podem obtenir
+estimadors de $\theta$ que tinguin ``bones'' propietats?
+\item  Donats varis estimadors per un mateix paràmetre com podem
+escollir el millor en base a algun criteri?
+\end{itemize}
+
+Per poder assolir aquests dos objectius començarem per
+estudiar les propietats dels estimadors, així com les mesures
+d'optimalitat que podrem fer servir per decidir entre varis estimadors.
+
+D'entrada ens restringirem al cas en que $\Theta\subseteq\Real$ o
+en que volem aproximar alguna funció $g(\theta)$ dels paràmetres
+on $g$ és del tipus $g:\Theta\rightarrow\Real$.
+
+\subsection{Criteris d'optimalitat d'estimadors. El Risc}
+
+Una forma de poder comparar entre diversos estimadors consisteix
+en definir una \emph{funció de pèrdua} que ens permeti quantificar
+d'alguna manera  la pèrdua, o cost associat, pel fet d'estimar el
+valor real del paràmetre, és a dir $\theta$, mitjançant
+l'aproximació que subministra un estimador, és a dir $t$.
+\begin{definition}
+Una funció de pèrdua és una aplicació
+\begin{eqnarray*}
+L&:&\Theta \times \Theta \rightarrow \Real  \\
+&&(\theta ,t)\rightarrow L(\theta,t)
+\end{eqnarray*}
+que verifica:
+\begin{enumerate}
+\item[a)] $L(\theta ,t)\geq 0,\quad\forall\ \theta,t\in\Theta$
+\item[b)] $L(\theta ,t)=0,\text{ si $\theta =t$}$
+\item[c)] $L(\theta ,t)\leq L(\theta ,t^{\prime })$, si $d(\theta
+,t)\leq d(\theta ,t^{\prime })$ on $d$ és una distància en
+$\Theta$.
+\end{enumerate}
+\end{definition}
+Per exemple són funcions de pèrdua:
+\begin{center}
+\begin{tabular}{ll}
+$L_1(\theta ,t)=|\theta -t|$ &
+$L_2(\theta ,t)=(\theta -t)^2$ \\
+$\displaystyle
+L_3(\theta ,t)=\left|\frac{\theta-t}{\theta}\right|$ &
+$\displaystyle
+L_4(\theta ,t)=\left(\frac{\theta-t}\theta\right)^2$ \\
+\multicolumn{2}{c}{$
+L_5(\theta ,t)=\left\{
+\begin{array}{ll}
+c>0 & \textrm{si $|\theta-t|>\epsilon$} \\
+0 & \textrm{si $|\theta-t|\leq\epsilon$}
+\end{array}
+\right.$}
+\end{tabular}
+\end{center}
+
+Els valors que pren la funció de pèrdua depenen dels valors de
+l'estimador i dels del paràmetre. Per una mostra donada podem
+conèixer el valor que hi pren l'estimador, però no el valor del
+paràmetre. Una possibilitat que ens permetrà comparar els
+possibles estimadors, \emph{per un valor donat del paràmetre},
+consisteix en promitjar els diferents valors de $L(\theta ,t)$
+sobre tots els possibles valors de $T$. D'aquest promig en diem el
+\emph{risc de l'estimador} $T$ associat a cada valor possible
+$\theta$ del paràmetre i l'escrivim $R_T(\theta)$.
+
+\begin{definition}
+Sigui $H_\theta(t)$ la distribució en el mostratge de $T$, és a
+dir
+\[
+T(X_1,X_2,\dots,X_n)\sim H_\theta (t)=P_\theta(T\leq t),
+\]
+i $h_\theta(t)$ representa la funció de densitat de probabilitat,
+si $H_\theta (t)$ és absolutament contínua, o $h_\theta (t_i)$ la
+funció de massa de probabilitat si $H_\theta (t_i)$ és discreta.
+Llavors el risc de l'estimador $T$ per estimar $\theta$ es
+defineix com:
+\[
+\begin{split}
+R_T(\theta)&= E_\theta \left[L\left(\theta,
+T(\Sample)\right)\right]=
+\int_{\Real}L(\theta,t)d H_\theta (t) \\
+&=\left \{ \begin{array}{ll} \int_{-\infty}^{+\infty}
+L(\theta,t)h_\theta(t)\,dt  & \text{si $H_\theta (t)$ és
+absolutament contínua,} \\
+\sum_{\forall\, t_i} L(\theta,t) h_\theta(t_i)&\text{si $H_\theta
+(t)$ és discreta}
+\end{array} \right.
+\end{split}
+\]
+\end{definition}
+
+El risc permet comparar dos estimadors.
+\begin{definition}
+Direm que un estimador $T_1$ és preferible a un altre $T_2$ si:
+\[
+\begin{split}
+R_{T_1}(\theta)  &\leq R_{T_2}(\theta),\ \forall\,\theta \in \Theta,\text{ i } \\
+R_{T_1}(\theta) &< R_{T_2}(\theta),\ \text{per a algun $\theta \in
+\Theta$}.
+\end{split}
+\]
+\end{definition}
+
+\begin{example}\label{Exemple-Risc-1}
+Sigui $X_1,X_2,\dots,X_n$ una mostra aleatòria simple de d'una
+distribució uniforme $X\sim U(0,\theta)$. El paràmetre que ens
+interessa estimar és $\theta$, el màxim de la distribució. Un
+estimador raonable pot ser:
+$$T_1(\Sample)=\max\{\Sample\}$$
+el màxim de la mostra, o un múltiple d'aquest:
+$$T_k(\Sample)=kT_1(\Sample)$$
+La distribució en el mostratge de $T_1(\Sample)$ és
+\[
+\begin{split}
+H_\theta(t) &=P_\theta [T_1\leq t] =
+P_\theta\left[\stackunder{1\leq i\leq n}{\max}\{X_i\}\leq t\right] \\
+&=P_\theta\left[ (X_1\leq t)\cap\dots\cap(X_n\leq t)\right]
+=\prod_{i=1}^n P_\theta\left[X_i\leq t\right]
+= \left(\frac t\theta\right)^n
+\end{split}
+\]
+si $t\in(0,\theta)$, i la seva funció de densitat és
+\[
+h_\theta ( \theta ) =H_\theta ^{\prime }( \theta ) =\frac n\theta
+\left( \frac t\theta \right) ^{n-1}
+\]
+L'esperança de $T_1$ val:
+\[
+E_\theta (T_1) =\int_0^\theta t\cdot \left[ \frac n\theta \left(
+\frac t\theta \right) ^{n-1}\right] dt=\left. \frac n{\theta ^n}\frac{t^{n+1}%
+}{n+1}\right| _0^\theta =\frac n{n+1}\frac{\theta ^{n+1}}{\theta
+^n}=\frac n{n+1}\theta
+\]
+i el moment de segon ordre
+\[
+E_\theta (T_1^2) =\int_0^\theta t^2\cdot \left[ \frac n\theta
+\left(\frac t\theta \right) ^{n-1}\right] dt=\frac n{n+2}\theta^2
+\]
+Si ara fixem una funció de pèrdua podrem comparar els dos
+estimadors. Agafem com funció de pèrdua \emph{l'error relatiu en
+l'estimació al quadrat}:
+$$
+L_4(\theta,t)=\frac{(\theta-t)^2}{\theta^2}
+$$
+El risc de $T_k$ per estimar $\theta$ serà
+\[
+\begin{split}
+R_{T_k}(\theta)&=E_\theta\left[\frac{(\theta-T_k)^2}{\theta^2}\right]
+=E_\theta\left[1-\frac{2}{\theta}T_k+\frac{1}{\theta^2}T_k^2\right]\\
+&=1-\frac{2}{\theta}E_\theta T_k+\frac{1}{\theta^2}E_\theta
+T_k^2=1-\frac{2}{\theta}\frac{n}{n+1}\theta\cdot k+
+\frac{1}{\theta^2}\frac{n}{n+2}\theta^2\cdot k^2\\
+&=1-\frac{2n}{n+1}k+\frac{n}{n+2}k^2
+\end{split}
+\]
+Veiem que el risc és una funció que depèn de $k$ i que, com és
+una paràbola $ak^2+bk+c$, amb $a=n/(n+2)$, $b=-2n/(n+1)$ i $c=1$,
+assoleix un mínim absolut en el punt d'abscissa
+$$
+-\frac{b}{2a}=\frac{n+2}{n+1}
+$$
+Per tant, entre els múltiples de $T_1$ el millor estimador en
+el sentit de la funció de pèrdua escollida
+$L_4(\theta,t)=(\theta-t)^2/\theta^2$ és
+$$
+\frac{n+2}{n+1}\max\{\Sample\}
+$$
+\end{example}
+L'exemple anterior és un exemple atípic. Un sol estimador fa mínim
+el risc per a tots els valors de $\theta$, ja que el risc obtingut
+no depèn de $\theta$. Sovint ens trobarem que els estimadors no
+són comparables, ja que el risc d'un és inferior al d'un altre per
+uns valors del paràmetre, mentre que la situació s'inverteix per a
+d'altres valors d'aquest. Això fa que aquest criteri sigui
+limitat, en el sentit que no és un criteri generalment bo per
+trobar un estimador òptim sinó per fer una comparació puntual
+entre dos estimadors.
+
+\subsection{L'error quadràtic mitjà}
+
+Una de les funcions de pèrdua més usuals és la funció de pèrdua
+quadràtica $L_2(\theta, t) =(\theta -t) ^2$. Un dels motius del
+seu ús és que el risc associat a aquesta funció de pèrdua
+$E_\theta \left[(\theta -T)^2\right]$, que anomenem \emph{error
+quadràtic mitjà} $EQM_T$, representa una mesura de la variabilitat
+de l'estimador $T$ entorn de $\theta$ semblant a la mesura de
+dispersió entorn de la mitjana que representa la variància.
+
+A més a més, del desenvolupament d'aquesta expressió s'obté un
+interessant resultat que mostra quines poden ser les propietats
+més interessants per un estimador.
+
+Sigui $\modest$ i sigui $T$ un
+estimador de $\theta$. L'error quadràtic mitjà de $T$ per estimar
+$\theta$ val
+\[
+EQM_T(\theta)=E_\theta \left[ (\theta -T)^2\right] =E\left[ \theta
+^2-2\theta T+T^2\right] =\theta ^2-2\theta E_\theta ( T)
++E_\theta ( T^2)
+\]
+Ara, sumant i restant $( E_\theta ( T) )^2$, obtenim
+\[
+\begin{split}
+EQM_T(\theta)&=E_\theta ( T^2) -(E_\theta ( T) )^2+(E_\theta (
+T) )^2+\theta ^2-2\theta E_\theta ( T)=
+\\&= \mathrm{var}(T) +( E_\theta ( T) -\theta)^2
+\end{split}
+\]
+
+El terme $(E_\theta(T) -\theta )^2$ és el quadrat del
+\emph{biaix} de $T$ que es defineix com
+\[
+b_\theta (T)=E_\theta(T)-\theta
+\]
+
+\begin{definition}
+L'error quadràtic mitjà $EQM_T(\theta)$, o simplement $EQM$,
+d'un estimador $T$ per estimar el paràmetre $\theta$ és la suma de
+la seva variància més el quadrat de la diferència entre el seu
+valor mig i l'autèntic valor del paràmetre que anomenem biaix.
+\end{definition}
+
+Si en la cerca d'estimadors de \emph{mínim risc} ens basem en la
+funció de pèrdua quadràtica, sembla que els estimadors més
+desitjables haurien de ser aquells on la variància i el biaix
+siguin els més petits possibles. Idealment voldríem poder reduir
+ambdues quantitats alhora. En la pràctica però, observem que, en
+general, no sol ser possible reduir simultàniament la variància i
+el biaix. A més a més, fins i tot si fos pràctic calcular l'EQM per a
+cada estimador, ens trobaríem que, per a la majoria de les
+famílies de probabilitat $P_\theta $ no existiria cap estimador
+que minimitzés l'EQM per a tots els valors de $\theta$.
+És a dir, que un estimador pot tenir un EQM mínim per uns valors de
+$\theta$ i un altre tindrà el mínim en uns altres valors
+de $\theta$.
+
+\begin{example}
+Sigui $\Sample$ una mostra aleatòria simple de $X\sim
+N(\mu,\sigma)$, on suposem $\sigma$ coneguda, i siguin
+\[
+T_1=\bar{X}\qquad  T_{2=}\frac{\sum_{i=1}^nX_i}{n+1}
+\]
+Si calculem la mitjana i la variància dels estimadors tenim
+\[
+\begin{array}{lcll}
+E_\mu (T_1)=\mu & \Rightarrow & b_{T_1}(\mu)=0 &
+\displaystyle
+\mathrm{var}_\mu(T_1)=\frac{\sigma ^2}n\\
+\displaystyle
+E_\mu (T_2)= \frac{n}{n+1}\mu & \Rightarrow &
+\displaystyle
+b_{T_2}(\mu)=\frac{-1}{n+1}\mu &
+\displaystyle \mathrm{var}_\mu(T_2)=\frac n{(n+1)^2}{\sigma ^2}
+\end{array}
+\]
+d'on
+\[
+\begin{split}
+EQM_\mu (T_1)&= \mathrm{var}(T_1)=\frac{\sigma ^2}n \\
+EQM_\mu (T_2)&= \frac 1{(n+1)^2}\mu ^2+\frac n{(n+1)^2}\sigma ^2
+\end{split}
+\]
+que són respectivament una recta i una paràbola. De manera que
+per a alguns valors de $\mu$ tenim que $EQM_\mu (T_1)<EQM_\mu(T_2)$
+i per a d'altres al revés. La figura 2.1
+%\ref{compara-riscs}
+mostra aquesta diferència.
+\begin{figure}\label{compara-riscs}
+\centering
+\includegraphics{./imatges/compara-riscs2.eps}
+%\includegraphics[width=8cm]{./imatges/compara-riscs.eps}
+\caption{Comparació del risc de dos estimadors}
+\end{figure}
+\end{example}
+
+\begin{example}
+Un exemple trivial força interessant és el
+següent. Per estimar un paràmetre $\theta$ l'estimador que
+consisteix en un valor fix $\theta_0$, té risc $0$ en
+$\theta=\theta_0$. El risc, però, augmenta molt a mida que ens
+allunyem del valor real de $\theta$. De forma que no resulta un
+estimador raonable, tot i que el seu risc pugui ser mínim per
+algun (un) valor de $\theta$.
+\end{example}
+
+Els exemples anterior ens mostren que els criteris de preferència
+entre estimadors basats en el risc o en l'EQM no són de gran
+utilitat general ja que molts estimadors poden ser incomparables.
+Davant d'aquest fet ens plantegem si és possible completar el
+criteri de minimitzar el risc mitjançant alguna propietat o
+criteri addicional. Les possibles solucions obtingudes a aquesta
+qüestió passen per dues vies:
+\begin{enumerate}
+\item  Restringir la classe dels estimadors considerats a aquells que
+compleixin alguna propietat addicional d'interès, tot seleccionant
+aquells de forma que s'eliminen els estimadors indesitjables i que
+el criteri de minimitzar el risc permeti seleccionar-ne un
+preferible a la resta. Aquest criteri ens duu a considerar les
+propietats desitjables dels estimadors com \emph{manca de biaix,
+consistència, eficiència} i a analitzar com combinar-los amb el
+criteri del mínim risc. El procés culmina amb l'estudi dels
+\emph{Estimadors Sense biaix Uniformement de Mínima Variància
+(ESUMV)}.
+\item  Reforçar el criteri de preferència d'estimadors pel
+procediment de reduir tota la funció de risc $R_T(\theta)$ a un
+únic nombre representatiu que permeti ordenar linealment tots els
+estimadors. Aquest criteri ens duu als \emph{Estimadors Bayes} i als
+\emph{Estimadors Minimax}.
+\end{enumerate}
+\clearpage
+
+\section{Estudi de les propietats desitjables dels estimadors}
+
+\subsection{El biaix}
+Suposem que tenim un model estadístic $\modest$ i un estimador
+$T(\Sample)$ d'una funció mesurable $g(\theta)$ del paràmetre. Una
+forma raonable de valorar què tan pròxims són els valors de $T$
+dels de g($\theta )$ és veure si, en promig, els valors de $T$
+coincideixen amb el valor mitjà de g($\theta )$.
+\begin{definition}
+Sota les condicions esmentades, si $E_\theta (T)$ és l'esperança
+de $T(\Sample)$ i $g(\theta)$ és una funció del paràmetre (en
+particular la identitat) la diferència
+\[
+\bias=b_T(\theta)=E_\theta (T)-g(\theta )
+\]
+rep el nom de \emph{biaix de l'estimador $T$ per estimar $g(\theta
+)$}. \par
+Si el biaix és nul, és a dir si:
+\[
+E_\theta (T)=g(\theta ),\quad \forall\, \theta \in \Theta
+\]
+direm que $T$ és un estimador \emph{no esbiaixat de }$g(\theta)$.
+\end{definition}
+
+\begin{example}
+Els dos exemples més coneguts són el del la mitjana i la
+variància mostrals.
+\begin{itemize}
+\item  La mitjana mostral és un estimador sense biaix de $\mu$.
+\item  La variància mostral és un estimador amb biaix de la
+variància poblacional. En concret el seu biaix val:
+$$
+b_{s^2}(\sigma^2)=E_{\sigma^2}(s^2)-\sigma^2=
+\frac{n-1}n\,\sigma ^2-\sigma^2=\frac{-1}n\sigma ^2
+$$
+\end{itemize}
+\end{example}
+
+L'ús d'estimadors sense biaix és convenient en mostres de mida
+gran. En aquestes $\mathrm{var}_\theta(T) $ és sovint
+petita i aleshores, com $E_\theta (T) =g(\theta) +b_T(\theta)$, és
+molt probable obtenir estimacions centrades en aquest valor en
+lloc de l'entorn $g(\theta)$.
+\begin{example}
+Sigui $\Sample$ una mostra aleatòria simple de $X\sim
+U(0,\theta)$. Agafem $T=\max\{\Sample\}$ com l'estimador del màxim
+de la distribució. Òbviament podem dir que $T<\theta$ i per tant
+l'estimació és sempre esbiaixada. Com hem vist en l'exemple
+\ref{Exemple-Risc-1}, la distribució en el mostratge de $T$ és
+\[
+H_\theta ( t) =P_\theta \left[ T\leq t\right] =\left(\frac
+t\theta\right)^n
+\]
+i la seva funció de densitat és
+\[
+f_\theta ( \theta ) =H_\theta ^{\prime }( \theta ) =\frac n\theta
+\left( \frac t\theta \right) ^{n-1}
+\]
+La seva esperança (veure exemple \ref{Exemple-Risc-1}) val
+\[
+E_\theta ( T) =\int_0^\theta t\cdot \left[ \frac n\theta \left(
+\frac t\theta \right) ^{n-1}\right] dt=\frac n{n+1}\theta
+\]
+d'on el biaix de $T$ per estimar $\theta $ és
+\[
+b_T(\theta) =\frac n{n+1}\,\theta -\theta =-\frac 1{n+1}\,\theta
+\]
+\end{example}
+
+Podem preguntar-nos sinó podríem millorar aquest estimador tot
+corregint el biaix de forma anàloga al que fèiem amb $\hat{s}^2$,
+és a dir, agafar un estimador \emph{corregit per al biaix}
+$$
+T^{\prime}=\frac{n+1}n\,T\quad \text{que, per construcció,
+verifica: } E(T^{\prime})=\theta.
+$$
+Considerem l'estimador de mínim risc en el sentit de l'error
+quadràtic mitjà, és a dir, l'estimador que minimitza $E\left[ (
+\theta -T) ^2\right]$. De fet, com hem vist en l'exemple
+\ref{Exemple-Risc-1} convé escollir el que minimitza
+$E[(\theta-T)^2/\theta^2]$, perquè també minimitza l'EQM però
+assoleix un mínim absolut. Aquest estimador és
+\[
+T''=\frac{n+2}{n+1}\,T
+\]
+i per tant és més adient que $T^{\prime}$, ja que té un menor risc
+respecte de l'error quadràtic mitjà.
+
+Quan, com aquí, ens trobem que donat un estimador en podem trobar
+un de menor risc, diem que el primer no és admissible respecte de
+la funció de pèrdua. En aquest cas diem que $T'$ no és admissible
+respecte l'EQM. Compte! això no vol dir que no el puguem fer
+servir sinó que n'hi ha un amb menys risc, ja que existeix un
+altre $T''$ preferible a ell que, per cert, no és centrat.
+Efectivament
+\[
+E_\theta (T'') =\frac{n+2}{n+1}\,E_\theta (T)
+=\frac{(n+2)n}{(n+1)^2}\,\theta
+\]
+
+L'exemple anterior mostra que degut a la descomposició
+$EQM_T( \theta ) =\mathrm{var}_\theta(T)+b_T^2(\theta)$ pot ser
+preferible un estimador amb biaix a un altre que no en té.
+
+En general, però, e{\ll}iminar el biaix no és una mala estratègia,
+sobretot pel fet que al restringir-nos a la classe dels
+estimadors sense biaix obtenim una solució constructiva que
+permetrà obtenir estimadors sense biaix de mínima variància en
+condicions bastant generals.
+
+Els exemples següents i{\ll}ustren dues propietats interessants del
+biaix. D'una banda mostren que no sempre existeix un estimador sense
+biaix. D'altra veiem com de vegades, tot i tenir un
+estimador sense biaix per a un paràmetre $E_\theta (T) =\theta$,
+una funció $g(T) $ no és necessàriament un estimador sense biaix
+de $g(\theta)$.
+\begin{example}
+Considerem una variable $X$ amb distribució de Bernouilli $B(1,p)$.
+Suposem que desitgem estimar $g(p)=p^2$ amb una única observació.
+Per tal que un estimador
+$T$ no tingui biaix per estimar $p^2$ caldria que
+$$
+p^2=E_p(T)=p\cdot T(1)+(1-p)\cdot T(0),\quad 0\leq p\leq 1
+$$
+és a dir, per a qualsevol valor de $p\in[0,1]$ s'hauria de
+verificar
+$$
+p^2=p\cdot (T(1)-T(0))+ T(0)
+$$
+Això no és clarament possible, ja que l'única forma que
+una funció lineal i una funció parabòlica coincideixin en tot
+l'interval $[0,1]$ és quan els coeficients $T(0)$ i $T(1)$
+valen zero.
+\end{example}
+\begin{example}
+El paràmetre $\alpha$ d'una llei exponencial amb funció de
+densitat
+$$f(x)=\alpha \,e^{-\alpha x}\,\mathbf{1}_{(0,\infty)}(x)
+$$
+és l'invers de la mitjana de la distribució, és a dir
+$\alpha =1/EX$.
+
+Un estimador raonable de $\alpha =g(\mu)$ pot ser $\hat{\alpha}=g(\hat{\mu})$,
+és a dir $\hat{\alpha}=1/\bar{X}$.
+Si apliquem la propietat de que la suma de variables aleatòries
+i.i.d. exponencials segueix una llei gamma de paràmetres
+$n$ i $\alpha$, s'obté que aquest estimador té biaix. La
+seva esperança és
+\[
+E(\hat{\alpha})=\frac n{n-1}\,\alpha
+\]
+El biaix es corregeix simplement amb
+$$\hat{\alpha}^{\prime}=\frac{n-1}n \,\hat{\alpha}$$
+\end{example}
+
+\subsection{Consistència}
+
+La consistència d'un estimador és una propietat força intuïtiva
+que ve a dir, informalment, que quan augmenta la mida
+mostral el valor de l'estimador s'acosta cada cop més a
+l'autèntic valor del paràmetre.
+\begin{definition}
+Sigui $\Sample,\dots$ una successió de variables aleatò\-ries i.i.d. $X\sim
+F_\theta$, $\theta \in \Theta$. Una successió d'estimadors
+puntuals $T_n=T(\Sample)$ s'anomena consistent per $g(\theta)$
+si $$T_n\stackunder{n\rightarrow
+\infty }{\stackrel{P}{\longrightarrow }}g(\theta)$$ per a cada
+$\theta \in \Theta$, és a dir si
+\[
+\forall \varepsilon >0 \qquad
+\lim_{n\to\infty}P\left\{ \left| T_n-g( \theta ) \right| >\varepsilon
+\right\}=0
+\]
+\end{definition}
+
+Observem que:
+\begin{enumerate}
+\item  Es tracta d'un concepte asimptòtic: Parlem de ``successions
+d'estimadors consistents'' més que d'estimadors
+pròpiament dits.
+\item  La definició es pot reforçar si, en lloc de considerar
+convergència en probabilitat (consistència feble), considerem convergència
+quasi segura o en mitjana quadràtica:
+\begin{itemize}
+\item  $T_n$ és fortament consistent si
+$T_n\,{\stackrel{\textrm{q.s.}}{\longrightarrow }}\,g( \theta )$
+\item  $T_n$ és consistent en mitjana-$r$ si $E_\theta \left[ \left|
+T_n-g( \theta ) \right| ^r\right] \longrightarrow 0$
+\end{itemize}
+\end{enumerate}
+\begin{example}
+Molts estimadors consistents ho són com a conseqüència de les lleis
+dels grans nombres. Recordem que la Llei feble dels Grans Nombres
+(Txebytxev) afirma que donada una successió de v.a.~independents i
+idènticament distribuïdes amb mitjanes $\mu<\infty$ i variàncies
+$\sigma^2<\infty $ llavors
+$$\bar{X}_n\stackrel{P}{\longrightarrow }\mu$$
+Com a conseqüència d'aquesta llei i atès que una mostra
+aleatòria simple és i.i.d., per definició, podem afirmar que
+$\bar{X}_n$ és consistent per estimar $\mu$.
+\end{example}
+
+\begin{example}\label{Ex-Consistencia-Maxim}
+La succesió $T_n=\max_{1\leq i\leq n}\{ X_i\}$ és consistent per estimar el màxim
+d'una distribució uniforme en $[0,\theta]$:
+\[
+P\left[\left| \stackunder{1\leq i\leq n}{\max}\{ X_i\}-\theta
+\right| >\varepsilon \right] =P\left[ \theta -\stackunder{1\leq i\leq n}{%
+\max}\{X_i\}>\varepsilon \right]
+\]
+ja que $X_i\in [0,\theta]$ i, per tant, podem escriure:
+\[
+\begin{split}
+P\left[ \theta -\varepsilon >\stackunder{1\leq i\leq n}{\max
+}\{X_i\}\right] &=P\left[\stackunder{1\leq i\leq n}{\max
+}\{X_i\}<\theta -\varepsilon \right]  \\
+&=\left( \frac{\theta -\varepsilon }\theta \right) ^n= \left (
+1-\frac \varepsilon \theta \right) ^n \stackunder{n\rightarrow
+\infty }{\longrightarrow }0
+\end{split}
+\]
+És immediat comprovar que
+$$
+E\left[ ( \theta -T_n) ^2\right]
+=\left( 1-\frac{2n}{n+1}+\frac n{n+2}\right)\,\theta ^2
+$$
+que també tendeix a zero quan $n\to\infty$ i per tant
+$T_n= \max_{1\leq i\leq n}\{X_i\}$ també és consistent
+en mitjana quadràtica.
+\end{example}
+
+Normalment, quan es parla de consistència es fa referència a la
+convergència en probabilitat, és a dir, $T_n$ és consistent si
+$\lim_{n\to\infty}P(| T_n-g(\theta )| >\varepsilon)=0$. Si
+l'estimador no té biaix, estem en la situació d'aplicar la
+desigualtat de Txebytxev\footnote{Si $\mathrm{var}(X)$ existeix, aleshores
+$\forall \varepsilon >0$ es verifica $P(| X-E(X)| >
+\varepsilon) \leq \frac{ \mathrm{var}(X)}{\varepsilon^2}$}:
+
+Si $E( T_n)=g(\theta ) $, aleshores
+\[
+P( \left| T_n-g( \theta ) \right| >\varepsilon )
+=P( \left| T_n-E( T_n) \right| > \varepsilon) \stackunder{\textrm{Txebytxev}}{\leq}
+\frac{\mathrm{var}(T_n)}{\varepsilon^2}
+\]
+Així, per mirar d'establir la consistència de $T$ hem de
+provar que
+$$\frac{\mathrm{var}(T_n)}{\varepsilon^2} \tendsto 0$$
+\begin{example}
+Sigui $M_n=\sum_{i=1}^n a_iX_i$ una combinació
+lineal dels valors de la mostra amb coeficients tals que
+$\sum_{i=1}^n a_i=1$ i algun $a_i>0$. És consistent $M_n$ per
+estimar $E(X)$?
+
+Comencem per veure que $M_n$ no té biaix
+\[
+\begin{split}
+E( M_n) &=E\left ( \sum_{i=1}^n a_iX_i\right ) =\sum_{i=1}^n
+E(a_i X_i) \\
+&=\sum_{i=1}^n a_iE(X_i) \stackrel{i.i.d.}{=}\sum_{i=1}^n
+a_iE(X)=E(X)
+\end{split}
+\]
+Calculem la variància
+\[
+\begin{split}
+\mathrm{var}(M_n) &= \mathrm{var}\left(\sum_{i=1}^n a_iX_i\right)
+=\sum_{i=1}^n \mathrm{var}( a_iX_i) \\
+&=\sum_{i=1}^n a_i^2\mathrm{var}( X_i)=\mathrm{var}(X)
+\sum_{i=1}^n a_i^2
+\end{split}
+\]
+
+Si apliquem ara la desigualtat
+de Txebytxev tenim:
+\[
+P( \left| M_n-\mu \right| >\varepsilon ) \leq \frac{\sigma ^2\sum
+a_i^2}{\varepsilon ^2}
+\]
+que no té perquè tendir a 0 quan $n\to\infty$ i, per tant, no
+podem afirmar que l'estimador és consistent. Per exemple, si
+$a_1=\frac 12,a_2=a_3=\dots=a_n=\frac 1{2(n-1)}$ tindrem que
+$\lim_{n\to\infty}\sum a_i^2= \frac 14$.\par Observem que el
+resultat obtingut no pot assegurar la consistència de $M_n$ per a
+qualsevol família de coeficients $a_1,\dots,a_n$, però òbviament
+l'estimador és consistent per a alguna (cas $a_i=1/n$).
+\end{example}
+
+\begin{example}
+Tornem a l'exemple de l'estimador de $EX$ d'una distribució
+exponencial $f(x)=\alpha \cdot \exp \{-\alpha\,x\}\cdot
+\mathbf{1}_{(0,\infty )}(x)$ que hem vist al parlar del biaix. Si
+considerem l'estimador
+\[
+\hat{\alpha}= 1/\bar{X}
+\]
+podem, un cop més tot aplicant les propietats de la llei gamma de
+paràmetres $n$ i $\alpha$, obtenir la seva variància
+\[
+\mathrm{var}(\hat{\alpha})=\frac 1{(n-1)^2(n-2)}\alpha^2
+\]
+En conseqüència, la variància de l'estimador corregit per al biaix
+$\hat{\alpha}^{\prime}=\frac{n-1}n\hat{\alpha}$ val
+\[
+\begin{split}
+\mathrm{var}(\hat{\alpha}^{\prime})
+&=\left(\frac{n-1}n\right)^2\mathrm{var}(\hat{\alpha})
+=\left(\frac{n-1}n\right)^2\frac 1{(n-1)^2(n-2)}\,\alpha ^2 \\
+&=\frac 1{n^2(n-2)}\,\alpha ^2
+\end{split}
+\]
+Així resulta obvi que, si apliquem la desigualtat de Txebytxev
+obtindrem que l'estimador $\hat{\alpha}^{\prime}$ és
+consistent. Per tant, també ho és $\hat{\alpha}$ que
+coincideix amb aquest quan $n$ tendeix a infinit.
+\end{example}
+
+\subsubsection{Propietats dels estimadors consistents}
+
+Moltes de les propietats dels estimadors són conseqüència directa
+de les propietats de la convergència en probabilitat, que podeu
+revisar per exemple a Martin Pliego (1998a) capítol 11.
+
+\begin{enumerate}
+\item  Si $T_n$ és consistent per estimar $\theta\,$ i
+$g:\Real\rightarrow\Real $ és una funció contínua, aleshores
+$g(T_n)$ és consistent per estimar $g(\theta)$.
+
+\item  Si $T_{1n}$ i $T_{2n}$ són
+consistents per estimar $\theta_1$ i $\theta_2$ respectivament, aleshores
+\begin{description}
+\item  $aT_{1n}\pm bT_{2n}$ és
+consistent per estimar $a\theta_1\pm b\theta_2$
+\item  $T_{1n}\cdot T_{2n}$ és
+consistent per estimar $\theta_1\cdot \theta_2$
+\item  $T_{1n}/T_{2n}$ és consistent per estimar $\theta_1/\theta_2$,
+si $\theta_2\neq 0$.
+\end{description}
+\item  Sigui $a_r=(1/n)\sum X_i^r$ el moment mostral d'ordre $r$.
+Com s'ha vist al capítol 1, l'esperança de $a_r$ és
+\[
+E(a_r) =E\left [ \frac 1n\sum X_i^r\right]
+=\frac 1n\sum E(X^r)=\frac 1n n\alpha _r=\alpha _r
+\]
+on $\alpha_r$ és el moment poblacional d'ordre $r$. Així doncs,
+$a_r$ no té biaix per estimar $\alpha_r$. La seva
+variància és
+\[
+\begin{split}
+\mathrm{var}(a_r)&=\mathrm{var}\left(\frac 1n\sum X_i^r\right)
+=\frac 1{n^2}\sum \mathrm{var}(X^r)
+=\frac 1nE\left[ X^r-E( X^r) \right]^2 \\
+&=\frac 1nE\left[X^r-\alpha _r\right] ^2 =\frac 1nE(
+X^{2r}+\alpha _r^2-2\alpha _rX^r)\\
+&= \frac 1n(\alpha_{2r}-\alpha _r^2).
+\end{split}
+\]
+Y si apliquem la desigualtat de Txebytxev s'obté
+\[
+P\left(|a_r-\alpha_r|\geq\varepsilon \right) \leq
+\frac{E(a_r-\alpha_r)^2}{\varepsilon^2}=
+\frac{\mathrm{var}(a_r)}{\varepsilon^2}=
+\frac{\alpha_{2r}-\alpha_r^2}{n\varepsilon^2}\tendsto 0
+\]
+Així doncs, em vist que els moments mostrals són estimadors
+consistents dels moments poblacionals.
+\end{enumerate}
+
+\subsection{Estimadors eficients}
+
+Com ja hem vist, un objectiu desitjable en la cerca d'estimadors
+optims és considerar estimadors de ``mínim risc'' o, si ens basem en la
+funció de pèrdua quadràtica, estimadors que minimitzin l'error
+quadràtic mitjà $E(\theta-T)^2$.
+
+En general és difícil trobar estimadors que facin mínim l'EQM per
+a tots els valors de $\theta$ però, si ens restringim als estimadors
+sense biaix, el problema té solució en un ventall més ample de
+situacions.
+
+Suposem que $T_1,T_2$ són dos estimadors sense biaix d'un
+paràmetre $\theta$. Per a aquests estimadors tenim que
+\[
+\begin{split}
+EQM_{T_1}(\theta) &=\mathrm{var}_\theta (T_1)
++b^2_{T_1}(\theta) \\
+EQM_{T_2}(\theta) &= \mathrm{var}_\theta (T_2) +
+b^2_{T_2}(\theta )
+\end{split}
+\]
+Si els estimadors no tenen biaix $b_{T_1}(\theta) =b_{T_2}(\theta)=0$
+i el que tingui menys variància tindrà el risc menor
+per estimar $\theta$. Si, per exemple,
+$\mathrm{var}(T_1)\leq\mathrm{var}(T_2)$
+direm que $T_1$ és més eficient que $T_2$ per estimar
+$\theta$.
+\begin{figure}
+\centering
+\includegraphics{./imatges/eficienc3.eps}
+\caption{Comparació de l'eficiència de dos estimadors per a un $\theta$ donat}
+\end{figure}
+
+Per a dos estimadors amb biaix zero $b_{T_i}(\theta)=0$, el quocient
+\[
+ER=\frac{EQM_{T_1}(\theta)}{EQM_{T_2}(\theta)}
+=\frac{\mathrm{var}_{\theta}(T_1)}{\mathrm{var}_{\theta}(T_2)}
+\]
+s'anomena \emph{eficiència relativa de $T_1$ respecte
+$T_2$}. Si només hi ha dos estimadors de $\theta$ pot ser
+fàcil veure quin és el més eficient. Si n'hi ha més, la cosa es
+complica. El ``més eficient'', cas de que existeixi, s'anomenarà
+\emph{l'estimador sense biaix de mínima variància}.
+\begin{definition}
+Sigui $\mathcal{S}(\theta)$ la classe dels estimadors sense biaix de
+$\theta$ i amb variància. Si per a tots els estimadors d'aquesta classe
+$T\in \mathcal{S}(\theta)$ es verifica que
+\[
+\mathrm{var}_\theta(T)\leq\mathrm{var}_\theta(T^{\ast})
+\quad \forall T\in\mathcal{S}(\theta)
+\]
+direm que $T^{\ast}$ és un estimador sense biaix de mínima variància de
+$\theta$. Si la desigualtat és certa $\forall \theta \in \Theta$
+direm que $T^{\ast}$ és un \emph{estimador sense biaix uniforme de
+mínima variància} ESUMV\footnote{UMVUE, en anglès}.
+\end{definition}
+
+\subsection{Informació de Fisher i cota de Cramer-Rao}
+
+Òbviament, en un problema d'estimació l'ideal és disposar d'un
+ESUMV, però això no sempre és possible. Se'ns plantegen diversos
+problemes:
+\begin{enumerate}
+\item  Existeixen ESUMV per a un paràmetre $\theta$ en un model donat?
+\item  En cas que existeixi l'ESUMV, sabrem com trobar-ho?
+\end{enumerate}
+Aquest problema té solució, sota certes condicions, fent
+servir els teoremes de Lehmann-Scheffé i Rao-Blackwell i el
+concepte de suficiència, que es discuteix més endavant.
+
+Una solució parcial apareix gràcies al \emph{Teorema de
+Cramer-Rao} que permet establir una cota mínima per a la variància
+d'un estimador. Quan un estimador assoleixi aquesta cota sabrem
+que és un estimador de variància mínima.
+
+Informalment aquest resultat ve a dir que, sota certes condicions
+de regularitat, si $T$ és un estimador sense biaix d'un paràmetre
+$\theta$, la seva variància està acotada per una expressió que
+anomenen \emph{cota de Cramer-Rao} $\mathrm{CCR}(\theta)$
+\[
+\mathrm{var}(T) \geq \mathrm{CCR}(\theta)
+\]
+Abans d'establir amb precisió aquest teorema anem a considerar el
+concepte d'informació d'un model estadístic introduït per Fisher.
+%\footnote{Els raonaments relatius a la cota de Cramer-Rao es poden
+%seguir independentment de quant clar quedi el perquè $I_n(\theta)$
+%és una mesura d'informació. Per aquest motiu la justificació de
+%$I_n(\theta)$ com a mesura d'informació es rel.lega a l'apèndix
+%del final del capítol}.
+
+\subsubsection{Informació i versemblança d'un model estadístic}
+\label{Informacio-i-versemblansa}
+Una idea bastant raonable és
+esperar que un estimador funcioni millor en el seu intent
+d'aproximar-se al valor d'un paràmetre quanta més informació
+tingui per fer-ho. Per aquest motiu la variància de l'estimador i
+la informació es presenten com a quantitats oposades: a més
+informació, menys error (variància) en l'estimació:
+\[
+\mathrm{var}( \te_n) \propto \frac 1{I_n( \theta ) }
+\]
+Ara ens trobem amb el problema de \emph{com} definir la quantitat
+d'informació (continguda en una mostra/d'un model), per tal que
+s'ajusti a la idea intuïtiva d'informació. Fisher ho va fer a
+través de la funció de versemblança\footnote{``verosimilitud'' en
+castellà i ``likelihood'' en anglès}.
+
+Sigui un model estadístic $\modest$ i una m.a.s.~$(\Sample)$, que
+pren valors $\bx=(\sample)$. Si $X$ és discreta la funció de massa
+de probabilitat indica, a grans trets, la probabilitat d'observar
+la mostra, donat un valor del paràmetre. Si $X$ és absolutament
+contínua aquesta interpretació ja no és tan directa.
+\[
+f(x_1,x_2,\dots,x_n;\theta ) =\left\{
+\begin{array}{ll}
+P_\theta [ X=x_1] \cdots P_\theta [X=x_n],&\textrm{si $X$ és discreta}\\
+f_\theta(x_1) \cdots f_\theta(x_n),&\textrm{si $X$ és abs.
+contínua}
+\end{array}
+\right.
+\]
+La funció de versemblança s'obté si considerem, en l'expressió
+anterior, que el que queda fixat és la mostra i no el paràmetre.
+És a dir, fixada una mostra $\bx$ la funció de versemblança indica
+\emph{com de versemblant resulta}, per a cada valor del paràmetre,
+que el model l'hagi generada.
+\begin{example}
+Suposem que tenim una m.a.s.~$\sample$ de mida $n$ d'una variable
+aleatòria $X$, que segueix una llei de Poisson de paràmetre
+$\lambda$ desconegut.
+$$
+X \sim F_\lambda =P( \lambda ),\ \lambda >0
+$$
+La funció de probabilitat de la mostra, fixat $\lambda$, és:
+$$
+g_\lambda(\sample)=\stackunder{i=1}{\stackrel{n}{\prod }}e^{-\lambda }\frac{\lambda
+^{x_i}}{x_i!}=e^{-n\lambda }\frac{\lambda ^{\sum x_i}}{\stackunder{i=1}{%
+\stackrel{n}{\prod }}x_i!}$$ i la funció de versemblança del
+model, fixada $\bx$, és:
+$$
+L(\sample;\lambda ) =\stackunder{i=1}{\stackrel{n}{\prod
+}}e^{-\lambda }\frac{\lambda
+^{x_i}}{x_i!}=e^{-n\lambda }\frac{\lambda ^{\sum x_i}}{\stackunder{i=1}{%
+\stackrel{n}{\prod }}x_i!}$$ Tot i que la forma funcional de
+$g_\lambda(\bx)$ i $L(\bx; \lambda)$ és la mateixa, el seu aspecte
+és ben diferent com es pot comprovar en la figura
+~\ref{fig-likelihoods} on donem valors a $g_\lambda(\bx)$, fent
+variar $\bx$ o a $L(\lambda; \bx)$ fent variar $\lambda$.
+\end{example}
+\begin{figure}
+\includegraphics{./imatges/versemblanca1.eps}\\
+\includegraphics{./imatges/versemblanca2.eps}
+\caption{Probabilitat de la suma de $n=5$ valors mostrals
+per a 10 mostres de la llei de Poisson amb $\lambda=3$ versus
+la funció versemblança per a una mostra observada.}
+\label{fig-likelihoods}
+\end{figure}
+
+%\begin{figure}
+%\includegraphics{./imatges/likelihood.eps}
+%\caption{Probabilitat d'una mostra vs versemblança}
+%\label{fig-likelihoods}
+%\end{figure}
+
+\subsubsection{Informació de Fisher}
+
+Per tal de poder calcular la quantitat d'informació de Fisher que
+hi ha continguda en una mostra sobre un paràmetre, cal considerar
+models estadístics regulars, és a dir, on es verifiquen les
+següents condicions de regularitat.
+
+\begin{definition}
+Direm que $\modest$ és un model estadístic regular si es
+verifiquen les següents condicions:
+\begin{enumerate}
+\item  La població d'on prové la mostra presenta un ``camp de
+variació'' o suport $S_{\theta}=\{ x|\, f( x;\theta)>0\}=S$ que no
+depèn de $\theta$.
+\item  La funció $L(\bx;\theta)$ admet, com a mínim, les dues primeres derivades.
+\item  Les operacions de derivació i integració són
+intercanviables.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+Sigui $\modest$ un model estadístic regular, és a dir, on es
+verifiquen les condicions de regularitat 1-3 d'abans. Si
+$Z=\frac\partial{\partial\theta}\log L(\bX;\theta)$, la quantitat
+d'informació de Fisher és
+\[
+I_n(\theta) =\mathrm{var}_\theta (Z)=\mathrm{var}_\theta \left(
+\frac\partial{\partial\theta }\log L(\bX;\theta) \right)
+\]
+\end{definition}
+Les condicions de regularitat són necessàries per poder fer el
+càlcul de $E_\theta(Z^2)$.
+
+\medskip
+A continuació presentem algunes propietats de la
+informació de Fisher. Podeu veure la demostració a Ruiz--Maya i
+Pliego (1995).
+\begin{enumerate}
+\item La informació de Fisher es pot expressar com:
+\[
+I_n( \theta )=E_{\theta}\left[ \left(
+\frac{\partial\log L(\bX;\theta)}{\partial\theta}
+\right)^2\right]
+\]
+Això es pot comprovar, ja que si apliquem les condicions de regularitat
+\[
+\begin{split}
+E(Z) &= E\left(
+\frac{\partial\log L(\bX;\theta)}{\partial\theta}\right)
+= \int_{S^n}
+\frac{\partial\log L(\bx;\theta)}{\partial\theta}
+L(\bx;\theta)\,d\bx\\
+&= \int_{S^n}
+\frac{\frac{\partial L(\bx;\theta)}{\partial\theta}}{L(
+\bx;\theta)}L(\bx;\theta)\,d\bx
+=\int_{S^n}\frac{\partial
+L(\bx;\theta)}{\partial\theta}\,d\bx \\
+&=\frac\partial {\partial\theta}\stackunder{%
+=1}{\underbrace{\int_{S^n}L(\bx;\theta)}}\,d\bx=
+\frac\partial{\partial\theta}\,1=0
+\end{split}
+\]
+De forma que $E(Z)=0$ i per tant tindrem que
+$\mathrm{var}_\theta (Z)=E_\theta(Z^2)$.
+\item  $I_n(\theta)=0$ si i només si $L(\bx;\theta)$
+no depèn de $\theta$.
+\item  Donades dues m.a.s.~$\bx_1,\bx_2$ de mides $n_1,n_2$, de la
+mateixa població es verifica:
+\[
+I_{n_1,n_2}(\theta) =I_{n_1}(\theta)+I_{n_2}(\theta)
+\]
+De manera que podem considerar una mostra de mida $n$ com $n$
+mostres de mida $1$:
+\[
+I_n(\theta) =\sum_{i=1}^n I_1( \theta ) =n\cdot i( \theta ),
+\text{ essent }i( \theta )=I_1( \theta )
+\]
+És a dir
+\[
+E\left( \frac{\partial \log ( L(\bX;\theta))}{\partial \theta
+}\right) =nE\left( \frac{\partial \log f(X;\theta)}{\partial
+\theta }\right)
+\]
+\item  Es verifica la següent relació:
+\[
+I_n(\theta) =E\left[ \left(\frac{\partial \log L(\bX;\theta)}
+{\partial\theta}\right)^2\right] =-E\left[
+\frac{\partial^2\log L(\bX;\theta) }{\partial^2\theta}\right]
+\]
+\end{enumerate}
+
+\begin{example}
+Anem a calcular la quantitat d'informació de Fisher continguda en
+una m.a.s.~extreta d'una població $N(\mu,\sigma)$ amb $\sigma=\sigma_0
+$ coneguda.\\ La funció de versemblança és
+\[
+L(\bx;\mu) =\stackunder{i=1}{\stackrel{n}{\prod}}%
+\frac 1{\sqrt{2\pi}\sigma_0}
+e^{-\frac{(x_i-\mu )^2}{2\sigma_0^2}}=
+(2\pi\sigma_0^2)^{-n/2}\exp\left(-\sum_{i=1}^n
+\frac{(x_i-\mu)^2}{2\sigma_0^2}\right)
+\]
+i el seu logaritme
+\[
+\log L(\bx;\mu) =-\frac n2\log(2\pi\sigma_0^2) -\frac
+1{2\sigma_0^2}\sum_{i=1}^n (x_i-\mu)^2
+\]
+Si derivem respecte $\mu$
+\[
+\frac{\partial \log L(\bx;\mu)}{\mu} =-\frac
+1{2\sigma _0^2}\,2\sum_{i=1}^n  ( x_i-\mu ) ( -1) =\frac{%
+\sum_{i=1}^n ( x_i-\mu )}{\sigma_0^2}
+\]
+d'on
+\[
+\begin{split}
+I_n(\mu)&=E\left(\frac{\partial\log L(\bX;\mu)}{\partial\mu}\right)^2
+=E\left(\frac{\sum_{i=1}^n (X_i-\mu)}{\sigma_0^2}\right)^2 \\
+&=\ \frac 1{\sigma_0^4}E\left[
+\sum_{i=1}^n (X_i-\mu )^2 +\sum_{i\ne j} (X_i-\mu)(X_j-\mu) \right] \\
+&=\frac 1{\sigma_0^4} E\left[ \sum_{i=1}^n (X_i-\mu)^2\right]+
+\frac 1{\sigma_0^4}
+\stackunder{=0}{\underbrace{E\left[\stackunder{i\neq
+j}{\stackrel{n}{\sum }}( X_i-\mu ) (X_j-\mu)\right]}} \\
+&=\frac 1{\sigma_0^4}\,n\sigma_0 ^2=\frac n{\sigma_0^2}
+\end{split}
+\]
+Aquest càlcul també es pot fer a partir de la tercera
+propietat de la informació de Fisher
+\[
+I_n(\mu)=nE \left[ \frac{\partial \log f(X;\mu)}{\partial\mu}\right]
+=n \frac 1{\sigma_0^2} =\frac n{\sigma_0^2}
+\]
+\end{example}
+
+\subsubsection{La desigualtat de Cramer--Rao}
+Un cop establertes les condicions de regularitat i
+característiques anteriors podem enunciar el teorema de
+Cramer--Rao (1945).
+\begin{theorem}
+Donat un model estadístic regular $\modest$, és a dir, un model on
+es verifiquen les condicions de regularitat enunciades, qualsevol
+estimador $T\in\mathcal{S}(\theta)$ de la classe dels estimadors
+no esbiaixats i amb variància verifica
+\[
+\mathrm{var}_\theta(T) \geq \frac 1{I_n(\theta)}
+\]
+\end{theorem}
+
+\emph{Demostració:}
+\par\medskip
+L'estimador $T\in\mathcal{S}(\theta)$ no té biaix, és a dir que
+\[
+E(T) =\int_{S^n} T(\bx)\cdot L(\bx;\theta)\,d\bx =\theta
+\]
+Si derivem i introduïm la derivada sota el signe de la integral, obtenim
+\[
+\begin{split}
+\frac\partial{\partial\theta }E(T)
+&=\int_{S^n} \frac\partial{\partial\theta}\left(T(\bx)\cdot L(\bx;\theta)\right)\,d\bx
+=\int_{S^n} T(\bx) \frac\partial{\partial\theta}L(\bx;\theta)\,d\bx\\
+&=\int_{S^n} T(\bx) \left(\frac{\frac\partial{\partial\theta}
+L(\bx;\theta)}{L(\bx;\theta)}\right)L(\bx;\theta)\,d\bx
+\end{split}
+\]
+%%Si de $t( \bx) $ en diem $\te_n$ i de $%
+%( \frac{\frac \partial {\partial \theta }f( \bx;\theta
+%) }{f( \bx;\theta ) }) $ en diem $Z$,
+Així doncs
+\[
+1=\frac\partial{\partial\theta}\,\theta=\frac\partial{\partial\theta}E(T)
+=E(TZ) =\int_{S^n} T(\bx)\cdot Z\,L(\bx;\theta)\,d\bx
+\]
+En resum
+\[
+E(T)=\theta,\ E(TZ)=1,\ E(Z)=0,\ \mathrm{var}(Z)=I_n(\theta)
+\]
+Si ara considerem el coeficient de correlació al quadrat entre
+$T$ i $Z$, tenim
+\[
+\rho^2(T,Z) =
+\frac{\left[\mathrm{cov}(T,Z)\right]^2}{\mathrm{var}(T)\cdot\mathrm{var}(Z)}
+=\frac{\left[E(TZ)-E(T) E(Z)\right]^2}%
+{\mathrm{var}(T) \cdot \mathrm{var}(Z) }\leq 1
+\]
+Si substituïm els resultats trobats abans obtenim
+\[
+\frac 1{\mathrm{var}(T) \cdot I_n(\theta)}\leq 1
+\]
+d'on es dedueix la desigualtat enunciada.\hfill $\blacksquare$
+
+\medskip
+\begin{definition}
+Si un estimador assoleix la CCR (Cota de Cramer--Rao) diem que és
+un \emph{estimador eficient}.
+\end{definition}
+Tot estimador eficient és de mínima variància en la classe
+$\mathcal{S}(\theta)$. Però també pot passar que existeixi un
+estimador de mínima variància sense arribar necessàriament a la
+CCR.
+\begin{example}
+Sigui $X\sim F_\theta =P(\lambda)$, $\lambda >0$ (Poisson).
+Busquem la CCR dels estimadors de $\lambda$.
+\[
+\begin{split}
+L(\bx;\lambda) &=\stackunder{i=1}{\stackrel{n}{\prod
+}}e^{-\lambda }\frac{\lambda
+^{x_i}}{x_i!}=e^{-n\lambda }\frac{\lambda ^{\sum x_i}}{\stackunder{i=1}{%
+\stackrel{n}{\prod }}x_i!} \\
+\log L(\bx;\lambda)  &=-n\lambda +\left(\sum
+x_i\right)\log\lambda -\log\left(\stackunder{i=1}{\stackrel{n}{%
+\prod }}x_i!\right)\\
+\frac{\partial \log ( L(\bx;\lambda))}{%
+\partial \lambda }&= -n+\left(\sum x_i\right)\frac 1\lambda\\
+E\left[ \frac{\partial \log
+L(\bx;\lambda)}{\partial\lambda}\right]^2 &= E\left[ n^2+\left(
+\frac{\sum X_i}\lambda \right)^2-\frac{2n\sum
+X_i}\lambda \right] \\
+&= n^2+\frac 1{\lambda ^2}E\left(\sum
+X_i\right)^2-\frac{2n}\lambda n E(X)
+\end{split}
+\]
+En aquest punt, podem recordar que la suma de variables de Poisson
+també és una Poisson
+$$\sum X_i\sim P(n\lambda)$$
+i per tant
+\[
+E\left(\sum X_i\right)^2 =\mathrm{var}( \sum X_i) +\left[
+E\left( \sum X_i\right)\right]^2 =n\lambda  +( n\lambda ) ^2
+\]
+De forma que
+$$
+E(Z^2)= n^2+\frac 1{\lambda ^2}(n\lambda +n^2\lambda ^2) -%
+\frac{2n^2\lambda }\lambda = n^2+\frac{n\lambda }{\lambda ^2}+\frac{n^2\lambda ^2}{\lambda ^2}%
+-2n^2=\frac n\lambda
+$$
+i definitivament
+$$
+I_n(\lambda) =\frac n\lambda \quad\Longrightarrow\quad
+\mathrm{var}(T) \geq \frac\lambda{n}
+$$
+Sabem que la mitjana aritmètica verifica
+$$\mathrm{var}(\bar{X}_n) =\frac \lambda{n}$$
+de forma que coincideix amb la cota de Cramer--Rao i resulta que
+$\bar{X}_n$ és l'estimador eficient de $\lambda$.
+\end{example}
+
+\begin{example}
+Per poder calcular la CCR o, més ben dit, per a que l'invers de
+$$
+E\left[\frac{\partial\log L(\bx;\theta)}{\partial\theta}\right]^2
+$$
+sigui de debò la cota mínima de
+$\mathrm{var}(\widehat{\theta})$ dins la classe $\mathcal{S}(\theta)$
+cal que es verifiquin les
+condicions de regularitat. En cas contrari podem obtenir
+resultats absurds.
+
+Considerem, per exemple, una variable aleatòria $X$
+amb funció de densitat
+\[
+f(x;\theta) =\frac 3{\theta ^3}x^2\mathbf{1}_{[0,\theta]}(x)
+\]
+i esperança
+\[
+E(X) =\int_0^\theta x\cdot\frac 3{\theta ^3} x^2\,dx
+=\left.\frac 3{\theta^3}\frac{x^4}4\right|_0^\theta
+=\frac 3{\theta^3}\frac{\theta^4}4=\frac 34\,\theta
+\]
+Com que $\theta =\frac 43E( X) $,
+això suggereix estimar $\theta$ per $\widehat{\theta}=\frac 43\bar{X}$
+que no té biaix.
+
+D'altra banda, si
+calculem la variància de $X$ tenim
+\[
+\mathrm{var}(X)=E(X^2)-E(X)^2
+=\int_0^\theta \frac 3{\theta^3}x^4\,dx-\left(\frac 34\,\theta\right)^2
+=\frac 35\,\theta
+^2-\frac 9{16}\,\theta^2=\frac{3}{80}\,\theta^2
+\]
+Ja sabem que $E(\widehat{\theta})=\theta$ i, a més,
+\[
+\mathrm{var}(\widehat{\theta}) =\mathrm{var}(\frac 43\bar{X})=%
+\frac{16}9\mathrm{var}(\bar{X}) =\frac{16}9\frac{\mathrm{var}(X)}n
+=\frac{16}9\frac 3{80}\frac{\theta^2}n=\frac{\theta^2}{15n}
+\]
+
+Si avaluem $I_n(\theta)$ en la forma més simple obtenim
+\[
+I_n(\theta) =nI(\theta)
+=nE\left[ \frac{\partial \log f(X;\theta)}{\partial
+\theta }\right]^2=n\frac 9{\theta^2}
+\]
+De forma que la CCR resulta ser més gran que la variància d'aquest
+estimador
+\[
+\mathrm{var}(\widehat{\theta}) =\frac{\theta^2}{15n}<
+\frac{\theta^2}{9n}
+\]
+la qual cosa és absurda. L'absurd ha esdevingut
+perquè no hem tingut en compte que el suport de $X$ depèn de
+$\theta$ i les condicions de regularitat, en aquest cas, no es
+verifiquen. La cota de Cramer--Rao no existeix.
+\end{example}
+
+També es dona el cas que la variància d'un estimador és inferior a
+la CCR encara que existeixi. Això pot passar, per exemple, per
+algun estimador esbiaixat.
+
+\subsubsection{Caracterització de l'estimador eficient}
+
+Una cosa és calcular la cota de Cramer--Rao i una altra és trobar
+l'estimador que assoleix aquesta cota i, en conseqüència, és de
+variància mínima. La següent caracterització permet, en algunes
+ocasions, obtenir directament la forma de l'estimador eficient.
+
+\begin{theorem}\label{Caracterizacio-Estimador-Eficient}
+Sigui $T$ l'estimador eficient de $\theta$, aleshores es verifica
+\[
+\sum_{i=1}^n \frac\partial{\partial\theta}\log f(X_i;\theta)
+=K(\theta,n) (T-\theta)
+\]
+on $K(\theta,n)$ és una funció que depèn de $\theta$ i de $n$ i
+que sol coincidir amb la informació de Fisher.
+\end{theorem}
+
+\emph{Demostració:}\par
+Si $T$ és l'estimador eficient, llavors
+$$\mathrm{var}(T) =\frac 1{I_n(\theta)}$$
+i per tant $\rho^2(T,Z)=1$.
+
+En general, donades dues variables aleatòries $X$ i $Y$ hom sap
+que si $\rho(X,Y)=1$, aleshores
+$$Y-E(Y)=\beta(X-E(X))$$
+Si apliquem aquest resultat a $T$ i $Z$ tenim
+\[
+\begin{split}
+Z-E(Z)&=\beta(T -E(T)) \\
+\frac{\partial\log L(\bx;\theta)}{\partial\theta}-0
+&=\beta(T -\theta) \\
+\sum_{i=1}^n \frac{\partial\log f(X_i;\theta)}{\partial\theta}
+&=K(\theta,n) (T-\theta)
+\end{split}
+\]
+
+
+\begin{example}
+En el cas de la distribució de Poisson tenim
+\[
+\begin{split}
+f(x;\lambda) &= e^{-\lambda}\frac{\lambda^x}{x!}\\
+\log  f(x;\lambda)  &= -\lambda
++x\log (\lambda) -\log (x!)\\
+\frac{\partial\log f(x;\lambda)}{\partial\lambda}&=-1 +x\frac{1}{\lambda}
+\\
+Z=\sum_{i=1}^n \frac{\partial\log f(X_i;\lambda)}{\partial\lambda}
+&=\sum_{i=1}^n \left(-1+\frac{X_i}\lambda\right)
+\end{split}
+\]
+Volem veure que
+$$
+\sum_{i=1}^n \left( \frac{X_i}\lambda -1\right)
+=K(\theta,n) (T-\theta)
+$$
+de forma que si ho re-escrivim adequadament
+tenim
+$$
+\frac{1}{\lambda}\sum_{i=1}^n X_i -n=\frac 1\lambda
+\left( \sum_{i=1}^n X_i-n\lambda \right) =\frac n\lambda \left(
+\frac{1}{n}\sum_{i=1}^n X_i-\lambda\right)
+$$
+Així resulta que $K(\lambda,n)=n/\lambda$ i coincideix amb la
+informació de Fisher $I_n(\lambda)$. Pel teorema
+anterior es dedueix que $T=\bar{X}$ és l'estimador eficient i, per tant,
+de mínima variància.
+\end{example}
+
+\subsubsection{CCR per a l'estimació d'una funció paramètrica}
+
+Sigui $g$ una funció real de variable real derivable i $V$ un
+estimador sense biaix de $g(\theta)$, és a dir
+$$
+E(V)=g(\theta )
+$$
+Si es compleixen les condicions de regularitat, aleshores
+$$
+\mathrm{var}(V) \geq
+\frac{[g'(\theta)]^2}{I_n(\theta)}
+$$
+Per demostrar-ho es fa el següent: On teníem $E(T) =\theta $, ara
+tenim $E(V)=g(\theta)$, i quan abans derivàvem respecte $\theta$ i
+obteníem un 1, ara tindrem $g'(\theta)$.
+
+Algunes propietats de la CCR referida a funcions paramètriques
+són les següents:
+\begin{enumerate}
+\item Com ja hem vist, és possible que no existeixi un estimador
+no esbiaixat d'un paràmetre o d'una funció d'aquest. Si $X\sim B(
+n,p) $ i $g(p) =\frac p{p-1}$ no existeix un estimador sense
+biaix. La classe $\mathcal{S}(g(p))$ és buida. En aquest cas
+tampoc existirà un estimador de variància mínima.
+\item Un estimador no esbiaixat pot ser de variància mínima
+però aquesta pot ser més gran que la CCR. Per exemple, en una
+població $N(\mu,\sigma^2)$ es demostra que $\hat{s}^2$ és
+l'estimador de variància mínima de $\sigma^2$. En aquest cas, la
+CCR és
+\[
+\frac 1{I_n(\sigma^2)}=\frac{2\sigma^4}n
+<\frac{2\sigma^4}{n-1}=\mathrm{var}(\hat{s}^2)
+\]
+i la variància del millor estimador és superior a la mínima
+teòrica, que no és accessible.
+\end{enumerate}
+
+
+\section{Estadístics suficients}
+
+En un problema d'inferència es pot donar el fet que les dades
+continguin informació supèrflua, no rellevant, a l'hora d'estimar
+el paràmetre. També pot passar al revés, que pretenguem estimar-ho
+sense fer servir tota la informació disponible en la mostra.
+Ambdues situacions són indesitjables. Sembla raonable que per
+estimar un paràmetre i, atesa la dificultat derivada de disposar
+de diversos estimadors entre els que volem escollir l'òptim, ens
+basem únicament en aquells que utilitzen (només) tota la
+informació rellevant.
+
+\begin{example}
+Suposem que volem estimar la proporció de peces defectuoses
+$\theta$ en un procés de fabricació. Per això examinem $n$ peces
+extretes a l'atzar al llarg d'una jornada i assignem un $1$ a les
+peces defectuoses i un $0$ a les que no ho són. Fent-ho així
+obtenim una mostra aleatòria simple $\Sample$ on
+\[
+X_i=\left\{
+\begin{array}{ll}
+1 &\textrm{amb probabilitat $\theta$} \\
+0 &\textrm{amb probabilitat $(1-\theta)$}
+\end{array}
+\right.
+\]
+Intuïtivament està clar que per estimar $\theta$ només ens
+interessa el nombre de zeros i uns, és a dir, el valor de
+l'estadístic
+$$\teX=\sum_{i=1}^n X_i$$
+En aquest cas no aportaria res un estadístic que tingués en compte
+la posició dels uns i dels zeros en la mostra. En canvi, un
+estadístic que no considerés tots els valors, com per exemple
+$\teX=X_1$, resultaria sens dubte menys adient.
+\end{example}
+
+Les observacions a l'exemple anterior es poden justificar tenint
+en compte que totes les mostres de mida $n$ amb un mateix nombre
+$t$ d'uns ($1$) tenen la mateixa probabilitat. En concret la
+funció de probabilitat d'una mostra $\sample$ és
+$$
+f_\theta(\sample)=\theta ^t(1-\theta)^{n-t}
+$$
+on $t=\sum_{i=1}^n x_i$,\ $x_i\in \{0,1\}$, $i=1,2,\dots,n$.
+
+Com es pot veure la probabilitat de la mostra només depèn del
+nombre d'uns (zeros) i no de l'ordre amb què es presenten en la
+mostra. El fet que la posició dels uns i dels zeros en la mostra
+no aportin informació rellevant equival a dir que l'estadístic
+$$\teX=\sum_{i=1}^n X_i$$ \emph{conté la mateixa informació } que
+$\Sample$ per estimar $\theta$. Observem, però, un seguit de
+diferències entre basar-nos en $\teX$ o en $\Sample$:
+\begin{itemize}
+\item  Al passar de $\Sample$ a
+$\sum_{i=1}^n X_i$ hi ha una reducció de les dades que no comporta
+pèrdua d'informació.
+\item  Moltes mostres diferents donen lloc al mateix valor de $T$.
+\end{itemize}
+
+Fisher va formalitzar aquesta idea amb el càlcul de la
+probabilitat condicionada de la observació mostral amb
+$\teX=\sum_{i=1}^n X_i$ i per a tot $t=0,1,\dots,n$:
+\[
+\begin{split}
+P_\theta [\bX=\bx|T=t]
+&=\frac{ P_\theta[\bX=\bx,T=t]}{P_\theta(T=t)}\\
+&= \frac{\theta^t(1-\theta)^{n-t}}{\left(\begin{array}{c} n \\t
+\end{array}\right) \theta^t(1-\theta)^{n-t}}=
+\frac 1{\left(\begin{array}{c} n \\t\end{array}\right)}
+\end{split}
+\]
+És a dir que, donats $(\sample)\in\{0,1\}^n$ i
+$t\in\{0,1,\dots,n\}$, tenim
+$$
+P_\theta [\bX=\bx \mid T=t] =\left\{
+\begin{array}{cl}
+0 & \textrm{si $t\neq \sum_{i=1}^n x_i$} \\
+\ds\frac 1{\left(\begin{array}{c} n \\t\end{array} \right)}
+&\textrm{si $t\neq \sum_{i=1}^{n} x_i$}\end{array} \right.
+$$
+Òbviament, $P_\theta[\bX=\bx]$ depèn de $\theta $ que és el
+paràmetre que volem estimar però, en canvi, la probabilitat
+condicionada $P_\theta [\bX=\bx \mid T=t ]$ \emph{no depèn} de
+$\theta$. Tenim doncs la següent expressió de la funció de
+probabilitat de la mostra:
+$$
+P_\theta(\bX=\bx)=P_\theta(T=t)\cdot P_\theta[\bX =\bx \mid T=t]
+$$
+Aquesta expressió mostra que $P_\theta (\bX)$ es pot descompondre
+en dos factors, un que depèn de $\theta$, $P_\theta(T=t)$, i un
+altre que no en depèn
+$$P_\theta[\bX=\bx\mid T=t]$$
+
+Una forma de veure aquesta descomposició és pensar que
+l'estadístic $T=\sum_{i=1}^n X_i$ ``acumula" \ o ``absorbeix" tota
+la informació relativa a $\theta$ i això es reflecteix en el fet
+que la probabilitat de la mostra, donat $T=t$, ja no depèn de
+$\theta$. És a dir, podem imaginar la mostra construïda en dues
+fases:
+\begin{itemize}
+\item  En una primera etapa s'escull el valor $t$ per a $T$ amb distribució
+$B(n,\theta)$.
+\item  A continuació es situa aleatòriament $t$ uns i $n-t$
+zeros en les $n$ posicions.
+\end{itemize}
+
+Quan l'estructura de l'estadístic $\teX$ fa que el segon factor en
+l'expressió anterior no depengui de $\theta$ vol dir que
+l'observació addicional de la mostra és irrellevant. En aquest cas
+direm que $\teX$ és \emph{suficient} per a l'estimació de
+$\theta$. Atès que aquesta propietat de $T$ queda caracteritzada
+per la independència que té $P_\theta[\bX=\bx\mid T=t]$ de
+$\theta$ es fa servir per definir la suficiència.
+\begin{definition}
+\item  Donat un model estadístic $\modest$ i un estadístic $T$,
+direm que T és suficient per a $\theta$ si, donada una mostra
+$\bX=(\Sample)$, es verifica que la distribució de $\bX$
+condicionada pel valor de $T$ no depèn de $\theta$.
+\end{definition}
+\begin{itemize}
+\item  No cal que $F_\theta$ sigui discreta, com en l'exemple
+introductori, o que la mostra sigui una mostra aleatòria simple.
+\item  L'estadístic suficient per a un paràmetre pot ser
+$k$-dimensional.
+\end{itemize}
+
+\begin{example}
+Donada una mostra $\Sample$ d'una distribució de Poisson, la
+funció de probabilitat de la mostra val
+$$
+P_\theta (X_1=x_1,\dots,X_n=x_n) =\frac{e^{-n\lambda}
+\lambda^{\sum x_i}}{x_1!\cdots x_n!}
+$$
+Calculem la probabilitat
+de la mostra condicionada pel valor de l'estadístic $T=\sum_{i=1}^n X_i$
+\[
+\begin{split}
+P_\theta [X_1=x_1,\dots,X_n=x_n\mid T=t]
+&=\frac{P_\theta (X_1=x_1,...,X_n=x_n,T=t)}%
+{P_\theta (T=t)} \\
+&=\ds\left\{\begin{array}{cl}
+\frac{\frac{e^{-n\lambda}\lambda ^{t}}{x_1!\cdots x_n!}}{\frac{%
+e^{-n\lambda}(n\lambda)^t}{t!}} & \textrm{si $\sum x_i=t$} \\
+0 & \textrm{si $\sum x_i\neq t$}
+\end{array}
+\right.\\
+&=\frac{t!}{x_1!\cdots x_n!}\left(\frac 1n\right)^t
+\Ind_{\{\sum x_i=t\}}(x_1,\dots,x_n)
+\end{split}
+\]
+La probabilitat
+condicional no depèn de $\lambda$ i, per tant, $T$ és suficient per
+a $\lambda$. Convé observar que, en aquest exemple, no totes les
+mostres tenen la mateixa probabilitat.
+\end{example}
+
+\subsection{Teorema de factorització}
+
+La justificació de la suficiència d'un estadístic a
+través de la definició no sempre és senzilla ja que la
+distribució condicional pot ser intractable amb les eines
+de que disposem. El teorema que es presenta a
+continuació proporciona un mètode senzill per comprovar la
+suficiència d'un estadístic i, sovint, suggereix quin és
+l'estadístic suficient de dimensió més reduïda possible.
+\begin{theorem} \textbf{\emph{Neymann-Fisher}}.
+Sigui $\modest$ un model estadístic i $\Sample$ una mostra
+aleatòria simple de $X$. Sigui $f_\theta (\bx)$ la funció de
+probabilitat o la funció de densitat de la mostra, segons $X$
+sigui discreta o absolutament contínua. Un estadístic $T$ és
+suficient per a $\theta$ si i només si hi ha dues funcions
+mesurables $g_\theta$ i $h$ tals que
+$$f_\theta(\bx) =g_\theta(T(\bx)) \cdot h(\bx)$$
+on $h$ no depèn de $\theta$ i $g$ depèn de $\theta$ i, a més,
+només depèn de la mostra a través de $\te$.
+\end{theorem}
+Veiem ara la demostració del teorema de factorització, restringida
+al cas de variables discretes.
+\par\medskip
+\emph{Demostració:}
+\par\medskip
+Començarem per suposar que $T$ és suficient i conclourem que és
+possible la factorització.\par
+Si $T(\bX)$ és suficient per a la família de distribucions
+$\{ F_\theta ;\theta \in \Theta\}$ la funció de probabilitat
+de la mostra condicionada per $T$ no depèn de $\theta$. Atès que
+$$
+f_\theta (\bx) =P_\theta [T=T( \bx)] \cdot
+f_\theta [ \bx \mid T=T(\bx)]
+$$
+només cal agafar $g_\theta (t) =P_\theta[ T=T(\bx)=t]$ i $
+h(\bx) =f_\theta [\bx \mid T=T(\bx)]$ per
+obtenir el resultat.
+
+Ara suposem que és possible la factorització i deduïm la suficiència. \par
+Si $f_\theta (\bx)=g_\theta(T(\bx)) \cdot h(\bx)$ i anomenem
+$A_t=\{\bx\in X(\Omega)^n \mid T(\bx)=t\}$, llavors
+$$
+P_\theta [T(\bx)=t]
+=\sum_{A_t} g_\theta(T(\bx))\cdot h(\bx)=
+g_\theta(t)\cdot \sum_{A_t} h(\bx)
+$$
+Ara considerem la distribució de la mostra condicionada a $T=t$.
+El Teorema de Bayes per densitat ens permet posar:
+\[
+\begin{split}
+f_\theta(\bx\mid T=t) &=\frac{f_\theta(\bx,T=t)}{P_\theta(T=t)}\\
+&= \left\{
+\begin{array}{ll}
+\frac{g_\theta(t) \cdot h(\bx)}{g_\theta(t)\cdot\sum_{A_t} h(\bx)}
+=\frac{h(\bx)}{\sum_{A_t}h(\bx)} & \textrm{si $T(\bx)=t$} \\
+0 & \textrm{si $T(\bx)\ne t$}
+\end{array}
+\right.
+\end{split}
+\]
+De manera que la distribució de $\bX$
+condicionada pel valor de $T$ no depèn de $\theta$ i, en conseqüència, $T$ és
+suficient.\hfill$\blacksquare$
+
+\begin{example}
+Si $X$ segueix una distribució de Bernouilli tenim:
+$$
+f_\theta (\bx) =\theta^{\Sumin x_i}(1-\theta)^{n-\Sumin x_i}
+=g_\theta(\Sumin x_i)
+$$
+Si fem
+$h(\bx)=1$ queda provat que $T=\Sumin X_i$ és suficient.
+\end{example}
+\begin{example}
+Si considerem una mostra d'una llei de Poisson
+$$
+f_\lambda (\bx)
+=e^{-n\lambda }\frac{\lambda^{\sum_{i=1}^n x_i}}{x_1!x_2!\cdots x_n!}
+$$
+i fem $T(\bx)=\sum_{i=1}^n x_i$ podem escriure
+$$
+f_\lambda (\bx)
+=e^{-n\lambda}\lambda^{T(\bx)}\cdot (x_1!x_2!\cdots x_n!)^{-1}
+=g_\lambda ( T(\bx)) \cdot h(\bx)
+$$
+on
+\[
+g_\lambda (T(\bx))= e^{-n\lambda}\lambda^{T(\bx)} \qquad
+h(\bx) =(x_1!x_2!\cdots x_n!)^{-1}
+\]
+De manera que $g_\lambda (t) =e^{-n\lambda}\lambda^{t}$
+depèn de la mostra només a través de $T=\Sumin x_i$ i
+$h(\bx) =(x_1!x_2!\cdots x_n!)^{-1}$ no depèn de $\lambda$.
+\end{example}
+\begin{example}
+Suposem que $\bX$ és una mostra aleatòria simple d'una població
+$X\sim N(\mu,\sigma)$, la seva funció de densitat és
+$$
+f_{\mu,\sigma^2}(x_1,x_2,\dots,x_n)
+=\frac 1{(\sqrt{2\pi\sigma^2})^n}
+\exp\left\{-\frac 1{2\sigma^2}\sum_{i=1}^n (x_i-\mu)^2\right\}
+$$
+Per fer evident la factorització ens basarem en el fet que
+$$
+\sum_{i=1}^n (x_i-\mu)^2=\sum_{i=1}^n (x_i-\bar{x})^2
++n(\bar{x}-\mu)^2
+$$
+Aleshores
+\[
+\begin{split}
+f_{\mu,\sigma^2}(x_1,x_2,\dots,x_n)
+&=\frac 1{(\sqrt{2\pi\sigma^2})^n}
+\exp\left\{-\frac 1{2\sigma^2}\left(\sum_{i=1}^n (x_i-\bar{x})^2
++n(\bar{x}-\mu)^2\right)\right\} \\
+&=\frac 1{(\sqrt{2\pi\sigma^2})^n}
+\exp\left\{-\frac 1{2\sigma^2}(ns^2+n(\bar{x}-\mu)^2)\right\}\\
+&= g_{\mu,\sigma^2}(\bar{x},s^2)\cdot 1
+\end{split}
+\]
+Així doncs, veiem que l'estadístic $(\bar{X},s^2)$ és suficient
+per a l'estimació de $(\mu,\sigma^2)$.
+
+Si suposem conegut un dels dos paràmetres $\sigma^2$ o $\mu$ podem
+obtenir una factorització on es veu que
+$\sum_{i=1}^n (x_i-\mu)^2$ és suficient per $\sigma^2$ (coneguda $\mu$) o
+$\bar{x}$ és suficient per a $\mu$ (coneguda $\sigma^2)$.
+\end{example}
+
+En l'exemple anterior es veu que l'estadístic suficient per a un
+problema pot tenir dimensió superior a 1. En general buscarem
+l'estadístic suficient de dimensió mínima que puguem trobar (a
+menor dimensió més informació supèrflua s'elimina). Si no el podem trobar
+així, sempre ens podem basar en l'estadístic $T=(\Sample)$ que és
+suficient però de dimensió màxima i, per tant, no aporta cap reducció al
+problema d'informació. Aquestes reflexions duen a enunciar el
+\emph{principi de suficiència} que aconsella condensar al màxim
+la informació rellevant en un estadístic suficient $T$ de dimensió
+el més petita possible (``mínima'') i seleccionar un estimador
+$T'$ entre els estadístics que són funció de la mostra a través de
+$T$: $T^{\prime}(\bX) =\varphi(T(\bX))$.
+
+\subsection{Propietats dels estadístics suficients}
+
+Les propietats següents es proven de manera senzilla fent servir
+el teorema de factorització:
+\begin{enumerate}
+\item Si $T$ és un estadístic suficient per a $\theta$ i $\varphi$
+una funció injectiva (o monòtona diferenciable), aleshores
+$T_1=\varphi(T)$ també és suficient per a $\theta$.
+%\begin{proof}
+%Si $\varphi ( T) $ és injectiva vol dir que $\varphi ^{-1}( {}) $
+%existeix i que $\varphi ^{-1}( T_1) =T$ T és suficient, es pot
+%veure mitjançant el Teorema de Factorització: $f_\theta ( \bx)
+%=g_\theta ( t) \cdot h( \bx) =g_\theta ( \varphi ^{-1}( T_1) )
+%\cdot h( \bx) =\
+%g_\theta ^1( t_1) \cdot h( \bx) $ Llavors$%
+%T_1$ és suficient.
+%\end{proof}
+\begin{example}
+En la família de la Poisson hem vist que
+$\Sumin X_{i}$ és suficient per a $\lambda$,
+aleshores $\bar{X}=\varphi (\Sumin X_i)$, on $\varphi(z)=(1/n)z$
+és injectiva, és suficient per a $\lambda$.
+\end{example}
+\item Si $T$ és un estadístic suficient per a $\theta $ i $\varphi$
+una funció paramètrica monòtona diferenciable,
+aleshores $\varphi(T)$ també és suficient per a $\varphi(\theta)$.
+\item Si $T_1,T_2$ són dos estadístics suficients per
+a $\theta$, aleshores $T_1$ és funció de $T_2$.
+\end{enumerate}
+
+\section{La família exponencial}
+En l'estudi de les propietats dels estimadors veiem que algunes
+distribucions es comporten millor que altres.
+Molts cops aquest bon comportament reflecteix una
+estructura comú que prové de pertànyer a una mateixa família de
+distribucions que s'anomena \emph{família exponencial}.
+
+\begin{definition}
+Sigui $f_\theta$ una família de probabilitats depenent d'un
+paràmetre unidimensional $\{f_\theta(x),
+\theta\in\Theta\subseteq \Real\}$ tal que el suport
+$S(\theta)=\{ x | f_\theta(x)>0\}$ no depèn de $\theta$.
+Si existeixen funcions a valors reals $Q(\theta)$ i $D(\theta)$ i
+funcions mesurables $T(x)$ i $S(x)$ tals que
+$$
+f_\theta(x)=\exp\{Q(\theta)\cdot T(x)+D(\theta)+S(x)\}
+$$
+diem que $f_\theta$ pertany a la \emph{família exponencial de
+distribucions}.
+\end{definition}
+
+També es pot definir la família exponencial com la formada per funcions
+de densitat del tipus
+$$
+f_\theta(x)=C(\theta)h(x)\exp\{Q(\theta)\cdot T(x)\}
+$$
+Òbviament ambdues definicions són equivalents ja que
+$$
+C(\theta)=e^{D(\theta)}\qquad h(x)=e^{S(x)}
+$$
+
+\begin{example}
+La llei de Poisson és exponencial uniparamètrica. \par Efectivament
+$$
+f_\lambda(x)=e^{-\lambda}\frac{\lambda^x}{x!}=exp\{-\lambda+x \log
+\lambda -\log(x!) \}
+$$
+i si fem
+$$
+Q(\lambda)=\log(\lambda)\quad T(x)=x\quad D(\lambda)=-\lambda\quad
+S(x)=-\log(x!)
+$$
+es fa palès que $f_{\lambda}$ pertany a la família
+exponencial.
+\end{example}
+
+\begin{example}
+La llei normal depèn de dos paràmetres $\mu$ i $\sigma$. Fixat
+un d'ells, la família de probabilitats que s'obté és exponencial
+uniparamètrica, és a dir, si amb el subíndex ``0'' indiquem el
+paràmetre fixat, tenim:
+\begin{eqnarray*}
+f_\sigma&=&\left \{N(\mu_0,\sigma),\sigma >0\right \} \text{ és
+exponencial uniparamètrica, i }\\
+f_\mu&=&\left \{N(\mu,\sigma_0),\mu \in \Real\right \} \text{ és
+exponencial uniparamètrica.}
+\end{eqnarray*}
+\end{example}
+
+Si volem considerar tots dos paràmetres alhora hem d'estendre la
+definició al cas de paràmetres $k$-dimensionals. Podeu veure-ho
+p.ex.~al llibre de Ruiz-Maya i M. Pliego \cite{Ruiz-Maya-95}.
+
+La família exponencial és important perquè hi pertanyen moltes de
+les distribucions emprades per mode{\ll}itzar  gran nombre de
+situacions pràctiques. Això permet estudiar les seves propietats en conjunt.
+És a dir, si establim que una propietat es verifica, per exemple, en
+la distribució de Pareto no podem dir res de si també la verifica la de
+Poisson, però quan establim que qui la verifica és la família
+exponencial sabem de forma automàtica que tots els seus membres
+la verifiquen.
+
+Un dels exemples més típics de la situació descrita al paràgraf
+anterior es troba en el cas dels estadístics suficients.
+Si factoritzem la funció de densitat d'una mostra aleatòria
+simple d'una distribució de la família exponencial es pot veure,
+pel lema de Neymann-Fisher, que existeix un estadístic suficient
+per a $\theta$. Això fa que automàticament sapiguem que aquest
+estadístic suficient existeix per a tots els membres de la família
+exponencial.
+
+Donada una mostra aleatòria simple $\Sample$ de $X$ que pertany a
+una família exponencial uniparamètrica tenim
+\[
+\begin{split}
+f_\theta(\sample)&=\prod_{i=1}^n C(\theta) h(x_i) e^{\{Q(\theta)T(x_i)\}}\\
+&=[C(\theta)]^ne^{\{Q(\theta)\Sumin T(x_i)\}}\prod_{i=1}^n h(x_i)
+\end{split}
+\]
+Si fem $\tau(\bx)=\Sumin T(x_i)$ i $H(\bx)= \prod_{i=1}^n h(x_i)$
+veiem que
+$$
+f_\theta(\sample)=g_{\theta}(\tau(\bx))\cdot H(\bx)
+$$
+on $g_{\theta}(\tau(\bx))$ només depèn del paràmetre i
+de la mostra, a través de l'estadístic $\tau(\bx)$, i $H(\bx)$ és
+funció únicament de la mostra. Pel teorema de factorització
+podem, doncs, concloure que $\tau(\bX)=\Sumin T(X_i)$ és un
+estadístic suficient per a $\theta$ per a qualsevol membre de la
+família exponencial.
+
+\section{Apèndix}
+
+\subsection{Integrals que depenen d'un paràmetre}
+Repassem breument les propietats de les integrals dependents d'un
+paràmetre que podeu trobar en qualsevol text d'introducció a
+l'anàlisi matemàtica com, per exemple, \emph {Anàlisi matemàtica},
+de J. Ortega, Publicacions UAB.
+
+Si la integral definida $\int_a^b f(x,\theta)\,dx$ és una funció del
+paràmetre $\theta$
+$$I(\theta)=\int_a^b f(x,\theta)\,dx$$
+ens interessa estudiar com es comporta $I(\theta)$ i com ve aquest
+comportament influït per les propietats de $f(x,\theta) $ i de
+la integral pròpiament dita:
+\begin{enumerate}
+\item
+Continuïtat de $I(\theta)$. Si $f(x,\theta) $ es contínua en
+el tancat $[a,b]\times [c,d]$, $I(\theta)$ és contínua en $[c,d]$.
+\item  Derivació sota el signe de la integral.
+Si $f(x,\theta)$ admet la derivada $\frac{\partial f}{\partial\theta}$ i que
+aquesta és contínua en un rectangle tancat, aleshores
+$I(\theta)$ admet la derivada respecte $\theta$ que s'obté
+així:
+$$
+\frac\partial{\partial\theta}\int_a^b f(x,\theta)\,dx
+=\int_a^b\frac{\partial}{\partial\theta}f(x,\theta) \,dx
+$$
+\end{enumerate}
+
+\subsection{Informació i versemblança d'un model estadístic}
+
+A la vista de com hem definit la versemblança d'un model
+estadístic en \ref{Informacio-i-versemblansa},
+pot semblar raonable fer servir la versemblança per comparar
+valors de $\theta$ com a candidats per estimar $\theta$. Si hem obtingut
+una mostra $\bx$ i resulta que
+\[
+L(\bx,\theta_1) =f(\bx;\theta_1)>L(\bx;\theta_2)=f(\bx;\theta_2)
+\]
+direm que, en vista de la mostra obtinguda, el valor $\theta_1$
+del paràmetre és un millor candidat per estimar $\theta$ que no
+pas el valor $\theta _2$.
+
+Un problema associat amb aquest plantejament és que els valors de
+$L(\bx;\theta)$ depenen de les unitats en que mesurem $X$. Si
+per exemple la mesura és en metres o en centímetres (canvi $Y=100X$) la
+versemblança de la mostra variarà
+\[
+\begin{split}
+f_Y(y;\theta) &=(1/100)f_X(y/100;\theta) \\
+L(\bx;\theta) &=\prod_{i=1}^n f(x_i;\theta) \\
+L(\mathbf{y};\theta) &=\prod_{i=1}^n
+f(y_i;\theta) =\left(\frac 1{100}\right)^n
+\prod_{i=1}^n f_X\left(\frac{y_i}{100};\theta\right)
+=\left(\frac 1{100}\right)^nL(\bx;\theta)
+\end{split}
+\]
+Per aquest motiu en lloc de comparar versemblances per la seva
+diferència, és a dir, mitjançant $L(\bx;\theta_1)-L(\bx;\theta_2)$
+és millor comparar-les fent servir el seu quocient.
+Així per comparar utilitzarem la \emph{raó de versemblances}:
+\[
+\Lambda(\bx) =\frac{L(\bx;\theta_1)}{L(\bx;\theta_2)}
+\]
+Aquesta discrepància aparent entre diferència i quocient
+desapareix si apliquem logaritmes:
+\[
+\log L(\bx;\theta_1) -\log L(\bx;\theta_2)
+=\log\frac{L(\bx;\theta_1)}{L(\bx;\theta_2)}
+\]
+
+\subsubsection{Perquè és $I_n(\theta)$ una mesura d'informació?}
+Per Fisher una bona mesura de la informació continguda en una
+mostra per estimar un paràmetre ve donada per la sensibilitat que
+la versemblança d'aquesta mostra manifesti en front de
+variacions del paràmetre, és a dir, la magnitud dels canvis de
+$L(\bx;\theta)$ en front dels canvis del paràmetre $\theta$
+indicarà ``quanta informació'' conté la mostra sobre el paràmetre.
+A partir d'aquesta idea Fisher introduí l'anomenada \emph{taxa de
+discriminació o ``score function''}:
+\[
+Z=\frac\partial{\partial\theta}\log L(\bx;\theta)
+=\frac{\frac\partial{\partial\theta}L(\bx;\theta)}{L(\bx;\theta)}
+\]
+que ve a ser una mena de ``taxa de variació instantània de
+$L(\bx;\theta)$". És a dir, una mesura de la velocitat a la que canvia
+$L(\bx;\theta)$ relativa als seus propis valors.
+
+Per la definició de derivada, $Z$ val
+\[
+\frac\partial{\partial\theta}\log L(\bx;\theta)
+=\lim_{\Delta\theta\to 0}
+\frac{\log[ L(\bx;\theta+\Delta\theta)] -\log[ L(\bx;\theta)]}%
+{\Delta\theta}
+\]
+Per tant $Z$ indica com canvia el logaritme de la versemblança
+relatiu als canvis en el valor del paràmetre. Si petits canvis en
+$\theta$ fan que hi hagi grans canvis en el $\log L(\bx;\theta)$,
+en una o altra direcció, el model conté força informació
+per estimar $\theta$. Si, contràriament, calen grans canvis en
+$\theta$ per detectar variacions en $\log L(\bx;\theta)$ diem
+que el model conté poca informació per estimar $\theta$.
+
+Podem concloure que la variable
+$Z=\frac\partial{\partial\theta}\log L(\bx;\theta)$ mesura
+la informació d'un model en
+el sentit que quant més gran sigui la variació de $L(\bx;\theta)$
+o $\log L(\bx;\theta)$ en front de variacions del
+paràmetre $\theta$ major informació conté la mostra, ja que és
+capaç de recollir les discrepàncies d'informació que es presenten
+en variar $\theta$. Així $Z$ serà com un marcador que reflecteix els
+canvis en la versemblança a través de $\log L(\bx;\theta)$ en
+front de canvis infinitesimals de $\theta$.
+
+Per mesurar la quantitat d'informació total, Fisher contempla $Z$
+com a variable aleatòria i defineix la informació com:
+\[
+I_n(\theta) =\mathrm{var}_\theta
+\left(\frac\partial {\partial\theta}\log L(\bx;\theta) \right)
+\]
+Quant més gran sigui $I_n(\theta)$, més fàcil serà, donada
+una mostra, discriminar entre dos valors del paràmetre
+$\theta_1,\theta _2$.

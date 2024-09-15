@@ -1,0 +1,1168 @@
+\chapter{PROVES D'HIP\'{O}TESIS}
+
+\section{Introducci\'{o}}
+
+Suposem que s'est\`{a} duent un estudi sobre el consum de tabac entre
+els estudiants universitaris. El treball d'un investigador, i
+d'aqu\'{\i} el d'un estad\'{\i}stic, es relaciona la majoria de les
+ocasions amb alguna de les dues situacions seg\"{u}ents:
+\begin{enumerate}
+\item Mirar de con\`{e}ixer el valor d'una
+caracter\'{\i}stica determinada en la poblaci\'{o} que estudia. Per exemple
+\begin{enumerate}
+\item Quin percentatge d'estudiants \'{e}s "fumador"?
+\item Quin \'{e}s el nombre mig de cigarretes entre els fumadors de
+cada sexe?
+\item Quina \'{e}s la distribuci\'{o} del nombre diari de cigarrets consumits
+pels fumadors?
+\end{enumerate}
+\item Decidir entre dues hip\'{o}tesis relatives a la poblaci\'{o} en estudi
+\begin{enumerate}
+\item \'{E}s cert que els cigarrets de la marca "$X$" \ contenen com a
+molt 12$\mu$g de nicotina?
+\item La concentraci\'{o} de nicotina dels cigarrets segueix una llei normal?
+\item En promig, els nois i les noies fumen el mateix nombre de cigarrets
+diaris?
+\item Pot detectar-se alguna relaci\'{o} entre el sexe i el nivell de
+consum de cigarrets (definit, per exemple com: \ "CAP" $(0)$, \
+"BAIX" $(<5)$, \ "MIG" $(5-15)$, \ "ALT" $(15-30)$, \ "MOLT ALT"
+$(>30)$)
+\end{enumerate}
+\end{enumerate}
+
+Aquest tema tracta del segon aspecte: \emph{les proves d'hipótesis}.
+
+\begin{definition}
+Sigui $H$ alguna hipótesis  relativa a una població.\\
+Una \emph{prova o contrast d'hipótesis} és una regla que permet
+decidir sobre la validesa d'$H$ és a dir permet que afirmem, amb una
+certa probabilitat d'error, sobre si es pot, o no, considerar que
+$H$ és certa.
+\end{definition}
+
+\paragraph{Models estadístics i proves d'hipótesis}
+
+Una estrat\`{e}gia habitual per respondre les q\"{u}estions
+anteriors consisteix en suposar alguna mena de model
+estad\'{\i}stic, param\`{e}tric o no, i reformular les hip\'{o}tesis
+a trav\'{e}s d'aquest. En l'exemple anterior podem suposar:
+\begin{enumerate}
+\item La concentraci\'{o} de nicotina dels cigarrets, $C$ \'{e}s una variable absolutament
+cont\'{\i}nua de mitjana $\mu_C$. $$X \sim F_{\mu}, \mu\in
+\mathbb{R}^+, \ \mu<\infty.$$
+\item En el model de l'apartat anterior estem suposant que $F$ s\'{o}n les  distribucions absolutament cont\'{\i}nues amb esperan\c{c}a finita i positiva.
+$$X\sim F,\, \left\{F \in \cal{F}\right\}.$$
+\item El nombre de cigarrets que fumen els nois i les noies \'{e}s una variable $\mu_H$ i $\mu_D$.
+\begin{eqnarray*}
+X_1 &\sim& F_{\mu_1},\, \left\{E(X_1)=\mu_1 \in \Theta_1\subseteq \Real^+ \right\}, \\
+X_2 &\sim& F_{\mu_2},\, \left\{E(X_2)=\mu_2 \in \Theta_2
+\subseteq \Real^+ \right\}
+\end{eqnarray*}
+\item La distribuci\'{o} dels fumadors de cada sexe, per nivell de consum, segueix una llei multinomial de 5 categories amb probabilitats $p_{1_{j}}$, pels homes, i
+$p_{2_{j}}$ per a les dones on $j=1,..5$. Per simplificar es pot
+indicar com $p_{ij}$, $i=1,2$, $j=1,..5$.
+\begin{equation*}
+X_i\sim M (n,(p_1,...,p_5),\ \sum_{i=1}^k p_i=1)
+\end{equation*}
+\end{enumerate}
+Havent definit aquests models podem reformular les hip\'{o}tesis
+anteriors com:
+\begin{enumerate}
+\item $\mu_C=12$?
+\item $C\sim N(\mu_C, \sigma_C)$?
+\item $\mu_H=\mu_D$?
+\item $p_{ij}=p_{i.}\times p_{.j}$, $i=1,2$, $j=1,..5$?
+\end{enumerate}
+
+\paragraph{El raonament ``a la contra''}
+
+La idea b\`{a}sica per decidir si s'accepta que una hip\'{o}tesi pot
+ser certa o no, consisteix en contrastar-la amb l'evid\`{e}ncia
+experimental, obtinguda d'una mostra ``representativa de la
+poblaci\'{o}'', i procedir com en un judici.
+
+D'entrada suposem que la hip\'{o}tesi es certa i mirem si
+l'evid\`{e}ncia experimental concorda amb ella, dins d'un cert marge
+d'error.
+
+Si no hi ha prou evid\`{e}ncies que ens duguin a rebutjar-la
+conclourem que la hip\'{o}tesi \'{e}s certa.
+
+Si, contr\`{a}riament, l'evid\`{e}ncia experimental i la
+hip\'{o}tesi son tan discordants que nom\'{e}s una petit\'{\i}ssima
+casualitat justificaria  observar aquella mostra, essent certa la
+hip\'{o}tesi, es procedeix a rebutjar-la.
+
+\begin{example}
+Amb un programa d'ordinador podem simular tirades d'un dau trucat
+\bit
+\item Per contrastar la hipótesis $H$: \emph{el dau és ``just''}
+observarem una ratxa de tirades.
+\bit
+\item Si concorden amb un dau equilibrat no rebutjarem $H$
+\item Pero si són massa diferents sí que ho farem.
+\eit
+\item Però ... Com definim ``concordar'' o ``ser massa diferents''?
+\eit
+\end{example}
+
+
+\paragraph{Simulació de les tirades d'un dau just o trucat}
+\begin{verbatim}
+> tirades<- sample(1:6,12, replace=T,
+                prob=rep(1/6,6))
+> tirades
+ [1] 3 6 3 1 1 2 2 1 3 3 1 3
+> tirades.truc <- sample(1:6,12, replace=T,
+                prob=c(rep(0.1,5),0.5))
+> tirades.truc
+ [1] 6 4 3 4 5 6 1 5 2 6 6 6
+\end{verbatim}
+
+Quina de les tres series següents anteriors prové d'un dau trucat?
+
+\begin{verbatim}
+ [1] 3 6 3 1 1 2 2 1 3 3 1 3 ?
+ [1] 4 1 6 5 4 5 6 1 1 3 6 1 ?
+ [1] 6 4 3 4 5 6 1 5 2 6 6 6 ?
+\end{verbatim}
+
+
+\section{Conceptes b\`{a}sics per a les proves d'hip\'{o}tesis
+estad\'{\i}stiques}
+
+Per ilustrar la noci\'{o} d'hip\'{o}tesi estad\'{\i}stica suposem
+que treballem en un proc\'{e}s de producci\'{o}. En una fase
+determinada es considera el proc\'{e}s acceptable (sota control) si
+el percentatge de defectes detectats, $\theta$, \'{e}s inferior o
+igual a un 10\%. El responsable decideix mantenir-lo en funcionament
+mentre no es faci evident que aquest percentatge \'{e}s superior.
+L'``evid\`{e}ncia experimental'' es basa en la inspecci\'{o} de lots
+de mida $n$ escollits a l'atzar. Conv\'{e} tenir presents alguns
+punts:
+\begin{itemize}
+\item L'objectiu no \'{e}s estimar el percentatge de defectes sin\'{o} decidir si el seu valor \'{e}s $0.1$ ($\theta_0$).
+\item La necessitat de la prova d'hip\'{o}tesi prov\'{e} de que es fa en condicions d'incertesa, derivada de que els errors es presenten aleat\'{o}riament. Aix\'{o} fa que quan s'observin discrep\`{a}ncies entre la hip\'{o}tesi i l'evid\`{e}ncia experimental haguem de poder decidir entre les dues possibilitats seg\"{u}ents:
+\begin{enumerate}
+\item La hip\'{o}tesi \'{e}s certa i les difer\`{e}ncies observades es deuen a l'atzar (la difer\`{e}ncia \'{e}s compatible amb la hip\'{o}tesi).
+\item La hip\'{o}tesi \'{e}s falsa (les difer\`{e}ncies observades no s\'{o}n compatibles amb la hip\'{o}tesi)
+\end{enumerate}
+Per exemple si $n$ \'{e}s 15 i observem dues peces defectuoses,
+probablement ho trobarem compatible amb un percentatge de defectes
+del 10\%. Si en canvi n'observem vuit de defectuoses,
+dif\'{\i}cilment creurem que la difer\`{e}ncia es deu a l'atzar
+sin\'{o} que m\'{e}s aviat pensarem que el percentatge de peces
+defectuoses \'{e}s superior al que diu la hip\'{o}tesi
+\end{itemize}
+
+En general, cada hip\'{o}tesi indueix una partici\'{o} en l'espai
+dels par\`{a}metres, \'{e}s a dir si, p.ex. donat el model $\modest$
+tenim la hip\'{o}tesi: $$H:\ \theta=\theta_0,$$podem considerar que
+l'espai dels par\`{a}metres es descompon en dues parts:
+$$
+\Theta=\Theta_0 \cup \Theta_0^c,\
+\Theta_0=\left\{\theta_0\right\},\,
+\Theta_0^c=\Theta-\left\{\theta_0\right\}.
+$$
+La hip\'{o}tesis representa, doncs, alguna mena de restricci\'{o}
+sobre els par\`{a}metres i, en cas de ser certa, el model esdev\'{e}
+m\'{e}s senzill \'{e}s a dir:
+$$
+X \sim F_\theta, \, \left\{\theta \in \Theta\right\}
+\Longrightarrow X \sim F_\theta, \, \left\{\theta \in
+\Theta_0\right\}.
+$$
+Per aquest motiu alguns autors, com Pe\~{n}a (1990) parlen de
+\emph{contrastos de simplificaci\'{o}} al referir-se als contrastos
+d'hip\'{o}tesis.
+\begin{definition}
+Donat un model estad\'{\i}stic, $\modest$, s'anomena hip\'{o}tesi
+nul.a una afirmaci\'{o} sobre el valor de $\theta$ que representa
+una restricci\'{o} sobre la fam\'{\i}lia de distribucions o sobre
+l'espai dels par\`{a}metres.
+\end{definition}
+
+Mentre no diguem el contrari ens referirem  a hip\'{o}tesis
+param\`{e}triques \'{e}s a dir suposem un model estad\'{\i}stic
+param\`{e}tric  on $F_\theta$ est\`{a} ben definida, excepte pels
+valors de $\theta$.
+
+Una hip\'{o}tesi pot ser \emph{simple} o \emph{composta}. Si
+$\Theta_0=\left\{\theta_0\right\}$, \'{e}s a dir la hip\'{o}tesi
+consisteix en un \'{u}nic valor per al par\`{a}metre,
+$$H:\ \theta=\theta_0$$
+diem que la hip\'{o}tesi \'{e}s simple. Si el nombre d'elements de
+$(\Theta_0)$ \'{e}s m\'{e}s gran d'1,
+\begin{eqnarray*}
+H:&\theta>\theta_0,\quad \theta < \theta_0,\quad &\text{(Hip\'{o}tesis \emph{unilaterals})}\\
+H:&\theta \neq \theta_0,&\text{(Hip\'{o}tesis \emph{bilateral})}
+\end{eqnarray*} diem que la hip\'{o}tesi \'{e}s composta.
+
+La metodologia cl\`{a}ssica del contrast d'hip\'{o}tesis elaborada
+per Neymann i Pearson a principis del segle passat procedeix a
+trav\'{e}s de dues hip\'{o}tesis:
+\begin{enumerate}
+\item Una hip\'{o}tesi de partida, que d'entrada se suposa certa, i s'anomena \emph{hip\'{o}tesi nula}: $H_0$.
+\item Una hip\'{o}tesi, que s'anomena \emph{alternativa} que, impl\'{\i}citament, s'accepta en rebutjar la hip\'{o}tesi nula.
+\end{enumerate}
+Les hip\'{o}tesis nula i alternativa tenen solen tenir
+import\`{a}ncia diferent en el contrast d'hip\'{o}tesis. Suposem,
+per exemple, la situaci\'{o} seg\"{u}ent:
+\begin{eqnarray*}
+H_0:\ \theta&=&\theta_0,\\
+H_1:\ \theta &\neq& \theta_0.
+\end{eqnarray*}
+La hip\'{o}tesi nula \'{e}s quelcom ben definit, que t\'{e} sentit
+acceptar o rebutjar. En canvi la hip\'{o}tesi alternativa no
+representa cap valor concret, de forma que dir que \emph{s'accepta
+la hip\'{o}tesi alternativa} \'{e}s m\'{e}s una forma de parlar que
+una refer\`{e}ncia als aut\`{e}ntics valors dels par\`{a}metres.
+Quan s'elabora la teoria de les proves d'hip\'{o}tesis es parteix de
+considerar ambdues hip\'{o}tesis simples, \'{e}s a dir:
+\begin{eqnarray*}
+H_0:\ \theta&=&\theta_0,\\
+H_1:\ \theta &=& \theta_1.
+\end{eqnarray*}
+En aquest cas cada hip\'{o}tesi t\'{e} un sentit per\'{o} el test en
+conjunt resulta poc realista, de manera que el que es fa \'{e}s
+partir d'aquesta situaci\'{o} per desenvolupar la teoria i anar-ho
+generalitzant a situacions m\'{e}s realistes.
+
+El proc\'{e}s de contrast passa per formular una hip\'{o}tesi (nula)
+i prendre una decisi\'{o}, consistent en acceptar-la o rebutjar-la a
+la vista de l'evid\`{e}ncia experimental. Aix\'{o} requereix
+disposar d'un \emph{criteri de decisi\'{o}} que, donada una mostra,
+ens permeti decidir si s'accepta o es rebutja la hip\'{o}tesi nula.
+Fixem-nos que, associat a cada decisi\'{o} es poden presentar dues
+situacions: que la decisi\'{o} sigui encertada (\'{e}s dir que
+acceptem $H_0$ quan \'{e}s certa o la rebutgem quan \'{e}s falsa) o
+err\'{o}nia (\'{e}s a dir que rebutgem $H_0$ quan \'{e}s certa o
+l'acceptem quan \'{e}s falsa). Podem resumir-ho en la taula
+seg\"{u}ent:
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{||c||c|c||}\hline\hline
+    % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+    &\multicolumn{2}{c||}{Decisi\'{o}}\\ \hline
+     & Acceptar $H_0$ &  Rebutjar $H_0$\\ \hline\hline
+    $H_0$ \'{e}s certa & Decisi\'{o} encertada  & Error de tipus I\\  \hline
+    $H_0$ \'{e}s falsa & Error de tipus II & Decisi\'{o} encertada  \\ \hline\hline
+  \end{tabular}
+  \end{center}
+  \caption{Decisions encertades i err\'{o}nies respecte una hipotesi nula}
+  \label{TaulaDecisio-1}
+\end{table}
+
+
+Davant d'aquesta situaci\'{o} hom pot pensar en obtenir una regla
+que permeti prendre la decisi\'{o} amb unes probabilitats d'errors
+de tipus I i tipus II, tan petites com es vulgui. Malauradament, per
+la seva naturalesa antag\'{o}nica, no \'{e}s possible reduir alhora
+els dos tipus d'error, \'{e}s a dir, quan m\'{e}s petita es fa la
+probabilitat d'error de tipus I major esdev\'{e} la probabilitat
+d'error de tipus II. Sovint es fa la comparaci\'{o} de que una prova
+d'hip\'{o}tesis \'{e}s com un judici on es vol decidir si hi ha prou
+evid\`{e}ncia per creure en la innoc\`{e}ncia de l'acusat
+(hip\'{o}tesi nula) o aquesta suggereix el contrari. L'error de
+tipus I seria aqu\'{\i}, condemnar un innocent, i l'error de tipus
+II eximir de culpa a un culpable. L\'{o}gicament quantes m\'{e}s
+proves requerim abans de condemnar alg\'{u} (\'{e}s a dir quant
+m\'{e}s baixem la probabilitat d'error de tipus I), m\'{e}s
+f\`{a}cil ser\`{a} que no puguem demostrar, per manca de proves
+suficients, la culpabilitat d'algun altre, \'{e}s a dir m\'{e}s
+augmentar\`{a} la probabilitat de cometre un error de tipus II.
+
+Davant la impossibilitat de controlar tots dos errors el que se
+sol fer \'{e}s fixar, en un valor petit com $0.05$ o $0.01$ l'error
+de tipus I i construir una regla de decisi\'{o} que presenti aquesta
+probabilitat d'error prefixada. At\`{e}s que no \'{e}s possible fixar
+tamb\'{e} l'error de tipus II el que es fa \'{e}s procurar obtenir regles
+que tinguin l'error de tipus II m\'{e}s petiti possible entre totes
+les que tenen el mateix error de tipus I.
+
+\begin{definition}
+Una \em{prova} d'una hip\'{o}tesi estad\'{\i}stica respecte d'alguna
+caracter\'{\i}stica desconeguda de la poblaci\'{o} \'{e}s qualsevol
+regla per decidir si s'accepta rebutja la hip\'{o}tesi nula en base
+a una mostra aleat\'{o}ria simple de la poblaci\'{o}
+\end{definition}
+\begin{definition}
+La probabilitat de rebutjar la hip\'{o}tesi nula $H_0$ quan \'{e}s
+certa s'anomena \textit{error de tipus I, nivell de
+significaci\'{o}, o mida} del test i s'indica per $\alpha$.
+\end{definition}
+$1-\alpha$ representa la probabilitat d'acceptar correctament
+$H_0$.
+\begin{definition}
+La probabilitat de acceptar la hip\'{o}tesi nula $H_0$ quan \'{e}s
+falsa s'anomena \emph{error de tipus II} i s'indica per 1-$\beta$.
+\end{definition}
+$\beta$ representa la probabilitat de rebutjar correctament $H_0$
+i s'anomena \em{pot\`{e}ncia del test}.
+
+La regla de decisi\'{o} es construeix en base a l'error de tipus I,
+\'{e}s a dir es construeix de forma que:
+$$
+P\left\{\text{Decidim rebutjar }H_0|H_0 \text{ \'{e}s
+certa}\right\}\leq \alpha.
+$$
+Una regla de decisi\'{o} se sol implementar mitjan\c{c}ant alguna
+\em{mesura de discrep\`{a}ncia} entre $H_0$ i la evid\`{e}ncia
+experimental continguda en la mostra (un \em {estad\'{\i}stic de test})
+o mitjan\c{c}ant una \em{regi\'{o} cr\'{\i}tica}.
+\begin{definition}
+Un estad\'{\i}stic de test $d(\bx)$ \'{e}s un estad\'{\i}stic la
+distribuci\'{o} del qual és coneguda sota la hip\'{o}tesi nula de
+forma que és possible trobar un valor cr\'{\i}tic $d_c$ tal que
+$$
+P\left\{d(\bx) \geq d_c|H_0\right\}\leq \alpha.
+$$
+\end{definition}
+Els valors mostrals per als quals la regla de decisi\'{o},
+implementada en l'estad\'{\i}stic de test, duu a rebutjar $H_0$
+constitueixen la regi\'{o} cr\'{\i}tica.
+\begin{definition}
+Un subconjunt de l'espai mostral, $W\subset \Omega$ s'anomena
+regi\'{o} cr\'{\i}tica del test si es verifica que:
+$$
+P\left\{x\in W|H_0\right\}\leq \alpha.
+$$
+\end{definition}
+Òbviament podem relacionar els dos conceptes si observem que,
+donat un estadístic de test $d(\bx)$ la regió crítica $W$
+verifica:
+$$
+W=\left\{\bx\in \Omega:\ d(\bx)\geq d_c\right\}.
+$$
+ Els conceptes que acabem de definir ens permeten
+re-escriure amb m\'{e}s detall la taula \ref{TaulaDecisio-1}.
+\vskip 0.5cm
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{||c||c|c||}\hline\hline
+    % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+     &\multicolumn{2}{c||}{Decisi\'{o}}\\ \hline
+     & $\left[ x\notin W \right]\rightarrow $ Acceptar $H_0$ &
+     $\left[x\in W]\rightarrow \right]$ Rebutjar $H_0$\\
+     \hline\hline
+    $H_0$ \'{e}s certa & Decisi\'{o} encertada  & Error de tipus I\\
+    &$P\left[ x\notin W|H_0\right ] > 1-\alpha$ &
+    $P\left[ x\in W|H_0\right ] \leq \alpha$\\ \hline
+    $H_0$ \'{e}s falsa & Error de tipus II & Decisi\'{o} encertada  \\
+    &$P\left[ x\notin W |H_0^c\right ] = 1-\beta$ &
+     $P\left[ x\in W|H_0^c\right ] =\beta$ \\
+    \hline\hline
+  \end{tabular}
+  \end{center}
+  \caption{Probabilitats d'error de tipus I i II}\label{taulaDecisio-2}
+\end{table}
+ \vskip 0.5cm
+
+\subsection{Exemples} Veiem alguns exemples per ilustrar les
+definicions anteriors.
+ \begin{example}\label{example-1-1}
+Un proc\'{e}s de producci\'{o} treballa amb lots de $n=15$ peces.
+En una fase inicial de la producci\'{o} es considera que el
+proc\'{e}s est\`{a} sota control si hi ha un 10\% de peces
+defectuoses. Volem una regla de decisi\'{o} que permeti, a la
+vista d'un lot, decidir si el percentatge de peces defectuoses
+\'{e}s del 10\% o resulta ser superior.
+\end{example}
+Per a la variable $X$=``N\'{u}mero de peces defectuoses en una mostra
+de 15 peces" podem considerar el model estad\'{\i}stic:
+$$
+X\sim B(n,p), \quad p=P\{\text{una pe\c{c}a sigui
+defectuosa}\},\quad p\in (0,1).
+$$
+Les hip\'{o}tesis a contrastar seran:
+\begin{eqnarray*}
+H_0:\ p&=&p_0 \ (=0.1)\\
+H_1:\ p & > & p_0.
+\end{eqnarray*}
+Per construir la regla de decisi\'{o} ens basem en el fet que, si
+$H_0$ \'{e}s certa llavors la distribuci\'{o} d'$X$ \'{e}s:
+$$
+X\sim B(n, p_0) \text{, si } H_0 \text{ \'{e}s certa}.
+$$
+Aquest fet ens permet trobar un nombre de peces defectuoses tal que,
+si la hip\'{o}tesi nula \'{e}s certa sigui tan poc probable trobar
+aquell nombre de defectes (o m\'{e}s que aquells) que haurem de
+concloure, si observem un valor com aquell o superior, que el que
+passa \'{e}s que la hip\'{o}tesi nula \'{e}s falsa. Aquest valor
+defineix una regi\'{o} cr\'{\i}tica de nivell de significaci\'{o}
+$\alpha$.
+$$
+W=\left\{ x\in \Omega|x\geq x_c, \text{ on } P\left[X\geq x_c|H_0
+\right]\leq \alpha \right\}.
+$$
+Consultant les taules de la distribuci\'{o} binomial, amb $n=15$ i
+$p=0.1$ es veu que
+$$
+P_{p=0.1}\left\{ X \geq 4\right\}=0.0555,
+$$
+de manera que la regi\'{o} $W_\alpha=\left\{x|x\geq 4\right\}$ \'{e}s una
+regi\'{o} cr\'{\i}tica de nivell de significaci\'{o} $\alpha>0.055$. En la
+pr\`{a}ctica agafar\'{\i}em $\alpha=0.06$ o $\alpha=0.1$.
+
+L'\'{u}s de la regi\'{o} cr\'{\i}tica obtinguda, amb una mostra
+donada es fa de manera \'{o}bvia: Suposem que un lot donat cont\'{e}
+2 peces defectuoses. Com $2\notin W_\alpha$, amb $\alpha=0.1$
+decidirem acceptar $H_0$.
+
+\begin{example}\label{example-2-1}
+Un proc\'{e}s de producci\'{o} omple unes ampolles amb 8ml d'un
+medicament. No conv\'{e} que n'hi posi massa ni massa poc de forma
+que la verificaci\'{o} ha de contrastar una hip\'{o}tesi bilateral.
+Per senzillesa podem suposar que la variable $X$=``Concentraci\'{o}
+de l\'{\i}quid introdu\"{\i}da es distribueix normalment amb
+desviaci\'{o} t\'{\i}pica coneguda $\sigma_0=0.07$
+$$X\sim N(\mu,\sigma_0)$$
+Les hip\'{o}tesis a contrastar s\'{o}n:
+\begin{eqnarray*}
+H_0:\ \mu&=&\mu_0 \ (=8)\\
+H_1:\ \mu &\neq & \mu_0.
+\end{eqnarray*}
+\end{example}
+Una regla de decisi\'{o} intu\"{\i}tiva en aquest cas pot ser:
+$$
+\text{``Rebutjar } H_0 \text{ si }|\overline{X}-\mu_0|\geq d_c ",
+$$
+on $d_c$ s'escull de manera que la probabilitat d'error tipus I
+sigui $\leq \alpha$, \'{e}s a dir que
+$$
+P\left\{|\overline{X}-\mu_0|\geq d_c|H_0\right\}\leq \alpha.
+$$
+Per calcular $d_c$ cal con\`{e}ixer la distribuci\'{o}
+d'$\overline{X}-\mu_0|$ sota $H_0$. De la normalitat d'$X$ se'n
+surt que, si $H_0$ \'{e}s certa, aleshores
+$$
+Z_n(\bX)=\frac{\overline{X}-\mu_0}{\sigma_0/\sqrt{n}}\sim N(0,1),
+$$
+d'on
+\begin{eqnarray*}
+P\left\{|\overline{X}-\mu_0|\geq d_c|H_0\right\}&=&
+P\left\{\frac{|\overline{X}-\mu_0|}{\sigma_0/\sqrt{n} }\geq
+\frac{d_c}{\sigma_0/\sqrt{n}}|H_0\right\}=\alpha.
+\end{eqnarray*}
+Es a dir que rebutjarem $H_0$ si
+$$
+Z_n(\bX)=\frac{|\overline{X}-\mu_0|}{\sigma_0/\sqrt{n}}\geq
+z_{\alpha/2}
+$$
+o, equivalentment, si
+$$
+|\overline{X}-\mu_0|\geq z_{\alpha/2}\cdot \sigma_0/\sqrt{n}, $$
+on $z_{\alpha/2}$ \'{e}s el valor que, en una distribuci\'{o} normal
+$N(0,1)$ deixa una probabilitat d'$\alpha/2$ a la seva dreta, \'{e}s
+a dir el percentil $1-\alpha/2$. La regi\'{o} cr\'{\i}tica del test \'{e}s
+doncs:
+$$
+W=\left\{ \bx \in \Omega|\ |\overline{X}|\geq
+\mu_0+z_{\alpha/2}\cdot \sigma_0/\sqrt{n} \right\}
+$$
+
+Si $\alpha=0.05$ es t\'{e}: $z_{\alpha/2}=1.965$. Donada una mostra de
+mida $n=5$ la regla de decisi\'{o} ser\`{a}: ``Rebutjar $H_0$ si
+$|Z_5(\bx)|\geq 1.965$".
+
+L'\'{u}s de la regla de decisi\'{o} \'{e}s ara immediat: Suposem que hem
+obtingut una mostra:
+$$
+\bx=0.75, 0.90, 0.85, 0.93, 0.89.
+$$
+Calculem el valor de l'estad\'{\i}stic de test sobre aquesta mostra,
+tot recordant que suposem $\sigma_0$ coneguda i igual a $0.07$.
+$$
+Z_5(\bx)=\frac{0.874-0.8}{0.07/\sqrt{5}}=2.35
+$$
+$|2.35|>1.96$, i per tant decidim rebutjar $H_0$ amb una
+probabilitat d'error tipus I=0.05. Si realitzem el test amb un
+nivell de significaci\'{o} del 0.01 tindrem que $z_0.005=2.58 > 2.35$.
+\'{E}s a dir, en aquest cas, al canviar el nivell de significaci\'{o}
+varia la decisi\'{o} i passem de rebutjar $H_0$ a acceptar-la.
+
+\subsection{Probabilitat d'error tipus II i pot\`{e}ncia}
+
+En els exemples anteriors hem constru\"{\i}t dos tests de nivell de
+significaci\'{o} $\leq \alpha$ i $\alpha$ respectivament. Ara desitgem
+estudiar quina \'{e}s probabilitat d'error de tipus II d'aquests
+tests, o, equivalentment, quina \'{e}s la seva pot\`{e}ncia.
+
+\subsubsection {Potencia del test $p=p_0$ vs $p>p_0$}
+Fixem-nos que hem plantejat el test com
+\begin{eqnarray*}
+H_0:\ p&=&p_0 \ (=0.1)\\
+H_1:\ p &> & p_0\ (p=p_1>p_0).
+\end{eqnarray*}
+Ara b\'{e} per poder calcular la pot\`{e}ncia del test cal que assignem a
+$p$ algun valor concret, ja que hem de calcular:
+$$
+\beta= P\left[ x\in W|H_0^c\right ] =P_{p_1}\left[ x\in W\right ].
+$$
+Si per exemple, segons la hip\'{o}tesi alternativa, $p$ val
+respectivament $0.2$, $0.3$ o $0.4$ llavors $P_{p_1}\left[ x\in
+W\right ]$ valdr\`{a}: $0.25$, $0.70$ i $0.91$ de manera que l'error
+tipus II associat a cada hip\'{o}tesis alternativa ser\`{a} $0.75$,
+$0.30$ i $0.09$ respectivament. Observi's que, raonablement, quant
+m\'{e}s diferent sigui el valor de $p$ que proposa la hip\'{o}tesi
+alternativa del que diu la hip\'{o}tesi nula m\'{e}s petit \'{e}s
+l'error de tipus II i m\'{e}s gran la pot\`{e}ncia del test. \'{E}s
+a dir quant m\'{e}s diferents s\'{o}n la hip\'{o}tesi nula i
+l'alternativa el test discrimina millor.
+
+La figura  \ref{criticalregs} mostra la distribuci\'{o} d'$X$ sota
+la hip\'{o}tesi nula $p=0.1$ i les tres hip\'{o}tesis alternatives
+$p=0.2$, $p=0.3$, i $p=0.4$. Com es pot veure, a mida que augmenta
+el valor de $p$ la distribuci\'{o} es despla\c{c}a cap a la dreta,
+la qual cosa d\'{o}na lloc a un augment de la pot\`{e}ncia
+(probabilitat a la dreta i sota la l\'{\i}nia vertical situada en
+$X=4$) i a una disminuci\'{o} de l'error de tipus II (probabilitat a
+l'esquerra de la l\'{\i}nia vertical, $X<4$).
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics{./imatges/CriticalRegs.eps}
+\end{center}
+\caption{Regions cr\'{\i}tiques per al contrast sobre $p=0.1$}
+\label{criticalregs}
+\end{figure}
+
+\subsubsection {Potencia del test $\mu=\mu_0$ vs $\mu> \mu_0$ o $\mu \neq \mu_0$}
+
+Comencem en primer lloc per discutir la pot\`{e}ncia del test
+\begin{eqnarray*}
+H_0:\ \mu&=&\mu_0 \ (=8)\\
+H_1:\ \mu &> & \mu_0\ (\mu=\mu_1>\mu_0).
+\end{eqnarray*}
+La pot\`{e}ncia del test \'{e}s la probabilitat de que una mostra es
+trobi dins la regi\'{o} cr\'{\i}tica, si la hip\'{o}tesi nula \'{e}s
+falsa, \'{e}s a dir:
+\begin{eqnarray*}
+\beta &=& P\left[ \bx \in W|H_0^c\right ]=\\
+&=&P\left[ \bx |\ \overline{x}\geq \mu_0+z_{\alpha}\cdot
+\sigma_0/\sqrt{n}|H_0^c\right ].
+\end{eqnarray*}
+Per calcular aquesta probabilitat no n'hi ha prou amb referir-se,
+simplement, a "$H_0^c$". Cal especificar un valor de $\mu$, \'{e}s a
+dir un valor concret sota la hip\'{o}tesi alternativa. Suposem que
+si \'{e}s certa la hip\'{o}tesi alternativa aleshores $\mu=\mu_1>
+\mu_0$. La pot\`{e}ncia del test ser\`{a}:
+\begin{eqnarray}
+\beta &=& P\left[ \bx |\ \overline{x}\geq \mu_0+z_{\alpha}\cdot
+\sigma_0/\sqrt{n}|H_1\right ] \\
+&=& P_{\mu=\mu_1} \left[\overline{x}\geq \mu_0+z_{\alpha}\cdot \sigma_0/\sqrt{n}\right ]\\
+&=& P \left[\frac{\overline{x}-\mu_1}{\sigma_0/\sqrt{n}}\geq
+\frac{\left(\mu_0+z_{\alpha}\cdot \sigma_0/\sqrt{n}\right)-\mu_1}{\sigma_0/\sqrt{n}}\right ]\\
+&=& P \left[Z \geq
+z_{\alpha}+\frac{\sqrt{n}}{\sigma_0}(\mu_0-\mu_1)\right ]
+\label{PowerExp-1}
+\end{eqnarray}
+Si per exemple, segons la hip\'{o}tesi alternativa, $\mu_1$ val
+respectivament $0.85$, $0.90$ o $0.95$ llavors la pot\`{e}ncia del
+test val respectivament: $0.48$, $0.94$ i $0.999$ de manera que
+l'error tipus II associat a cada hip\'{o}tesis alternativa ser\`{a}
+$0.52$, $0.06$ i $0.001$ respectivament. Observi's que, com en
+l'exemple anterior, quant m\'{e}s diferent sigui el valor de $\mu_1$
+que proposa la hip\'{o}tesi alternativa del que diu la hip\'{o}tesi
+nula m\'{e}s petit \'{e}s l'error de tipus II i m\'{e}s gran la
+pot\`{e}ncia del test.
+
+\subsection{Funci\'{o} de pot\`{e}ncia}
+Els exemples anteriors posen de manifest que, donat un test de
+nivell de significaci\'{o} $\alpha$ la seva capacitat per
+discriminar entre dues hip\'{o}tesis dep\`{e}n de:
+\begin{itemize}
+\item La mida mostral
+\item El valor concret del par\`{a}metre que proposa la hip\'{o}tesi
+alternativa.
+\end{itemize}
+Podem generalitzar aquesta idea introduint la \em{funci\'{o} de
+pot\`{e}ncia}.
+\begin{definition}
+Donat un model estad\'{\i}stic param\`{e}tric $\modest$ i un
+contrast d'hip\'{o}tesis sobre $\theta$:
+\begin{eqnarray*}
+H_0:\ \theta &\in &\Theta_0 \ (\text{Sovint }\theta=\theta_0)\\
+H_1:\ \theta &\in &\Theta_1=\Theta-\Theta_0,
+\end{eqnarray*}
+amb regi\'{o} cr\'{\i}tica de nivell de significaci\'{o} $\alpha$, $W_\alpha$
+s'anomena funci\'{o} de pot\`{e}ncia del test a la funci\'{o} que, a cada
+valor $\theta^*$ del par\`{a}metre li assigna la probabilitat de la
+regi\'{o} cr\'{\i}tica suposant que $\theta=\theta*$, \'{e}s a dir:
+\begin{eqnarray*}
+\beta: &&\Theta \longrightarrow [0,1]\\
+       &&\theta^* \longrightarrow
+        \beta(\theta^*)=P_{\theta=\theta^*}(\bx\in W_\alpha)
+\end{eqnarray*}
+\end{definition}
+La funci\'{o} de pot\`{e}ncia inclou dos dels conceptes que hem estudiat
+en relaci\'{o} als errors de tipus I i II, i conv\'{e} no confondre-la
+amb la \em{pot\`{e}ncia del test}:
+\begin{itemize}
+\item Si $\theta\in \Theta_0$ aleshores:
+$$
+\beta(\theta)=P_{\theta\in \Theta_0}(\bx\in W_\alpha) =P(\bx\in
+W_\alpha|H_0)=\alpha=\text{ Probabilitat d'error tipus I}
+$$
+\item Si $\theta\in \Theta_1$ aleshores:
+$$
+\beta(\theta)=P_{\theta\in \Theta_1}(\bx\in W_\alpha) =P(\bx\in
+W_\alpha|H_1)=\beta =\text{ Pot\`{e}ncia del test}.
+$$
+\end{itemize}
+
+Fixat un valor de $\theta$ nom\'{e}s se sol poder augmentar la
+pot\`{e}ncia augmentant la mida mostral $n$ tal i com mostra
+l'expressi\'{o} \ref{PowerExp-1}. La figura \ref{PowerFunct} mostra la
+funci\'{o} de pot\`{e}ncia per al test del segon exemple i diferents
+valors '$n$. Com s'hi pot observar a un valor donat de $\theta$
+li correspondran diferents valors de $\beta(\theta)$ tan m\'{e}s
+grans com major sigui $n$.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics{./imatges/PowerFunct.eps}
+\end{center}
+\caption{Funci\'{o} de pot\`{e}ncia per al test $\mu=0.8$ vs $\mu>0.8$}
+\label{PowerFunct}
+\end{figure}
+
+Observem l'expressi\'{o} \ref{PowerExp-1}
+$$
+\beta= P \left[Z \geq
+\underbrace{z_{\alpha}+\frac{\sqrt{n}}{\sigma_0}(\mu_0-\mu_1)}_{z_\beta}\right]
+$$
+Podem fer-la servir per resoldre dos problemes d'inter\`{e}s for\c{c}a
+pr\`{a}ctic. Suposant fixats $\alpha$, $\mu_0$ i $\mu_1$:
+\begin{itemize}
+\item Fixada una mida mostral determinar quina pot\`{e}ncia ($\rightarrow$ quin error de
+tipus II) assolir\`{a} el test amb una mostra de mida $n$.
+\item Fixada una pot\`{e}ncia $\beta$ podem determinar quina mida
+mostral cal per assolir aquella pot\`{e}ncia, a\"{\i}llant el valor de $n$
+\ref{PowerExp-1}:
+$$
+n=\left(\frac{z_\beta-z_\alpha}{\mu_0-\mu_1}\right)^2.
+$$
+\end{itemize}
+Si en el segon exemple agafem $\alpha=0.05$, $\mu_0=0.8$,
+$\mu_1=0.85$ podem respondre les dues q\"{u}estions b\`{a}siques:
+\begin{itemize}
+\item Quina ser\`{a} la probabilitat d'error tipus II si agafem una
+mostra de mida $n=10$?
+$$
+\beta= P \left[Z \geq
+z_{0.05}+\frac{\sqrt{10}}{0.07}(0.8-0.85)\right]=0.730\Rightarrow
+$$
+La probabilitat d'error tipus II \'{e}s 0.27
+\item Quina mida mostral cal si volem que, com a molt, la
+probabilitat d'error tipus II sigui 0.10 ($\Rightarrow
+\beta=0.9$)?
+$$
+n=\left(\frac{z_{0.90}-z_{0.05}}{0.8-0.85}\right)^2=16.7\doteq 17
+$$
+\end{itemize}
+
+\section{Tests de m\`{a}xima pot\`{e}ncia. Lema de Neymann-Pearson}
+
+Com hem vist en les seccions anteriors, el plantejament que hem fet
+de les proves d'hip\'{o}tesis t\'{e} l'inconvenient que nom\'{e}s
+podem fixar una sola (probabilitat de ) tipus d'error cada vegada. A
+la pr\`{a}ctica aix\'{o} es concreta en organitzar la prova de forma
+que l'error que tingui ``pitjors'' conseq\"{u}\`{e}ncies sigui el de
+tipus I, per al qual s'estableix una probabilitat petita $\alpha$.
+
+Un cop fet aix\'{o} es procurar\`{a} escollir un test d'entre els de
+nivell $\alpha$ que tingui la pot\`{e}ncia m\'{e}s alta possible,
+\'{e}s a dir amb la m\'{\i}nima probabilitat d'error de tipus II.
+Aquest problema no t\'{e} una soluci\'{o} general. El teorema
+conegut com ``Lema de Neymann-Pearson" estableix una condici\'{o}
+per a l'exist\`{e}ncia d'un test de m\`{a}xima pot\`{e}ncia quan
+ambdues hip\'{o}tesis s\'{o}n simples. Sota certes condicions
+m\'{e}s o menys restrictives el resultat es pot generalitzar al cas
+en que la hip\'{o}tesis alternativa \'{e}s unilateral o,
+excepcionalment per la fam\'{\i}lia exponencial, a hip\'{o}tesis
+bilaterals.
+
+\begin{definition}
+Sigui ${\cal{D}}_\alpha$ el conjunt dels tests de nivell de
+significaci\'{o} $\alpha$ per a un contrast d'hip\'{o}tesis simples.
+Donats dos tests $\tau_1, \tau_2\in {\cal{D}}_\alpha$ direm que
+$\tau_1$ \'{e}s m\'{e}s potent que $\tau_2$ si es compleix que:
+$$
+\beta_{\tau_1}>\beta_{\tau_2},
+%\quad \forall \theta \in \Theta_1,
+$$
+\'{e}s a dir si \'{e}s compleix que la probabilitat d'error de tipus II,
+$1-\beta$ \'{e}s m\'{e}s petita per $\tau_1$ que per $\tau_2$.
+\end{definition}
+
+\begin{definition}
+Un test $\tau$ de la classe ${\cal{D}}_\alpha$  s'anomena de
+m\`{a}xima pot\`{e}ncia si \'{e}s m\'{e}s potent que qualsevol altre test en
+${\cal{D}}_\alpha$, \'{e}s a dir si
+$$
+\beta_{\tau}\geq \beta_{\tau'},\quad \forall \tau'\in
+{\cal{D}}_\alpha.
+$$ La regi\'{o} cr\'{\i}tica d'un test de m\`{a}xima pot\`{e}ncia s'anomena regi\'{o} cr\'{\i}tica \'{o}ptima.
+\end{definition}
+
+L'obtenci\'{o} de tests \'{o}ptims consistir\`{a} b\`{a}sicament en
+fixar $\alpha$, habitualment en un valor petit, i mirar de
+determinar $\tau$ de forma que sigui de m\`{a}xima pot\`{e}ncia. Una
+eina per fer aix\'{o} ens la subministra el lema de Neymann-Pearson
+que es presenta a continuaci\'{o}.
+
+\subsection{Lema de Neymann-Pearson}
+
+\begin{theorem}
+Sigui $\bx$ una mostra aleat\'{o}ria simple d'una poblaci\'{o}
+$\modest$ amb funci\'{o} de densitat $f(\bx;\theta)$ i funci\'{o} de
+versemblan\c{c}a $L(\theta;\bx)$. Sigui el contrast d'hip\'{o}tesis
+simples:
+\begin{eqnarray*}
+H_0:\quad \theta&=&\theta_0, \\
+H_1:\quad \theta&=&\theta_1.
+\end{eqnarray*}
+ dues
+Si existeix una constant positiva $K_\alpha$ tal que la regi\'{o}:
+\begin{eqnarray*}
+W_\alpha = \left\{ \bx:\
+\frac{L(\theta_1;\bx)}{L(\theta_0;\bx)}\geq K_\alpha \right\}
+\end{eqnarray*}
+compleix que $P\{\bx \in W_\alpha\|H_0\}\leq \alpha$ aleshores
+$W_\alpha$ \'{e}s la regi\'{o} cr\'{\i}tica \'{o}ptima de nivell
+$\alpha$ per a aquest test.
+\end{theorem}
+
+No donarem la demostraci\'{o} d'aquest teorema que podeu veure a
+la majoria dels textos de la bibliografia, com el de Fortiana i
+Nualart  \cite{Fortiana-99} o Ruiz-Maya i Pliego
+\cite{Ruiz-Maya-95}.
+
+El resultat que presenta el teorema \'{e}s relativament
+intu\"{\i}tiu. Si \'{e}s certa la hip\'{o}tesi alternativa la
+versemblan\c{c}a ser\`{a} m\'{e}s gran amb $\theta_1$ que amb
+$\theta_0$, de forma que \'{e}s d'esperar que, a partir d'un cert
+valor, l'evid\`{e}ncia experimental continguda en la mostra sigui
+m\'{e}s ``compatible'' amb la hip\'{o}tesi alternativa que la nula.
+Aquest valor es determina a trav\'{e}s de la condici\'{o} de
+regi\'{o} cr\'{\i}tica, \'{e}s a dir agafant-lo de forma que la
+probabilitat de superar-lo si \'{e}s certa $H_0$ sigui un valor
+petit, $\alpha$.
+
+Per obtenir tests de m\`{a}xima pot\`{e}ncia mitjan\c{c}ant el lema
+de Neymann-Pearson es comen\c{c}a per suposar que es disposa de la
+regi\'{o} cr\'{\i}tica \'{o}ptima i es procura deduir del lema la
+condici\'{o} que han de verificar els elements de la regi\'{o}
+cr\'{\i}tica. Aquesta sol quedar en funci\'{o} d'una constant el
+valor de la qual es calcula a partir de la condici\'{o} de regi\'{o}
+cr\'{\i}tica. Veiem alguns exemples
+
+\begin{example} \textbf{Test per a la mitjana d'una poblaci\'{o} normal}
+\label{example-2-2}
+
+Sigui $X\sim N(\mu,\sigma)$, amb $\sigma$ coneguda i el test
+\beqa
+H_0:\ \mu&=&\mu_0 \\
+H_1:\ \mu &= & \mu_1. \eeqa Hem vist en l'exemple
+[\ref{example-2-1}] que un test intu\"{\i}tiu per a aquest
+problema consisteix en rebutjar $H_0$ si la mitjana de la mostra
+supera un cert valor cr\'{\i}tic, massa gran per ser compatible
+amb el valor $\mu_0$. El lema de Neymann-Pearson d\'{o}na lloc al
+mateix test. Sigui: \beqa
+L(\mu;\bx)=(2\pi\sigma^2)^{-n/2}\exp\left \{-\frac
+1{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\right\}, \eeqa d'on \beqa
+\frac{L(\mu_1;\bx)}{L(\mu_0;\bx)}&=& \exp \left \{-\frac
+1{2\sigma^2}
+\sum_{i=1}^n[(x_i-\mu_1)^2-(x_i-\mu_0)^2]\right\},\\
+&=& \exp \left \{-\frac 1{2\sigma^2}
+\sum_{i=1}^n[2x_i(\mu_0-\mu_1)+(\mu_1^2-\mu_0^2)]\right\}. \eeqa La
+regi\'{o} cr\'{\i}tica \'{o}ptima t\'{e} la forma
+$$\frac{L(\mu_1;\bx)}{L(\mu_0;\bx)}\geq K_\alpha,\quad \text{o, equivalentment }\quad
+ln\left [\frac{L(\mu_1;\bx)}{L(\mu_0;\bx)}\right]\geq
+\ln(K_\alpha),$$ per alguna constant $K_\alpha$, \'{e}s a dir:
+$$
+-\sum_{i=1}^n[2x_i(\mu_0-\mu_1)+(\mu_1^2-\mu_0^2)]\geq 2\sigma^2
+\ln(K_\alpha)
+$$
+o, expressada en funci\'{o} de la mitjana mostral:
+$$
+\overline{x}\geq\frac{\sigma^2
+\ln(K_\alpha)}{n(\mu_1-\mu_0)}+\frac 12(\mu_0-\mu_1)=C_\alpha,
+$$
+on $C_\alpha$ \'{e}s una constant. Per determinar el valor de
+$C_\alpha$ ignorem l'expressi\'{o} anterior i ens basem en el fet que
+$W_\alpha$ \'{e}s regi\'{o} cr\'{\i}tica i per tant verifica que
+$$
+P\left\{\bx\in W_\alpha|H_0\right\}\leq \alpha.
+$$
+Si $H_0$ \'{e}s certa es t\'{e} que $\overline{X}\sim
+N(\mu_0,\sigma^2/n)$, de forma que l'expressi\'{o} anterior esdev\'{e}:
+$$
+P\left\{\bx\in W_\alpha|H_0\right\}= P\left\{\overline {X}\geq
+C_\alpha\right\}=\alpha,
+$$
+d'on, com ja hav\'{\i}em vist en l'exemple se'n surt que
+$$
+C_\alpha= \mu_0+z_{\alpha}\cdot \sigma/\sqrt{n}.
+$$
+
+Observem que si $\mu_1$ hagu\'{e}s estat $< \mu_0$ llavors el signe de
+la desigualtat hauria canviat al dividir per $(\mu_1-\mu_0)$ amb
+la qual cosa la regi\'{o} cr\'{\i}tica hauria estat de la forma
+$\overline{X}<{C'}_{\alpha}$ tal i com suggereix la intu\"{\i}ci\'{o} en
+aquest cas.
+
+\end{example}
+
+\section{Tests d'hip\'{o}tesis compostes}
+
+En molts problemes de contrastos les hip\'{o}tesis no s\'{o}n
+necess\`{a}riament simples, especialment la hip\'{o}tesi
+alternativa. Si per exemple estem estudiant si uns cigarrets baixos
+en nicotina contenen ``com a molt'' $0.8$ mg de nicotina les
+hip\'{o}tesis raonables no serien: \beqa
+H_0:\ \mu&=& \mu_0 \\
+H_1:\ \mu &=& \mu_1,\eeqa
+sino
+\beqa
+H_0:\ \mu&\leq&\mu_0 \\
+H_1:\ \mu &> & \mu_1.
+\eeqa
+
+En l'exemple [\ref{example-2-2}], per al contrast simple $\mu=
+\mu_0$ enfront $\mu= \mu_1$ hem obtingut una regi\'{o} cr\'{\i}tica
+que no depen del valor de $\mu_1$ sin\'{o} \'{u}nicament de si
+\'{e}s major o menor que $\mu_0$. Aix\'{o} vol dir que la regi\'{o}
+cr\'{\i}tica ser\`{a} la mateixa per qualsevol valor de $\mu_1 >
+\mu_0$ o, respectivament $\mu_1<\mu_0)$. Aquest resultat es pot
+generalitzar de la manera seg\"{u}ent.
+\begin{proposition}
+Sigui $W_\alpha$ la regi\'{o} cr\'{\i}tica \'{o}ptima  per a un test
+d'hip\'{o}tesis simples $H_0:\ \theta= \theta_0$ enfront $H_1:
+\theta = \theta_1$. Si $W_\alpha$ no depèn del valor de $\theta_1$
+per a qualsevol $\theta_1< \theta_0$ (respectivament $\theta_1>
+\theta_0$) aleshores $W_\alpha$ \'{e}s la regi\'{o} cr\'{\i}tica
+\'{o}ptima per al test d'hip\'{o}tesis simple enfront composta
+$H_0:\ \theta= \theta_0$ enfront $H_1: \theta < \theta_1$
+(respectivament  $\theta_1> \theta_0$) .
+\end{proposition}
+\begin{proof}
+$W_\alpha$ \'{e}s la regi\'{o} cr\'{\i}tica \'{o}ptima per al test
+$H_0:\ \theta= \theta_0$ enfront $H_1: \theta = \theta_1$. Suposem
+que $W_\alpha$ no \'{e}s RCO per al test $H_0:\ \theta= \theta_0$
+enfront $H_1: \theta < \theta_1$. Aix\'{o} vol dir que existir\`{a}
+alguna altra regi\'{o} cr\'{\i}tica $W_\alpha'$ tal que,
+\begin{equation}
+\text{donat }\theta_1' < \theta_0\longrightarrow P_{\theta_1'}
+(W_\alpha')>P_{\theta_1'}(W_\alpha).\label{absurd}
+\end{equation}
+Per\'{o} aix\'{o} no \'{e}s possible ja que, si $W_\alpha$ no depèn
+del valor de $\theta_1$ tamb\'{e} ha de ser RCO per al test $H_0:\
+\theta= \theta_0$ enfront $H_1: \theta = \theta_1'$, \'{e}s a dir
+cal que $P_{\theta_1'}(W_\alpha')>P_{\theta_1'}(W_\alpha)$ que
+contradiu \ref{absurd}. La contradicci\'{o} prov\'{e} de suposar que
+$W_\alpha$ no \'{e}s RCO i per tant queda establert que ha de
+ser-ho.
+\end{proof}
+
+\begin{definition}Si és possible trobar una regió crítica $W^*$ la potència de
+la qual sigui màxima sigui quin sigui el valor de $\theta$
+determinat en la hipótesis alternativa, diem que $W^*$ és una regió
+crítica òptima uniformement. El test associat a una regió crítica
+òptima uniformement s'anomena test uniformement més potent o U.M.P.
+\end{definition}
+
+En general, però, per als contrastos unilaterals i bilaterals no
+es pot assegurar que existeixi  un test U.M.P. Hi ha dues formes
+d'abordar aquest problema que ens duen a solucions parcials per a
+alguns casos: Es pot forçar el model probabilístic, requerint
+alguna propietat addicional de la família de probabilitats o es
+pot restringir la classe de tests entre els quals es busca el
+test òptim.
+
+La primera aproximació ens duu a considerar només aquelles
+famílies de probabilitats en les quals la raó de versemblances
+que apareix en el lema de Neymann-Pearson es pot expressar com
+una funció monòtona d'un estadístic. Intuïtivament en aquest cas
+serà possible ``aïllar la condició de regió crítica" en funció
+d'aquest estadístic. Les famílies que tenen aquesta propietat
+s'anomenen famílies amb {\em raó de versemblança monòtona}.
+
+Una segona aproximació s'obté en observar que, si no es busca el
+test U.M.P. entre tots els tests possibles sinó únicament entre
+aquells que verifiquen una determinada restricció, molt raonable,
+aleshores és possible trobar tests U.M.P. per alguns contrastos
+d'hipótesis alternatives bilaterals. La restricció consisteix en
+cercar només entre els tests amb probabilitat d'error de tipus II
+menor que $1-\alpha$. Però això és molt raonable ja que, el que vol
+dir és que no es tindran en compte aquells tests on sigui més
+probable acceptar $H_0$ equivocadament (error de tipus II) que amb
+raó (decisió correcta amb probabilitat $1-\alpha$).
+
+\subsection{Famílies amb raó de versemblances monòtona}
+
+En l'exemple anterior hem vist que, si en el test d'hip\'{o}tesis
+simples $H_0:\ \theta= \theta_0$ enfront $H_1: \theta = \theta_1$
+s'obté, aplicant el lema de Neyman-Pearson, que la regió crítica,
+$W_\alpha$, no depèn del valor de $\theta_1$ aleshores $W_\alpha$
+\'{e}s la regi\'{o} cr\'{\i}tica \'{o}ptima per al test
+d'hip\'{o}tesis simple enfront composta $H_0:\ \theta= \theta_0$
+enfront $H_1: \theta < \theta_1$.
+
+Una pregunta raonable és si serà sempre possible procedir
+d'aquesta forma o, en tot cas, quan és possible trobar una regió
+crítica òptima que no depengui de $\theta_1$ sinó només de si
+$\theta_0> \theta_1$ o al contrari. La caracterització de les
+famílies de probabilitats per a les quals això és possible es fa
+fent servir el concepte de {\em raó de versemblança monòtona}.
+
+\begin{definition}
+Sigui $\modest$ un model estadístic, $f_\theta$ la família de
+probabilitats associada al model i $\bx$ una mostra aleatòria
+simple d'$X$. Diem que la família de probabilitats $f_\theta,\
+\theta\in\Theta$ té raó de versemblança monòtona en l'estadístic
+$T(\bx)$ si, $\forall \theta_1>\theta_0$ i, sempre que
+$f_{\theta_1}(\bx)\neq f_{\theta_0}(\bx)$ es té que
+$$
+R(\bx)=\frac{f_{\theta_1}(\bx)}{f_{\theta_0}(\bx)},
+$$
+és una funció no decreixent de $T(\bx)$.
+\end{definition}
+
+\begin{example}
+En una família amb llei de Poisson suposem $\lambda_1>\lambda_2$ i
+una m.a.s. $\bx$. La funció de versemblança de la mostra és:
+$$
+L(\lambda;\bx)=\exp{-n\,\lambda}\frac{\lambda^{\sum x_i}}{x_i!}.
+$$
+Aleshores:
+\beqa
+R(\bx)&=& \frac{\exp{-n\,\lambda_1}\frac{\lambda_1^{\sum
+x_i}}{x_i!}}
+{\exp{-n\,\lambda_2}\frac{\lambda_2^{\sum x_i}}{x_i!}}\\
+&=&\exp{-n(\lambda_1-\lambda_2)}\left(\frac{\lambda_1}{\lambda_2}\right)^
+{\sum x_i}.
+\eeqa
+Prenent logaritmes tindrem
+\beqa
+\log R(\bx)&=&
+\underbrace{-n(\lambda_1-\lambda_2)}_A+\underbrace{\sum
+x_i}_T(\bx)\cdot \underbrace{\log
+\left(\frac{\lambda_1}{\lambda_2}\right)}_B\\
+&=&A+B\cdot T(\bx),\quad, B>0,
+\eeqa
+i per tant la família de Poisson té raó de versemblança en
+$T(\bx)=\Sumin x_i$.
+\end{example}
+
+\begin{example}
+La família exponencial uniparamètrica té raó de versemblances
+monòtona. Efectivament donada
+$$
+L(\theta;\bx)=C(\theta)h(\bx)\exp{Q(\theta)T(\bx)},
+$$
+suposem $\theta_1>\theta_2$.
+\beqa
+R(\bx)&=&\frac{C(\theta_1)h(\bx)\exp{Q(\theta_1)T(\bx)}}
+{C(\theta_2)h(\bx)\exp{Q(\theta_2)T(\bx)}}\Longrightarrow\\
+\log R(\bx)&=&\left[\log\frac{C(\theta_1)}{C(\theta_2)}\right]+
+\left(Q(\theta_1)-Q(\theta_2)\right)T(\bx).
+\eeqa
+Si $Q(\theta)$ és creixent (decreixent) aleshores $R(\bx)$ té RVM
+en $T(\bx)$ (en $-T(\bx)$). Si no ho és és possible fer-la
+esdevenir mitjançant una reparametrització.
+\end{example}
+
+\begin{example}
+Sigui $X\sim {\cal C}(1,\theta)$ una distribució de Cauchy.
+LLavors, donats $\theta_1> \theta_2$ es té:
+$$
+R(\bx)=\frac{1+(x-\theta_1)^2}{1+(x-\theta_2)^2}\longrightarrow
+1,\quad \text{quan } x\rightarrow \pm \infty,
+$$
+de manera que ${\cal C}(1,\theta)$ no té RVM.
+\end{example}
+
+L'interès del concepte de RVM resideix en el teorema que es presenta
+a continuació, que estableix l'existència de tests UMP d'hipótesis
+unilaterals per a les famílies amb raó de versemblança monòtona.
+
+\begin{theorem}\textbf{Karlin-Rubin}
+Sigui $f(x;\theta), \{\theta\in\Theta\}$ una família de
+probabilitats amb raó de versemblança monòtona en l'estadístic
+$T(\bX)$. Per contrastar la hipótesis $H_0:\ \theta=\theta_0
+(\theta\leq \theta_0),\ \theta_0\in \Theta_0$ enfront $H_1:\ \theta>
+\theta_0$ qualsevol test de mida $\alpha$ amb regió crítica
+\begin{equation}
+W_\alpha=\left\{\bx|T(\bx)\geq
+c_\alpha\right\}\label{test-K-R}
+\end{equation} té funció de potència no decreixent i és U.M.P. entre els
+tests de mida $\alpha$ per a aquesta hipótesis.
+
+A més a més $\forall\alpha\in[0,1]$ i $\forall\theta\in\Theta$
+existeix $c_\alpha$ tal que  tal que el test descrit a
+\ref{test-K-R} sigui U.M.P. de mida $\alpha$ per contrastar $H_0$
+enfront $H_1$.
+
+\end{theorem}
+Podeu veure la demostració d'aquest teorema, en versió
+aleatoritzada, a Rohatgi(\cite{Rohatgi-75}).
+
+\begin{example}
+En una distribució uniforme $X\sim[0,\theta]$ volem contrastar la
+hipótesis : \beqa H_0:&&\ \theta=\theta_0 \\ H_1:&&\
+\theta>\theta_0.\eeqa Comencem per determinar si es tracta d'una
+família amb RVM. Donada una mostra aleatòria simple, $\bx$ la
+versemblança del model és:
+$$
+L(\theta;\bx)=\frac 1{\theta^n}\textbf{1}_{[0\leq \max x_i\leq
+\theta ]}(\bx).
+$$
+Suposem $\theta_1>\theta_2$ i considerem la raó:
+\beqa
+\frac{f_{\theta_1}(\bx)}{f_{\theta_2}(\bx)}&=& \frac{\frac
+1{\theta_1^n}\textbf{1}_{[0\leq \max x_i\leq \theta_1
+]}(\bx)}{\frac 1{\theta_2^n}\textbf{1}_{[0\leq \max x_i\leq
+\theta_2]}(\bx)}\\
+&=&\left(\frac{\theta_2}{\theta_1}\right)^n
+\frac{\textbf{1}_{[0\leq \max x_i\leq \theta_1]}(\bx)}
+{\textbf{1}_{[0\leq \max x_i\leq \theta_2]}(\bx)}.
+\eeqa
+Sigui
+$$
+R(\bx)=\left\{
+\begin{array}{ll}
+  1 & \max x_i \in [0,\theta_2] \\
+  \infty & \max x_i \in [\theta_2,\theta_1 ]
+\end{array}
+\right.
+$$
+Si definim $R(\bx)=\infty$ si $ \max x_i> \theta_1$ aleshores
+$\frac{f_{\theta_1}(\bx)}{f_{\theta_2}(\bx)}$ és una funció no
+decreixent de l'estadístic $$T(\bX)=\max_{1\leq i\leq n} X_i$$ i
+la família de densitats uniformes té raó de versemblança monòtona
+en $T(\bX)$. En conseqüència, pel teorema de Karlin-Rubin el test
+\begin{equation}
+W_\alpha=\left\{\bx|T(\bx)\geq c_\alpha\right\},
+\end{equation}
+és un test UMP per a les hipótesis \beqa H_0:&&\ \theta \leq
+\theta_0
+\\ H_1:&&\ \theta>\theta_0.\eeqa
+El punt crític $c_\alpha$ es determina per la condició de que
+$W_\alpha$ sigui regió crítica, és a dir:
+\beqa
+P\left\{\bx|T(\bx)\leq c_\alpha|H_0\right\}&=&\\
+ \left( \frac{c_\alpha}{\theta_0}\right)^n &=&1-\alpha,
+\eeqa
+d'on rebutjarem $H_0$ si ${\displaystyle\max_{1 \leq i\leq n} x_i
+\geq \theta_0 (1-\alpha)^{\frac 1n}}$.
+\end{example}
+
+\subsection{Tests sense biaix o centrats}
+Una segona alternativa, a l'hora de buscar tests U.M.P. per
+contrastos d'hipótesis compostes és restringir-nos als tests
+centrats o sense biaix.
+\begin{definition}
+Un test de mida $\alpha$ i regió crítica $W_\alpha$ per a les
+hipótesis $H_0:\ \theta\in \Theta_0$ enfront $H_1:\ \theta\in
+\Theta_1$ s'anomena centrat o sense biaix si es verifica que la
+potència del test és més gran o igual que el nivell de significació
+per a qualsevol valor de la hipótesis alternativa és a dir si:
+$$
+\beta(\theta)=P\left\{\bx \in W_\alpha|H_1\right\}\geq \alpha,\
+\forall \theta \in \Theta_1.
+$$
+\end{definition}
+Com ja hem comentat aquest requeriment és molt natural ja que
+només vol dir que la probabilitat de rebutjar $H_0$
+(correctament) quan és falsa ha de ser més gran que la
+probabilitat de fer-ho (incorrectament) quan és certa.
+
+Si ens restringim als tests sense biaix és possible establir
+l'existència de tests U.M.P., que en aquest cas s'anomenen
+U.M.P.S.B. per a la família exponencial uniparamètrica. Els
+teoremes següents estableixen aquesta propietat i donen alguns
+d'aquests tests pel cas de la distribució normal. Les
+demostracions es poden trobar a Lehman (\cite{Lehman-86}).
+
+\begin{theorem}
+Si la família $\left\{ f (x;\theta),\ \theta\in \Theta \right \}$
+és exponencial uniparamètrica aleshores existeix un test U.M.P.
+sense biaix de mida $\alpha$ per al contrast bilateral  $H_0:\
+\theta=\theta_0$ enfront $H_1:\ \theta\neq \theta_0$.
+\end{theorem}
+
+\begin{theorem}
+Sigui $\Sample$ una mostra aleatòria simple d'una variable amb
+distribució $N(\mu,\sigma)$.
+\begin{enumerate}
+\item Si $\sigma^2$ és coneguda aleshores per contrastar
+$H_0:\ \mu=\mu_0$ enfront $H_1:\ \mu\neq\mu_0$ el test consistent
+en rebutjar $H_0$ si $|Z|>\zem$, on
+$$Z=\frac{\ds{\bar{X}-\mu_0}}{\ds\sqrt{\sigma^2/n}} \sim N(0,1)$$
+és U.M.P. sense biaix de nivell $\alpha$.
+\item Si $\sigma^2$ és desconeguda aleshores per contrastar $H_0:\ \mu=\mu_0$
+enfront $H_1:\ \mu\neq\mu_0$ el test consistent en rebutjar $H_0$
+si $|T|> t(\alpha,n-1)$, on
+$$T=\frac{\ds{\bar{X}-\mu_0}}{\ds{S}}\sqrt{n-1} \sim t(n-1)$$ és
+U.M.P. sense biaix de nivell $\alpha$.
+\item Per contrastar $H_0:\ \sigma^2=\sigma_0^2$ enfront $H_1:\ \sigma^2=\sigma_0^2$
+el test consistent en rebutjar $H_0$ si
+$$\chi^2 >\chi_{(n-1),\alpha/2}  \text{ o } \chi^2<\chi_{(n-1),1-\alpha/2},$$ on
+$$\chi^2=\frac{\ds{(n-1)\hat{S}^2}}{\ds{\sigma_0^2}} \sim
+\chi^2(n-1),$$ és U.M.P. sense biaix de nivell $\alpha$.
+\end{enumerate}
+\end{theorem}
+Els valors $\zem$, $t(\alpha,n-1)$ i $\chi_{(n-1),\alpha/2}$ són
+respectivament els percentils $1-\alpha$ de les distribucions
+$N(0,1)$ $t$ de Student amb $n-1$ graus de llibertat i $\chi^2$
+amb $n-1$ graus de llibertat.
+
+\begin{theorem}
+Sigui $\bX_1$, una mostra d'una població normal
+$N(\mu_1,\sigma_1)$ i $\bX_2$ una altra mostra provinent d'una
+població $N(\mu_2, \sigma_2)$ independent de l'anterior.
+\begin{enumerate}
+\item Si $\sigma_1^2,\sigma_2^2$ són conegudes, aleshores per
+contrastar $H_0: \mu_1-\mu_2$ enfront d'$H_1: \mu_1 \neq \mu_2$,
+el test consistent en rebutjar $H_0$ si $|Z| >\zem$ on
+$$
+Z=\frac{\ds{(\bar{X}_1-\bar{X}_2)-d_0}}
+{\ds{\sqrt{\frac{\sigma_1\sp 2}{n_1}+\frac{\sigma_2\sp 2}{n_2}}}}
+\sim N(0,1),
+$$
+és U.M.P. sense biaix de nivell $\alpha$.
+\item Si $\sigma_1^2, \sigma_2^2$ són desconegudes però iguals,
+$\sigma_1^2=\sigma_2^2$ aleshores per contrastar $H_0:
+\mu_1-\mu_2$ enfront d'$H_1: \mu_1 \neq \mu_2$, el test
+consistent en rebutjar $H_0$ si $|T| > t(\alpha,n_1+n_2-2)$ on
+$$
+T=\frac{\ds{(\bar{X}_1-\bar{X}_2)-d_0}}%
+{\sqrt{\frac{\ds{(n_1S_1\sp 2 + n_2 S_2\sp 2)\,(n_1+n_2)}}
+{\ds{(n_1+n_2-2)(n_1\,n_2)}}}} \sim t(n_1+n_2-2)
+$$
+és U.M.P. sense biaix de nivell $\alpha$.
+\item Per contrastar $H_0: \sigma_1\sp 2=\sigma_2\sp 2$ enfront
+d'$H_1: \sigma_1\sp 2 \neq \sigma_2\sp 2$ el test consistent en
+$$
+\text {rebutjar $H_0$ si } F > F_{n_2,\alpha/2}^{n_1} \mbox{ o }
+F< F_{n_2,1-\alpha/2}^{n_1},
+$$
+on
+$$
+F=\frac{\ds{\hat{S}_1\sp 2}}{\ds{\hat{S}_2\sp 2}} \sim
+F(n_1-1,n_2-1)
+$$
+és U.M.P. sense biaix de nivell $\alpha$.
+\end{enumerate}
+\end{theorem}
+Els valors $\zem$, $t(n_1+n_2-2)$ i $ F_{n_2,\alpha/2}^{n_1}$ són
+respectivament els percentils $1-\alpha$ de les distribucions
+$N(0,1)$, $t$ de Student amb $n-1+n_2-2$ graus de llibertat i $F$
+de Fisher amb $n_1, n_2$ graus de llibertat.
+
+\subsection{Exemples}
+Podeu trobar exemples resolts de tots aquests tests al capítol 6
+("Análisis estadístico Normal") de Cuadras (\cite{Cuadras-00}).
